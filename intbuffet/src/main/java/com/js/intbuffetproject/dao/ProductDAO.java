@@ -10,5 +10,9 @@ public interface ProductDAO {
 
 	public List<Product> listProduct();
 
-	public void removeProduct(Integer id);
+	public void removeProduct(Long id);
+	
+	public Product getProductByID(Long id);
+	
+	public List<Product> searchProduct(String searchtext);
 }

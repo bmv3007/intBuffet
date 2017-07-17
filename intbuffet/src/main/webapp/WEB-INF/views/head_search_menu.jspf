@@ -1,0 +1,47 @@
+<%-- <%
+request.setCharacterEncoding("UTF-8");
+String search = "";
+
+if(request.getParameter("search")!=null && !request.getParameter("search").trim().isEmpty()) {
+  search = request.getParameter("search");
+  session.setAttribute("search", search);
+} else if(session.getAttribute("search")!=null){
+	 search = session.getAttribute("search").toString();
+}else{
+	session.setAttribute("search", search);
+}
+
+
+%> --%>
+		<!-- 	******************HEAD seach****************** -->
+		<div class="row">
+			<div class="seach">
+				
+				<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+					<form class="form-search" method="get" action="search"
+						target="_self">
+						<div align="left" valign="center">
+					
+						 <input class="bot3" type="submit" value="search"> 
+						<input  class="seachtext" type="text" name="search" placeholder="suchen" value="<%=session.getAttribute("search").toString()%>" />
+							</div>
+					</form>
+				</div>
+				<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 top-menu">
+
+
+					<ul>
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Buffets</a></li>
+						<li><a href="login" id="login">Sing in</a></li>
+						<li><a href="cart"><img src="resources/images/basket5.jpg"></a></li>
+
+						<!-- <li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>
+						<li><a href="?lang=ru"><img src="resources/images/ru.jpg"></a></li> -->
+
+					</ul>
+
+				</div>
+			</div>
+
+		</div>

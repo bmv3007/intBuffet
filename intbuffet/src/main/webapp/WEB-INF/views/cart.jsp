@@ -1,6 +1,5 @@
 <%@include file="head.jspf"%>
 <%@include file="head_search_menu.jspf"%>
-<%@include file="carousel.jspf"%>
 
 <!-- 	******************MAIN row****************** -->
 <div class="row">
@@ -16,7 +15,7 @@
 			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 				<div class="row masonry" data-columns>
 
-					<c:forEach var="product" items="${productList1}">
+					<c:forEach var="product" items="${productLisInCart}">
 
 						<div>
 							<div class="thumbnail">
@@ -28,7 +27,7 @@
 										<a href="#">${product.name}</a>
 									</h3>
 									<p>Beschreibung sehr gross........................</p>
-									<a target="_self" href="#" id="${product.id}"  onclick="addAjax(${product.id})">Add+${product.id}<i
+									<a href="" id=${product.id}  onclick="deleteAjax()">Delete <i
 										class="glyphicon glyphicon-shopping-cart"></i></a>
 								</div>
 

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 /**
  * Product bean.
  * 
@@ -21,12 +23,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "products")
-public class Product {
+@Proxy(lazy=false)
+public class Product implements java.io.Serializable{ 
+
+static final long serialVersionUID = 3260689382642549142L;
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name")
 	private String name;
@@ -59,7 +64,7 @@ public class Product {
 	private List<Ingredient> ingredients;
 	
 	
-	public Product(Integer id, String name, String category, String description, int price, int vegetarian, int weight,
+	public Product(Long id, String name, String category, String description, int price, int vegetarian, int weight,
 			int quantity, byte[] image, List<Ingredient> ingredients) {
 		super();
 		this.id = id;
@@ -98,7 +103,7 @@ public class Product {
 		this.image = image;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -158,7 +163,7 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -1,0 +1,58 @@
+<!-- *****************************carousel************************************ -->
+
+
+		<div class="container">
+			<div class="row graycolor">
+				<div id="carousel" class="carousel slide graycolor">
+					<!--  индикаторы слайдов -->
+					<ol class="carousel-indicators graycolor">
+
+						<li class="active" data-target="#carousel" data-slide="0"></li>
+						<li data-target="#carousel" data-slide="1"></li>
+						<li data-target="#carousel" data-slide="2"></li>
+						<li data-target="#carousel" data-slide="3"></li>
+						<li data-target="#carousel" data-slide="4"></li>
+
+					</ol>
+
+					<!--  слайды -->
+					<div class="carousel-inner">
+						<div class="item active">
+							<p class="fig">
+								<img src="resources/images/1.jpg">
+							</p>
+						</div>
+						<div class="item">
+							<p class="fig">
+								<img src="resources/images/2.jpg">
+							</p>
+						</div>
+						<div class="item">
+							<p class="fig">
+								<img src="resources/images/3.jpg">
+							</p>
+						</div>
+						<div class="item">
+							<p class="fig">
+								<img src="resources/images/4.jpg">
+							</p>
+						</div>
+						<div class="item">
+							<p class="fig">
+								<img src="resources/images/5.jpg">
+							</p>
+						</div>
+					</div>
+
+					<!--  cтрелки переключения слайдов -->
+					<a href="#carousel" class="left carousel-control" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a> <a href="#carousel" class="right carousel-control"
+						data-slide="next"> <span
+						class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+

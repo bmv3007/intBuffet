@@ -29,7 +29,19 @@ public class ProductServiceImpl implements ProductService {
     }
  
     @Transactional
-    public void removeProduct(Integer id) {
+    public void removeProduct(Long id) {
     	productDAO.removeProduct(id);
     }
+
+	@Override
+	public Product getProductByID(Long id) {
+		// TODO Auto-generated method stub
+		 return productDAO.getProductByID(id);
+	}
+
+	@Override
+	public List<Product> searchProduct(String searchtext) {
+		// TODO Auto-generated method stub
+		 return productDAO.searchProduct(searchtext);
+	}
 }
