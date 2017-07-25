@@ -4,7 +4,7 @@ import com.js.intbuffetproject.model.Address;
 
 public interface AddressDAO {
 
-	public void addAddress(Address address);
+	void addAddress(Address address);
 
-	public void removeAddress(Long id);
+	void removeAddress(Long id);
 }

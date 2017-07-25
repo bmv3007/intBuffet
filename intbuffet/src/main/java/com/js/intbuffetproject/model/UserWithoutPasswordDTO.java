@@ -13,14 +13,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserWithoutPasswordDTO {
 
 	@Id
 	@Column(name = "username")
 	private String username;
-
-	@Column(name = "password")
-	private String password;
 
 	@Column(name = "email")
 	private String email;
@@ -34,35 +31,23 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birthday")
 	private Date birthday;
-	
+
 	@OneToOne
 	@JoinColumn(name = "address", referencedColumnName = "id")
 	private Address address;
 
-	public User(String username, String password, String email, String firstname, String surname, Date birthday,
+	public UserWithoutPasswordDTO(String username, String email, String firstname, String surname, Date birthday,
 			Address address) {
 		super();
 		this.username = username;
-		this.password = password;
 		this.email = email;
 		this.firstname = firstname;
 		this.surname = surname;
 		this.birthday = birthday;
 		this.address = address;
 	}
-	
-	public User(String username, String password, String email, String firstname, String surname, Date birthday) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.firstname = firstname;
-		this.surname = surname;
-		this.birthday = birthday;
-		
-	}
 
-	public User() {
+	public UserWithoutPasswordDTO() {
 
 	}
 
@@ -72,14 +57,6 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {

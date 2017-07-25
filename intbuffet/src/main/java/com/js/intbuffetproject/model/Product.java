@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Product bean.
@@ -36,8 +39,9 @@ static final long serialVersionUID = 3260689382642549142L;
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "category")
-	private String category;
+	@ManyToOne //many orders by one client
+	@JoinColumn(name="category")
+	private Category category;
 
 	@Column(name = "description")
 	private String description;
@@ -61,10 +65,11 @@ static final long serialVersionUID = 3260689382642549142L;
 	@JoinTable(name = "products_ingredients", 
 	joinColumns = @JoinColumn(name = "products_id"), 
 	inverseJoinColumns = @JoinColumn(name = "ingredients_id"))
+	@JsonIgnore
 	private List<Ingredient> ingredients;
 	
 	
-	public Product(Long id, String name, String category, String description, int price, int vegetarian, int weight,
+	public Product(Long id, String name, Category category, String description, int price, int vegetarian, int weight,
 			int quantity, byte[] image, List<Ingredient> ingredients) {
 		super();
 		this.id = id;
@@ -107,11 +112,11 @@ static final long serialVersionUID = 3260689382642549142L;
 		return id;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.ProductDAO;
 import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.model.SearchParameter;
 import com.js.intbuffetproject.service.ProductService;
  
 @Service
@@ -43,5 +44,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> searchProduct(String searchtext) {
 		// TODO Auto-generated method stub
 		 return productDAO.searchProduct(searchtext);
+	}
+
+	@Override
+	public List<Product> searchProductByParameters(SearchParameter searchParameter) {
+		// TODO Auto-generated method stub
+		return productDAO.searchProductByParameters(searchParameter);
 	}
 }

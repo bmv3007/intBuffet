@@ -17,12 +17,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	background: transparent;
 }
 body {
-	color: #eaeaea;
+	color: #000000;
 	font: 14px Arial;
 	margin: 0 auto;
 	padding: 0;
 	position: relative;
 	background-color: #eaeaea;
+	
 
 }
 h1{ font-size:28px;}

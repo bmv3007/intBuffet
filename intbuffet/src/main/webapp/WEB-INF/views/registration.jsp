@@ -1,5 +1,5 @@
 <%@include file="head.jspf"%>
-
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%-- <%
 
 if(request.getParameter("username")!=null && !request.getParameter("username").trim().isEmpty()) {
@@ -32,37 +32,54 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 </div>
 
 
-<c:if test="${not empty param.error}">
-	<font color="red"> <spring:message code="label.loginerror" /> :
-		${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-	</font>
-</c:if>
 
 <div class="container">
 	<section id="content">
-		<form method="POST"
-			action="<c:url value="/j_spring_security_check" />">
-			<h1>Authentication</h1>
+		<form:form method="POST" commandName="user"  action="signup">
+			<h1>Registration</h1>
+			<fieldset>
 			<div>
-				<input placeholder='login' required="" id="username" type="text"
-					name="j_username">
+				<form:input placeholder='login' required="" path="username" id="username" type="text"
+					name="username"/>
+			</div>
+			<div>
+				<form:input placeholder='firstname' required="" path="firstname" id="firstname"
+					type="text" name="firstname"/>
+			</div>
+			<div>
+				<form:input placeholder='surname' required="" path="surname" id="surname" type="text"
+					name="surname"/>
+			</div>
+			<div>
+				<form:input placeholder='e-mail' required="" path="email"  id="email" type="text"
+					name="email"/>
 			</div>
 			<div>
 				<!--      <input name="_spring_security_remember_me" type="checkbox" class="remember">remember me </input> -->
-				<input placeholder='password' required="" id="password"
-					type="password" name="j_password" onkeyup="doAjax()">
+				<form:input placeholder='password' required="" path="password"  id="password"
+					type="password" name="password" />
 			</div>
 			<div id="strengthValue"></div>
 			<br>
+			<div>
+				<form:input placeholder='birthday' required="" path="birthday"  id="birthday" type="date"
+					name="date"/>
+			</div>
+			</fieldset>
 			<div>
 				<br>
 			</div>
 			<br>
 			<div>
-				<input type="submit" value="Login"> <a href="registration"
-					id="register">Registration</a> <a href="cancel" id="cancel">Cancel</a>
+				<input type="submit"  value="Sign up"/> <a href="cancel"
+					id="cancel">Cancel</a>
 			</div>
-		</form>
+			<div>
+			<c:if test="${not empty errormassage}">
+	<font color="red"> ${errormassage}</font>
+</c:if>
+<div>
+		</form:form>
 		<!-- form -->
 	</section>
 	<!-- content -->

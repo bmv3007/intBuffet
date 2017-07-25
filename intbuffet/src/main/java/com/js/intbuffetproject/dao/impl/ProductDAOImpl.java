@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.js.intbuffetproject.dao.ProductDAO;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.model.SearchParameter;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO {
@@ -69,6 +70,23 @@ public class ProductDAOImpl implements ProductDAO {
 		return products;
 		}
 		
+	}
+
+	@Override
+	public List<Product> searchProductByParameters(SearchParameter searchParameter) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Product.class);
+		if(searchParameter.getCategoryID()!=0){
+			criteria.createAlias("category", "category").add(Restrictions.eq("category.id", searchParameter.getCategoryID()));
+		}
+		
+		if(searchParameter.getVegetarian()==true){
+			criteria.add(Restrictions.eq("vegetarian", 0));
+		}		
+		logger.info("***********");
+		List<Product> products = criteria.list();
+		
+		logger.info("searchProductByParameters"+ products.size());
+		return products;
 	}
 
 }

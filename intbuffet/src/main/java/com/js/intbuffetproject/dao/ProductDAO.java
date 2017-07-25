@@ -3,16 +3,19 @@ package com.js.intbuffetproject.dao;
 import java.util.List;
 
 import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.model.SearchParameter;
 
 public interface ProductDAO {
 
-	public void addProduct(Product product);
+	void addProduct(Product product);
 
-	public List<Product> listProduct();
+	List<Product> listProduct();
 
-	public void removeProduct(Long id);
+	void removeProduct(Long id);
 	
-	public Product getProductByID(Long id);
+	Product getProductByID(Long id);
 	
-	public List<Product> searchProduct(String searchtext);
+	List<Product> searchProduct(String searchtext);
+	
+	public List<Product> searchProductByParameters(SearchParameter searchParameter);
 }

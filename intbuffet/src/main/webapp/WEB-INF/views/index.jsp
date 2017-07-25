@@ -27,8 +27,12 @@
 									<h3>
 										<a href="#">${product.name}</a>
 									</h3>
+									<p>Category: ${product.category.name}</p>
 									<p>Beschreibung sehr gross........................</p>
-									<a target="_self" href="#" id="${product.id}"  onclick="addAjax(${product.id})">Add+${product.id}<i
+									<p> Price: ${product.price}</p>
+									<p> Vegetarian: ${product.vegetarian}</p>
+									<p> Weight: ${product.weight}</p>
+									<a target="_self" id="${product.id}"  onclick="addAjax(${product.id})">Add+${product.id}<i
 										class="glyphicon glyphicon-shopping-cart"></i></a>
 								</div>
 

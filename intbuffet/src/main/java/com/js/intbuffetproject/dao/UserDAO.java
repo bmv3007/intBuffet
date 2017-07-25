@@ -4,7 +4,13 @@ import com.js.intbuffetproject.model.User;
 
 public interface UserDAO {
 
-	public void addUser(User user);
+	void addUser(User user);
 
-	public void removeUser(String username);
+	void removeUser(User user);
+	
+	void editUser(User user);
+	
+	User getUserByUsername(String username);
+	
+	
 }

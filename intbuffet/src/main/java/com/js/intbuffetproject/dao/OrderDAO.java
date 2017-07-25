@@ -7,15 +7,15 @@ import com.js.intbuffetproject.model.Order;
 
 public interface OrderDAO {
 
-	public void addOrder(Order order);
+	void addOrder(Order order);
 
-	public List<Order> listOrder();
+	List<Order> listOrder();
 	
-	public List<Order> listOrderFromTo(Date from, Date to);
+	List<Order> listOrderFromTo(Date from, Date to);
 	
-	public List<Order> listOrderByClient(String username);
+	List<Order> listOrderByClient(String username);
 	
-	public Order getOrderById(Long id);
+	Order getOrderById(Long id);
 
-	public void removeOrder(Integer id);
+	void removeOrder(Integer id);
 }

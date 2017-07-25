@@ -16,40 +16,57 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.model.User;
+import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.ProductService;
+import com.js.intbuffetproject.service.UserService;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes("UserWithoutPasswordDTO")
 public class HomeController {
+
+	@Autowired
+	private HttpSession httpSession;
 
 	private static final Logger logger = Logger.getLogger(HomeController.class);
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private CategoryService categoryService;
+
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping("/index")
 	@ResponseBody
-	public ModelAndView listProducts(Map<String, Object> map, Locale locale, HttpSession session) {
+	public ModelAndView listProducts(Map<String, Object> map, Locale locale) {
 		ModelAndView modAndView = new ModelAndView();
 		// logger.info("local = " + locale);
 		map.put("productList1", productService.listProduct());
-		session.setAttribute("currentProductList", productService.listProduct());
-		session.setAttribute("username", "");
-		session.setAttribute("search", "");
+		httpSession.setAttribute("currentProductList", productService.listProduct());
+		httpSession.setAttribute("categoriesList", categoryService.listCategories());
+		httpSession.setAttribute("username", "");
+		httpSession.setAttribute("search", "");
 		modAndView.addAllObjects(map);
 		modAndView.setViewName("index");
 
@@ -73,17 +90,11 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String goin() {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(SessionStatus status) {
 		// logger.info(accessDecisionManager);
-
-		return "login";
-	}
-
-	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
-	public String cancel() {
-
-		return "redirect:/index";
+		status.setComplete();
+		return "index";
 	}
 
 	@RequestMapping("/search")
@@ -111,39 +122,36 @@ public class HomeController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public @ResponseBody // @ResponseBody - нужен, когда мы НЕ перенаправляем на
 	// другую страницу, а пишем ответ на той же странице
-	String checkStrength(@RequestParam Long idgood, HttpSession session) {
+	void checkStrength(@RequestParam Long idgood) {
 		logger.info("idgood = " + idgood);
 		Product product = productService.getProductByID(idgood);
 		logger.info("product = " + product.getName());
-		if (session.getAttribute("cart") == null) {
+		if (httpSession.getAttribute("cart") == null) {
 
 			logger.info("cart is null");
 			Cart cart = new Cart();
 			cart.addProduct(product, 1);
-			session.setAttribute("cart", cart);
+			httpSession.setAttribute("cart", cart);
 			logger.info("cart =" + cart.getProductsInCart().elements());
-		} else if (((Cart) session.getAttribute("cart")).getProductsInCart().containsKey(product)) {
-			Cart cart = (Cart) session.getAttribute("cart");
+		} else if (((Cart) httpSession.getAttribute("cart")).getProductsInCart().containsKey(product)) {
+			Cart cart = (Cart) httpSession.getAttribute("cart");
 			cart.addProduct(product, cart.getProductsInCart().get(product) + 1);
-			session.setAttribute("cart", cart);
+			httpSession.setAttribute("cart", cart);
 		} else {
 
-			Cart cart = (Cart) session.getAttribute("cart");
+			Cart cart = (Cart) httpSession.getAttribute("cart");
 			cart.addProduct(product, 1);
-			session.setAttribute("cart", cart);
+			httpSession.setAttribute("cart", cart);
 		}
-		
-		return "OK";
-
 	}
 
 	@RequestMapping("/cart")
 	@ResponseBody
-	public ModelAndView cart(Map<String, Object> map, Locale locale, HttpSession session) {
+	public ModelAndView cart(Map<String, Object> map, Locale locale) {
 		ModelAndView modAndView = new ModelAndView();
-		logger.info("session.getAttribute(cart) = " + session.getAttribute("cart"));
-		if (session.getAttribute("cart") != null) {
-			map.put("productLisInCart", ((Cart) session.getAttribute("cart")).getProductsInCart().keys());
+		logger.info("session.getAttribute(cart) = " + httpSession.getAttribute("cart"));
+		if (httpSession.getAttribute("cart") != null) {
+			map.put("productLisInCart", ((Cart) httpSession.getAttribute("cart")).getProductsInCart().keys());
 
 			modAndView.addAllObjects(map);
 		}

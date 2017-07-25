@@ -85,12 +85,17 @@ body {
 }
 
 .seach {
+	
 	background: #478694;
 	height: 43px;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	position: relative;
 	padding-left: 25px;
+}
+
+.block {
+	display: block;
 }
 
 .graycolor {
