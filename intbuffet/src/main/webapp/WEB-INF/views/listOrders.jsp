@@ -69,30 +69,25 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="item" items="${productLisInCart}" >
+						<c:forEach var="item" items="${UsersOrders}" >
                           
 							<tr>
-								 <td class="cart_product"><a href=""><img
-										src="<%=request.getContextPath()%>/getImage?id=${item.id}"
-										class="img-responsive"></a></td>  
+								 <td class="cart_product">	<a href="">${item.id}</a></td>  
 								<td class="cart_description">
-									<h4>
-										<a href="">${item.name} </a>
-									</h4>
-									 <p>${item.description}</p>  
+									
+									 <p>${item.date}</p>  
+								</td>
+								<td class="cart_price">
+ 									<p>${item.orderstatus}</p>
 								</td>
 								 <td class="cart_price">
- 									<p>&#8364; ${item.price}</p>
+ 									<p>${item.paymentmethod}</p>
 								</td>
-								<td class="cart_quantity">
-									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" id=${item.id}
-											onclick="addAjax(${item.id},${item.price},${item.quantity})"> + </a> <input
-											class="cart_quantity_input" type="text" name="quantity"
-											value=${item.quantity} autocomplete="off" size="2" id="quantity">
-									 	<a class="cart_quantity_down" id=${item.id}
-											onclick="deleteAjax()"> - </a> 
-									</div>
+								<td class="cart_price">
+ 									<p>${item.deliverymethod}</p>
+								</td>
+								<td class="cart_price">
+ 									<p>${item.paid}</p>
 								</td>
 								<td class="cart_total">
 									<p class="cart_total_price" id="totalItem"+"${item.id}"></p>

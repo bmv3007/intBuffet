@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
@@ -39,7 +40,7 @@ static final long serialVersionUID = 3260689382642549142L;
 	@Column(name = "name")
 	private String name;
 
-	@ManyToOne //many orders by one client
+	@ManyToOne 
 	@JoinColumn(name="category")
 	private Category category;
 
@@ -47,7 +48,7 @@ static final long serialVersionUID = 3260689382642549142L;
 	private String description;
 
 	@Column(name = "price")
-	private int price;
+	private float price;
 
 	@Column(name = "vegetarian")
 	private int vegetarian;
@@ -59,7 +60,7 @@ static final long serialVersionUID = 3260689382642549142L;
 	private int quantity;
 
 	@Column(name = "image")
-	private byte[] image;
+	private String image;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "products_ingredients", 
@@ -69,8 +70,8 @@ static final long serialVersionUID = 3260689382642549142L;
 	private List<Ingredient> ingredients;
 	
 	
-	public Product(Long id, String name, Category category, String description, int price, int vegetarian, int weight,
-			int quantity, byte[] image, List<Ingredient> ingredients) {
+	public Product(Long id, String name, Category category, String description, float price, int vegetarian, int weight,
+			int quantity, String image, List<Ingredient> ingredients) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -100,11 +101,11 @@ static final long serialVersionUID = 3260689382642549142L;
 		ingredients.add(ingredient);
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -136,11 +137,11 @@ static final long serialVersionUID = 3260689382642549142L;
 		this.description = description;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

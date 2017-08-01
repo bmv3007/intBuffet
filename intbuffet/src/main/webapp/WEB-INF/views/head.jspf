@@ -1,38 +1,54 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.js.intbuffetproject.dao.impl.ProductDAOImpl"%>
-<%@page import="com.js.intbuffetproject.model.Product"%>
-<%@page contentType="text/html; charset=UTF-8" language="java"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
-<link href="resources/css/style.css" rel="stylesheet" />
-<link href="resources/css/login.css" rel="stylesheet" />
-</head>
-<body>
 
+<div class="header_top">
+	<!--header_top-->
 	<div class="container">
-		<!-- 	******************HEAD logo****************** -->
-		<div class="row graycolor">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		 <div class="welcome" align="right">You are welcome !</div>
-		 </div>
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="contactinfo">
+					<ul class="nav nav-pills">
+						<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88
+								821</a></li>
+						<li><a href=""><i class="fa fa-envelope"></i>
+								info@domain.com</a></li>
+					</ul>
+
+					<form class="form-search" method="get" action="search"
+						target="_self">
 
 
-				<div align="center">
-					<img src="resources/images/logo1.jpg" align="left" />
+						<a><input class="seachtext" type="text" name="search"
+							placeholder="search" value="<%=session.getAttribute("search")%>" />
+						</a>
+
+					</form>
 
 				</div>
+
 			</div>
-			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-			   
-				<div align="center">
-					<img src="resources/images/logo1.jpg" align="right" />
+			<div class="col-sm-6">
+				<div class="shop-menu pull-right">
+					<ul class="nav navbar-nav">
+
+						<li><a href="<c:url value='/index' />">Home</a></li>
+						<li><a href="cart.html"><i class="fa fa-shopping-cart"></i>
+								Cart  <span class="badge">4</span></a></li>
+						<li><a href="login1" id="login"><i class="fa fa-lock"></i>
+								Login</a></li>
+						<security:authorize
+							access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+							<li><a href="getUsersOrders" id="orders">Orders</a></li>
+							<li><a href=""><i class="fa fa-user"></i>Profile</a></li>
+							<li><a href="logout" id="logout">Log out</a></li>
+						</security:authorize>
+
+
+					</ul>
 				</div>
+
 			</div>
 		</div>
+	</div>
+</div>
 
-		
+<!--/header_top-->
+

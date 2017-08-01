@@ -1,24 +1,25 @@
-package com.js.intbuffetproject.dao;
+package com.js.intbuffetproject.service;
 
 import java.io.Serializable;
 import java.util.List;
 
 import com.js.intbuffetproject.model.Address;
 
-public interface AddressDAO {
 
-	Serializable addAddress(Address address);
+public interface AddressService {
 
-	void removeAddress(Long id);
-	
+	Serializable addAddress(Address category);
+
 	List<Address> listAddresses();
 	
 	Address getAddressByID(Long id);
+
+	void removeAddress(Long id);
 	
 	List<String> listCountries();
-	List<String> listCities();
-	List<String> listStreets();
-
 	
+	List<String> listCities();
+	
+	List<String> listStreets();
 	
 }

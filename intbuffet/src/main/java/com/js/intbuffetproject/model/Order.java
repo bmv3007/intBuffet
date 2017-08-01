@@ -1,5 +1,6 @@
 package com.js.intbuffetproject.model;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,12 +31,12 @@ public class Order {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(value=TemporalType.TIMESTAMP)
 	@Column(name = "date")
-	private Date date;
+	private  Date date;
 
 	@ManyToOne //many orders by one client
 	@JoinColumn(name="client")
@@ -51,7 +53,7 @@ public class Order {
 	private String deliverymethod;
 
 	@Column(name = "paid") //? boolean ??
-	private int paid;
+	private boolean paid;
 
 	@Column(name = "orderstatus")
 	private String orderstatus;
@@ -69,7 +71,7 @@ public class Order {
 	}
 
 	public Order(Integer id, Date date, User user, Address address, String paymentmethod, String deliverymethod,
-			int paid, String orderstatus) {
+			boolean paid, String orderstatus) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -129,11 +131,11 @@ public class Order {
 		this.deliverymethod = deliverymethod;
 	}
 
-	public int getPaid() {
+	public boolean getPaid() {
 		return paid;
 	}
 
-	public void setPaid(int paid) {
+	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
 

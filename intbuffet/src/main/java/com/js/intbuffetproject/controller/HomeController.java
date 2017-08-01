@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.CategoryService;
@@ -50,12 +52,9 @@ public class HomeController {
 
 	@Autowired
 	private ProductService productService;
-	
-	@Autowired
-	private CategoryService categoryService;
 
 	@Autowired
-	private UserService userService;
+	private CategoryService categoryService;
 
 	@RequestMapping("/index")
 	@ResponseBody
@@ -75,7 +74,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home(Locale local) {
-
+	
 		return "redirect:/index";
 	}
 
@@ -84,7 +83,7 @@ public class HomeController {
 			throws ServletException, IOException {
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 
-		response.getOutputStream().write(productService.getProductByID(itemId).getImage());
+		// response.getOutputStream().write(productService.getProductByID(itemId).getImage());
 
 		response.getOutputStream().close();
 
@@ -118,47 +117,6 @@ public class HomeController {
 
 		return modAndView;
 	}
-
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public @ResponseBody // @ResponseBody - нужен, когда мы НЕ перенаправляем на
-	// другую страницу, а пишем ответ на той же странице
-	void checkStrength(@RequestParam Long idgood) {
-		logger.info("idgood = " + idgood);
-		Product product = productService.getProductByID(idgood);
-		logger.info("product = " + product.getName());
-		if (httpSession.getAttribute("cart") == null) {
-
-			logger.info("cart is null");
-			Cart cart = new Cart();
-			cart.addProduct(product, 1);
-			httpSession.setAttribute("cart", cart);
-			logger.info("cart =" + cart.getProductsInCart().elements());
-		} else if (((Cart) httpSession.getAttribute("cart")).getProductsInCart().containsKey(product)) {
-			Cart cart = (Cart) httpSession.getAttribute("cart");
-			cart.addProduct(product, cart.getProductsInCart().get(product) + 1);
-			httpSession.setAttribute("cart", cart);
-		} else {
-
-			Cart cart = (Cart) httpSession.getAttribute("cart");
-			cart.addProduct(product, 1);
-			httpSession.setAttribute("cart", cart);
-		}
-	}
-
-	@RequestMapping("/cart")
-	@ResponseBody
-	public ModelAndView cart(Map<String, Object> map, Locale locale) {
-		ModelAndView modAndView = new ModelAndView();
-		logger.info("session.getAttribute(cart) = " + httpSession.getAttribute("cart"));
-		if (httpSession.getAttribute("cart") != null) {
-			map.put("productLisInCart", ((Cart) httpSession.getAttribute("cart")).getProductsInCart().keys());
-
-			modAndView.addAllObjects(map);
-		}
-		modAndView.setViewName("cart");
-
-		return modAndView;
-
-	}
+	
 
 }

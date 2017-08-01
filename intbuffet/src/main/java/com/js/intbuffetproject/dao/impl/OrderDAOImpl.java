@@ -1,5 +1,6 @@
 package com.js.intbuffetproject.dao.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,18 +26,13 @@ public class OrderDAOImpl implements OrderDAO {
 	private SessionFactory sessionFactory;
 
 	public void addOrder(Order order) {
-		sessionFactory.getCurrentSession().save(order);
+		Serializable id = sessionFactory.getCurrentSession().save(order);
+
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Order> listOrder() {
 
-		// if (logger.isDebugEnabled()) {
-		// logger.debug("getWelcome is executed!");
-		// }
-
-		// logs exception
-		// logger.error("This is Error message", new Exception("Testing"));
 		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession()
 				.createQuery("from Order ORDER BY id ASC").list();
 		for (Order pr : listPr) {
@@ -45,7 +41,7 @@ public class OrderDAOImpl implements OrderDAO {
 		return listPr;
 	}
 
-	public void removeOrder(Integer id) {
+	public void removeOrder(Long id) {
 		Order order = (Order) sessionFactory.getCurrentSession().load(Order.class, id);
 		if (null != order) {
 			sessionFactory.getCurrentSession().delete(order);

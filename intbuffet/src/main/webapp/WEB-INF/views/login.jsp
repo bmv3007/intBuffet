@@ -1,5 +1,25 @@
-<%@include file="head.jspf"%>
+<%@ taglib prefix= "spring" uri= "http://www.springframework.org/tags"%>
+<%@ taglib prefix= "security" uri= "http://www.springframework.org/security/tags" %>
+<%@page contentType="text/html; charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+<link href="resources/css/cart.css" rel="stylesheet" />
+<link href="resources/css/style.css" rel="stylesheet" />
+<link href="resources/css/login.css" rel="stylesheet" />
+</head>
+<body>
 
+	<!-- **********************Test**************************************** -->
+
+	<header id="header">
+		<!--header-->
+
+<%@include file="head.jspf"%>
+</header>
 <%-- <%
 
 if(request.getParameter("username")!=null && !request.getParameter("username").trim().isEmpty()) {
@@ -8,32 +28,11 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 
 %> --%>
 
-<!-- 	******************HEAD seach****************** -->
-<div class="row">
-	<div class="seach">
 
-		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"></div>
-		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 top-menu">
-
-
-			<ul>
-				<li><a href="#">About us</a></li>
-				<li><a href="#">Buffets</a></li>
-				<li><a href="#"><img src="resources/images/basket5.jpg"></a></li>
-
-				<!-- <li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>
-						<li><a href="?lang=ru"><img src="resources/images/ru.jpg"></a></li> -->
-
-			</ul>
-
-		</div>
-	</div>
-
-</div>
 
 
 <c:if test="${not empty param.error}">
-	<font color="red"> <spring:message code="label.loginerror" /> :
+	<font color="red">
 		${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 	</font>
 </c:if>
@@ -41,16 +40,16 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 <div class="container">
 	<section id="content">
 		<form method="POST"
-			action="<c:url value="/j_spring_security_check" />">
+			action="<c:url value="/login" />">
 			<h1>Authentication</h1>
 			<div>
 				<input placeholder='login' required="" id="username" type="text"
-					name="j_username">
+					name="username">
 			</div>
 			<div>
 				<!--      <input name="_spring_security_remember_me" type="checkbox" class="remember">remember me </input> -->
 				<input placeholder='password' required="" id="password"
-					type="password" name="j_password" onkeyup="doAjax()">
+					type="password" name="password">
 			</div>
 			<div id="strengthValue"></div>
 			<br>
@@ -61,7 +60,7 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 			<div>
 				<input type="submit" value="Login"> <a href="registration"
 					id="register">Registration</a> <a href="cancel" id="cancel">Cancel</a>
-			</div>
+					</div>
 		</form>
 		<!-- form -->
 	</section>

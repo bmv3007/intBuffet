@@ -1,5 +1,27 @@
+<%@ taglib prefix= "spring" uri= "http://www.springframework.org/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix= "security" uri= "http://www.springframework.org/security/tags" %>
+<%@page contentType="text/html; charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+<link href="resources/css/cart.css" rel="stylesheet" />
+<link href="resources/css/style.css" rel="stylesheet" />
+<link href="resources/css/login.css" rel="stylesheet" />
+</head>
+<body>
+
+	<!-- **********************Test**************************************** -->
+
+	<header id="header">
+		<!--header-->
+
 <%@include file="head.jspf"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+</header>
+
 <%-- <%
 
 if(request.getParameter("username")!=null && !request.getParameter("username").trim().isEmpty()) {
@@ -9,7 +31,7 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 %> --%>
 
 <!-- 	******************HEAD seach****************** -->
-<div class="row">
+<!-- <div class="row">
 	<div class="seach">
 
 		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"></div>
@@ -21,8 +43,8 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 				<li><a href="#">Buffets</a></li>
 				<li><a href="#"><img src="resources/images/basket5.jpg"></a></li>
 
-				<!-- <li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>
-						<li><a href="?lang=ru"><img src="resources/images/ru.jpg"></a></li> -->
+				<li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>
+						<li><a href="?lang=ru"><img src="resources/images/ru.jpg"></a></li>
 
 			</ul>
 
@@ -30,7 +52,7 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 	</div>
 
 </div>
-
+ -->
 
 
 <div class="container">
@@ -42,33 +64,31 @@ if(request.getParameter("username")!=null && !request.getParameter("username").t
 				<form:input placeholder='login' required="" path="username" id="username" type="text"
 					name="username"/>
 			</div>
-			<div>
+			<%-- <div>
 				<form:input placeholder='firstname' required="" path="firstname" id="firstname"
 					type="text" name="firstname"/>
 			</div>
 			<div>
 				<form:input placeholder='surname' required="" path="surname" id="surname" type="text"
 					name="surname"/>
-			</div>
-			<div>
-				<form:input placeholder='e-mail' required="" path="email"  id="email" type="text"
-					name="email"/>
-			</div>
+			</div> --%>
+			
 			<div>
 				<!--      <input name="_spring_security_remember_me" type="checkbox" class="remember">remember me </input> -->
 				<form:input placeholder='password' required="" path="password"  id="password"
 					type="password" name="password" />
 			</div>
-			<div id="strengthValue"></div>
+			<div id="strengthValue">  </div>
 			<br>
-			<div>
+			<%-- <div>
 				<form:input placeholder='birthday' required="" path="birthday"  id="birthday" type="date"
 					name="date"/>
+			</div> --%>
+			<div>
+				<form:input placeholder='e-mail' required="" path="email"  id="email" type="text"
+					name="email"/>
 			</div>
 			</fieldset>
-			<div>
-				<br>
-			</div>
 			<br>
 			<div>
 				<input type="submit"  value="Sign up"/> <a href="cancel"

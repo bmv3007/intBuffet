@@ -19,5 +19,5 @@
 	
 	
 	<!-- Безопасность -->
-	<!--  <import resource="security.xml" /> -->
+	 <import resource="security.xml" /> 
 </beans>

@@ -1,5 +1,7 @@
 package com.js.intbuffetproject.dao.impl;
 
+import java.io.Serializable;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.js.intbuffetproject.dao.AddressDAO;
 import com.js.intbuffetproject.model.Address;
 
-
 @Repository
 public class AddressDAOImpl implements AddressDAO {
 
@@ -18,8 +19,9 @@ public class AddressDAOImpl implements AddressDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void addAddress(Address address) {
-		sessionFactory.getCurrentSession().save(address);
+	public Serializable addAddress(Address address) {
+		Serializable idAddress = sessionFactory.getCurrentSession().save(address);
+		return idAddress;
 	}
 
 	public void removeAddress(Long id) {
@@ -28,6 +30,36 @@ public class AddressDAOImpl implements AddressDAO {
 			sessionFactory.getCurrentSession().delete(address);
 		}
 
+	}
+
+	@Override
+	public List<Address> listAddresses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Address getAddressByID(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> listCountries() {
+
+		return sessionFactory.getCurrentSession().createSQLQuery("select distinct country from addresses order by country").list();
+	}
+
+	@Override
+	public List<String> listCities() {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().createSQLQuery("select distinct city from addresses order by city").list();
+	}
+
+	@Override
+	public List<String> listStreets() {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().createSQLQuery("select distinct street from addresses order by street").list();
 	}
 
 }

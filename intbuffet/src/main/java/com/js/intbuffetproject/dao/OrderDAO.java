@@ -17,5 +17,5 @@ public interface OrderDAO {
 	
 	Order getOrderById(Long id);
 
-	void removeOrder(Integer id);
+	void removeOrder(Long id);
 }

@@ -23,7 +23,7 @@ if(request.getParameter("search")!=null && !request.getParameter("search").trim(
 
 					<input class="bot3" type="submit" value="search"> <input
 						class="seachtext" type="text" name="search" placeholder="suchen"
-						value="<%=session.getAttribute("search").toString()%>" />
+						value="<%=session.getAttribute("search")%>" />
 				</div>
 			</form>
 		</div>
@@ -41,7 +41,7 @@ if(request.getParameter("search")!=null && !request.getParameter("search").trim(
 					<li><a href="logout" id="logout">Log out</a></li>
 				</c:if>
 
-				<li><a href="login" id="login">Sing in</a></li>
+				<li><a href="login1" id="login">Sing in</a></li>
 				<li><a href="cart"><img src="resources/images/basket5.jpg"></a></li>
 
 				<!-- <li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>

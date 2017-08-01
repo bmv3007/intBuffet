@@ -1,5 +1,7 @@
-package com.js.intbuffetproject.model;
+package com.js.intbuffetproject.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,32 +13,51 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "users")
-public class UserWithoutPasswordDTO {
+import org.springframework.security.core.GrantedAuthority;
 
-	@Id
-	@Column(name = "username")
+import com.js.intbuffetproject.model.Address;
+
+public class UserDTO {
+
 	private String username;
 
-	@Column(name = "email")
+	
 	private String email;
 
-	@Column(name = "firstname")
+	
 	private String firstname;
 
-	@Column(name = "surname")
+	
 	private String surname;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "birthday")
+	
 	private Date birthday;
 
-	@OneToOne
-	@JoinColumn(name = "address", referencedColumnName = "id")
 	private Address address;
+	
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-	public UserWithoutPasswordDTO(String username, String email, String firstname, String surname, Date birthday,
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
+	public UserDTO(String username, String email, String firstname, String surname, Date birthday, Address address,
+			ArrayList<GrantedAuthority> authorities) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.firstname = firstname;
+		this.surname = surname;
+		this.birthday = birthday;
+		this.address = address;
+		this.authorities = authorities;
+	}
+
+	Collection<? extends GrantedAuthority> authorities;
+
+	public UserDTO(String username, String email, String firstname, String surname, Date birthday,
 			Address address) {
 		super();
 		this.username = username;
@@ -47,7 +68,7 @@ public class UserWithoutPasswordDTO {
 		this.address = address;
 	}
 
-	public UserWithoutPasswordDTO() {
+	public UserDTO() {
 
 	}
 

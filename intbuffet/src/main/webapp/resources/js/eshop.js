@@ -16,7 +16,7 @@ $.ajax({
 });
 }
 
-function addAjax(articul) {
+function addAjax(articul,price,quantity) {
 	$.ajax({
 		type: "GET",
 		url : 'add',
@@ -25,7 +25,24 @@ function addAjax(articul) {
 			
 			}
 
-});
+});  
+	var total = price *quantity;
+	$('#totalItem').html(total);
+	return false;
+}
+
+function deleteAjax(articul,price,quantity) {
+	$.ajax({
+		type: "GET",
+		url : 'delete',
+		data : ({idgood: articul}),
+		success : function(data) {
+			
+			}
+
+});  
+	var total = price *quantity;
+	$('#totalItem').html(total);
 	return false;
 }
 
@@ -37,18 +54,22 @@ function find() {
 		success : function(data) {
 				
 			var out = '';
-			/*for (var key in data){
-				out+='<div class="single-goods">';
+			for (var key in data){
+				out+='<div> ';
+				out+='<div class="thumbnail">';
+				
 				  out+='<h3>'+data[key]['name'];
-				  out+='<input type="checkbox" class="add-to-cart" data-art="'+key+'" data-art-name="'+data[key]['name']+'"/></h3>';
-				  out+='<p> price: '+data[key]['cost']+' € </p>';
-				  out+='<p>'+data[key]['description']+'</p> <br>';
-				  out+='<p><a href="images/'+key+'.png"><img src="'+data[key].image+'"></a></p> <br>';
+				//  out+='<input type="checkbox" class="add-to-cart" data-art="'+key+'" data-art-name="'+data[key]['name']+'"/></h3>';
+				//  out+='<p> price: '+data[key]['cost']+' € </p>';
+				//  out+='<p>'+data[key]['description']+'</p> <br>';
+				  out+='<p><a href="images/'+key+'.png"><img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive"></a></p> <br>';
 				  out+='</div>';
+				  out+='</div>';
+				
 				 
-			}*/
-			console.log(data);
-			//$('#goods').html(out);
+			}
+			//console.log(data);
+			$('#goods').html(out);
 				
 		}
 

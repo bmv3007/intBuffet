@@ -15,14 +15,14 @@
 </head>
 <body>
 
-	<!-- **********************Test**************************************** -->
-
-	<header id="header">
+<header id="header">
 		<!--header-->
 
 <%@include file="head.jspf"%>
 </header>
 <%@include file="carousel.jspf"%>
+
+
 
 <!-- 	******************MAIN row****************** -->
 <div class="row">
@@ -32,8 +32,11 @@
 		<div class="row">
 
 			<!-- 	******************MAIN row menu****************** -->
+			<security:authorize access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+  
 			<%@include file="left_menu_client.jspf"%>
-
+			
+</security:authorize>
 			<!-- 	******************MAIN row products****************** -->
 			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 				<div class="row masonry" id="goods" data-columns>
@@ -42,7 +45,8 @@
 
 						<div>
 							<div class="thumbnail">
-								<img src="<%=request.getContextPath()%>/getImage?id=${product.id}" 
+								<img
+									src="<%=request.getContextPath()%>/getImage?id=${product.id}"
 									class="img-responsive">
 									
 								<div class="caption">
@@ -54,7 +58,7 @@
 									<p> Price: ${product.price}</p>
 									<p> Vegetarian: ${product.vegetarian}</p>
 									<p> Weight: ${product.weight}</p>
-									<a target="_self" id="${product.id}"  onclick="addAjax(${product.id})">Add<i
+									<a target="_self" id="${product.id}"  onclick="addAjax(${product.id})">Add+${product.id}<i
 										class="glyphicon glyphicon-shopping-cart"></i></a>
 								</div>
 

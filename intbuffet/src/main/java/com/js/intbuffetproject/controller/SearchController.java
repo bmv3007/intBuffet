@@ -59,6 +59,29 @@ public class SearchController {
 		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
 		
 		logger.info("categoryId:" + categoryId + "vegetarian:" + vegetarian);
+		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
+		
 		return  productService.searchProductByParameters(searchParameter);
 	}
-}
+	
+	
+	
+	/*@RequestMapping(value = "/find", method = RequestMethod.POST)
+	public ModelAndView find(Map<String, Object> map, @RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian")  boolean vegetarian) {
+
+		SearchParameter searchParameter = new SearchParameter();
+		searchParameter.setCategoryID(categoryId);
+		searchParameter.setVegetarian(vegetarian);
+		
+		ModelAndView modAndView = new ModelAndView();
+		// logger.info("local = " + locale);
+		map.put("productList1", productService.searchProductByParameters(searchParameter));
+		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
+		modAndView.addAllObjects(map);
+		modAndView.setViewName("index");
+		logger.info("categoryId:" + categoryId + "vegetarian:" + vegetarian);
+		//httpSession.setAttribute("productList1", productService.searchProductByParameters(searchParameter));
+		
+		return  modAndView;
+	}
+*/}
