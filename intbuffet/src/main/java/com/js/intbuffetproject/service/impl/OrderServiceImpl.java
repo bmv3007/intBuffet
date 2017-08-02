@@ -40,9 +40,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order getOrderByUsername(String username) {
+	public List<Order> getOrderByUsername(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDAO.listOrderByClient(username);
 	}
 
 	@Override

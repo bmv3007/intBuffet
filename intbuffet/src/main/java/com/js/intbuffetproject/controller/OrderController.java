@@ -1,6 +1,7 @@
 package com.js.intbuffetproject.controller;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +32,7 @@ import com.js.intbuffetproject.service.OrderService;
 import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.UserService;
 import com.js.intbuffetproject.util.Util;
+import com.js.intbuffetproject.util.Util.Deliverymethod;
 import com.js.intbuffetproject.util.Util.Orderstatus;
 import com.js.intbuffetproject.util.Util.Paymentmethod;
 
@@ -57,8 +59,49 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 
+	@RequestMapping(value = "/order", method = RequestMethod.GET)
+	public ModelAndView order() {
+		ModelAndView modelAndView = new ModelAndView();
+
+		if (httpSession.getAttribute("userDTO") != null) {
+			if (httpSession.getAttribute("cart") != null) {
+				// Product product = productService.getProductByID(idgood);
+
+				Order order = new Order();
+				order.setDate(new Date());
+
+				/*
+				 * List<Product> products = productService .fillProducts(((Cart)
+				 * httpSession.getAttribute("cart")).getProductsInCart().values(
+				 * )); order.setProducts(products);
+				 */
+				order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
+				modelAndView.addObject("paymentmethod1", Arrays.asList(Paymentmethod.values()));
+				modelAndView.addObject("deliverymethod", Arrays.asList(Deliverymethod.values()));
+				modelAndView.addObject("countries", addressService.listCountries());
+				modelAndView.addObject("cities", addressService.listCities());
+				modelAndView.addObject("streets", addressService.listStreets());
+				modelAndView.addObject("productLisInCart",
+						((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+
+				logger.info("order = index" + ((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+				modelAndView.setViewName("order");
+				Address address = new Address();
+				order.setAddress(address);
+				modelAndView.addObject(order);
+
+			}
+		} else {
+			logger.info("order = login");
+			modelAndView.setViewName("login");
+
+		}
+		return modelAndView;
+
+	}
+
 	@RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
-	public ModelAndView signup(@ModelAttribute("order") Order order, BindingResult result) {
+	public ModelAndView makeOrder(@ModelAttribute("order") Order order, BindingResult result) {
 		UserDTO usetDTO = (UserDTO) httpSession.getAttribute("userDTO");
 		User user = userService.getUserByUsername(usetDTO.getUsername());
 		order.setUser(user);
@@ -79,17 +122,42 @@ public class OrderController {
 		return modAndView;
 
 	}
-	
-	@RequestMapping("/getUsersOrders")
-	public ModelAndView getUsersOrders(Locale locale) {
-		ModelAndView modAndView = new ModelAndView();
-		logger.info("((UserDTO) httpSession.getAttribute('user')).getUsername())="+ ((UserDTO) httpSession.getAttribute("user")).getUsername());
-		UserDTO user= (UserDTO) httpSession.getAttribute("user");
-		modAndView.addObject("UsersOrders", orderService.getOrderByUsername(user.getUsername())); 
-		
-		modAndView.setViewName("listOrders");
 
-		return modAndView;
+	@RequestMapping(value = "/getusersorders", method = RequestMethod.GET)
+	public ModelAndView getUsersOrders(Locale locale) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (((UserDTO) httpSession.getAttribute("userDTO")) == null) {
+			modelAndView.setViewName("index");
+			return modelAndView;
+		}
+
+		UserDTO user = (UserDTO) httpSession.getAttribute("userDTO");
+		logger.info("Orders = " + orderService.getOrderByUsername(user.getUsername()).toArray());
+		List<Order> listOrder = orderService.listOrderByClient(user.getUsername());
+		modelAndView.addObject("UsersOrders", listOrder);
+		// Date date =
+		modelAndView.setViewName("listOrders");
+
+		return modelAndView;
+
+	}
+
+	@RequestMapping(value = "/getallusersorders", method = RequestMethod.GET)
+	public ModelAndView getAllUsersOrders(Locale locale) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (((UserDTO) httpSession.getAttribute("userDTO")) == null) {
+			modelAndView.setViewName("index");
+			return modelAndView;
+		}
+
+		modelAndView.addObject("orderstatus", Arrays.asList(Orderstatus.values()));
+
+		List<Order> listOrder = orderService.listOrder();
+		modelAndView.addObject("UsersOrders", listOrder);
+		// Date date =
+		modelAndView.setViewName("listOrders");
+
+		return modelAndView;
 
 	}
 

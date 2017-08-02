@@ -6,6 +6,7 @@ import java.util.Map;
 public class Cart {
 
 	private User user;
+	private Double total;
 	private Map<Long, Item> productsInCart = new Hashtable<>(); // product-quantity
 
 	public User getUser() {
@@ -40,6 +41,13 @@ public class Cart {
 	 * productsInCart.put(product, amount); }
 	 */
 
+	public Cart(User user, Double total, Map<Long, Item> productsInCart) {
+		super();
+		this.user = user;
+		this.total = total;
+		this.productsInCart = productsInCart;
+	}
+
 	public void addProduct(Long itemId, Item item) {
 
 		productsInCart.put(itemId, item);
@@ -48,5 +56,22 @@ public class Cart {
 	public void deleteProduct(Long id) {
 		productsInCart.remove(id);
 	}
+
+	public Double getTotal() {
+		
+		if(productsInCart!=null){
+			total = 0.0;
+			for(Item item:productsInCart.values()){
+				total = total + (double) (item.getPrice()*item.getQuantity());
+			}
+		}
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+	
+	
 
 }

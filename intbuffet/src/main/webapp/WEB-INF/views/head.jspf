@@ -36,8 +36,9 @@
 								Login</a></li>
 						<security:authorize
 							access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
-							<li><a href="getUsersOrders" id="orders">Orders</a></li>
-							<li><a href=""><i class="fa fa-user"></i>Profile</a></li>
+							<li><a href="getusersorders" id="orders">Orders</a></li>
+							<li><a href="getallusersorders" >All orders</a></li>
+							<li><a href="profile"><i class="fa fa-user"></i>Profile</a></li>
 							<li><a href="logout" id="logout">Log out</a></li>
 						</security:authorize>
 

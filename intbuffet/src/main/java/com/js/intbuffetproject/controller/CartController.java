@@ -110,43 +110,6 @@ public class CartController {
 
 	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public ModelAndView order() {
-		ModelAndView modelAndView = new ModelAndView();
-		logger.info("userDTO = " + httpSession.getAttribute("userDTO"));
-
-		if (httpSession.getAttribute("userDTO") != null) {
-			if (httpSession.getAttribute("cart") != null) {
-				// Product product = productService.getProductByID(idgood);
-
-				Order order = new Order();
-				order.setDate(new Date());
-
-				List<Product> products = productService
-						.fillProducts(((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
-				order.setProducts(products);
-				order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
-				modelAndView.addObject("paymentmethod1", Arrays.asList(Paymentmethod.values()));
-				modelAndView.addObject("deliverymethod", Arrays.asList(Deliverymethod.values()));
-				modelAndView.addObject("countries", addressService.listCountries());
-				modelAndView.addObject("cities", addressService.listCities());
-				modelAndView.addObject("streets", addressService.listStreets());
-
-				logger.info("order = index");
-				modelAndView.setViewName("order");
-				Address address = new Address();
-				order.setAddress(address);
-				modelAndView.addObject(order);
-
-				
-			}
-		} else {
-			logger.info("order = login");
-			modelAndView.setViewName("login");
-
-		}
-		return modelAndView;
-
-	}
+	
 
 }

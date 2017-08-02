@@ -52,9 +52,20 @@
 									<p>Category: ${product.category.name}</p>
 									<p>Beschreibung sehr gross........................</p>
 									<p> Price: ${product.price}</p>
-									<p> Vegetarian: ${product.vegetarian}</p>
+									<p> Vegetarian: 
+									<c:choose>
+										<c:when test="${product.vegetarian==0}">
+											Yes
+										</c:when>
+										<c:otherwise>
+											 No
+										</c:otherwise>
+									</c:choose>
+									
+									
+									</p>
 									<p> Weight: ${product.weight}</p>
-									<a target="_self" id="${product.id}"  onclick="addAjax(${product.id})">Add<i
+									<a target="_self" id="${product.id}" class="btn btn-danger" onclick="addAjax(${product.id})"><i
 										class="glyphicon glyphicon-shopping-cart"></i></a>
 								</div>
 

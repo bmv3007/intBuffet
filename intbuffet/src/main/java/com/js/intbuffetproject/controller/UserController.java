@@ -1,8 +1,10 @@
 package com.js.intbuffetproject.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,8 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Address;
+import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Order;
+import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
+import com.js.intbuffetproject.service.AddressService;
 import com.js.intbuffetproject.service.UserService;
+import com.js.intbuffetproject.util.Util.Orderstatus;
 
 /**
  * Handles requests for the application home page.
@@ -32,32 +39,29 @@ import com.js.intbuffetproject.service.UserService;
 @Controller
 @SessionAttributes("userDTO")
 public class UserController {
-	
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-	
-	@Autowired 
+
+	@Autowired
 	private HttpSession httpSession;
 
 	@Autowired
 	private UserService userService;
 
-	
+	@Autowired
+	private AddressService addressService;
+
 	@RequestMapping(value = "/index2", method = RequestMethod.GET)
 	public String index2() {
-		// logger.info(accessDecisionManager);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> list = authentication.getAuthorities();
-		UserDTO usD= new UserDTO();
+		UserDTO usD = new UserDTO();
 		usD.setAuthorities(list);
 		usD.setUsername(authentication.getName());
-		logger.info("GrantedAuthority = "+list);
-		logger.info("authentication.getDetails() = "+authentication.getDetails());
-		logger.info("authentication.getCredentials = "+authentication.getCredentials());
 		httpSession.setAttribute("userDTO", usD);
-		return "index2";
+		return "redirect:/index";
 	}
-	
+
 	@RequestMapping(value = "/login1", method = RequestMethod.GET)
 	public String goin1() {
 		// logger.info(accessDecisionManager);
@@ -85,7 +89,6 @@ public class UserController {
 	public ModelAndView signup(@ModelAttribute("user") User user, BindingResult result,
 			@RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
 		user.setBirthday(date);
-		logger.info("getBirthday = " + user.getBirthday());
 		logger.info("getUsername = " + user.getUsername());
 
 		ModelAndView modAndView = new ModelAndView();
@@ -100,12 +103,42 @@ public class UserController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/getuser", method = RequestMethod.GET)
 	public User getUser(String username) {
 		// logger.info(accessDecisionManager);
-		
+
 		return userService.getUserByUsername(username);
+	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ModelAndView profile() {
+		// logger.info(accessDecisionManager);
+		ModelAndView modelAndView = new ModelAndView();
+		String usName = ((UserDTO) httpSession.getAttribute("userDTO")).getUsername();
+		logger.info("httpSession.getAttribute('userDTO')) = "
+				+ ((UserDTO) httpSession.getAttribute("userDTO")).getUsername());
+		User user = userService.getUserByUsername(usName);
+		logger.info("profile" + user);
+		modelAndView.addObject("user", user);
+		modelAndView.addObject("countries", addressService.listCountries());
+		modelAndView.addObject("cities", addressService.listCities());
+		modelAndView.addObject("streets", addressService.listStreets());
+		modelAndView.setViewName("profile");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
+	public ModelAndView makeOrder(@ModelAttribute("user") User user, BindingResult result) {
+		Serializable idAddress = addressService.addAddress(user.getAddress());
+
+		ModelAndView modelAndView = new ModelAndView();
+		userService.updateUser(user);
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("profile");
+
+		return modelAndView;
+
 	}
 
 }

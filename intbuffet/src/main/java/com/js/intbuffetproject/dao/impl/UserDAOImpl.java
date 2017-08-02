@@ -23,7 +23,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	public void removeUser(String username) {
-		User user = (User) sessionFactory.getCurrentSession().load(User.class, username);
+		User user = (User) sessionFactory.getCurrentSession().get(User.class, username);
 		if (null != user) {
 			sessionFactory.getCurrentSession().delete(user);
 		}
@@ -37,15 +37,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void editUser(User user) {
-		// TODO Auto-generated method stub
-
+	public void updateUser(User user) {
+		sessionFactory.getCurrentSession().update(user);
 	}
 
 	@Override
 	public User getUserByUsername(String username) {
 
-		return (User) sessionFactory.getCurrentSession().load(User.class, username);
+		return (User) sessionFactory.getCurrentSession().get(User.class, username);
 	}
 
 }

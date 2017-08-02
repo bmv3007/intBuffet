@@ -8,6 +8,8 @@ import com.js.intbuffetproject.model.Product;
 public interface CategoryDAO {
 
 	void addCategory(Category category);
+	
+	void updateCategory(Category category);
 
 	List<Category> listCategories();
 

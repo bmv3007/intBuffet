@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void editUser(User user) {
-		userDAO.editUser(user);
+	public void updateUser(User user) {
+		userDAO.updateUser(user);
 
 	}
 

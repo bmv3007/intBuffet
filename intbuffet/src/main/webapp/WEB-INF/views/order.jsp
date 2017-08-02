@@ -63,13 +63,13 @@
 				class="navbar-form navbar-center">
 				<label for="order">Order</label>
 				<table>
-					
+
 					<tr>
 						<td><form:label path="date"> Date: <fmt:formatDate
 									type="date" value="${order.date}" />
 							</form:label></td>
 					</tr>
-					
+
 					<tr>
 						<td><form:label path="paymentmethod">Method of payment: </form:label></td>
 						<td><form:select path="paymentmethod">
@@ -103,22 +103,22 @@
 					</tr>
 
 				</table>
-	<%-- </form:form>
+				<%-- </form:form>
 	<!--       ******************************************************          -->			
 				
 				<form:form action="makeOrder" modelAttribute="address"
 				class="form-inline">
 				<label for="address">Address</label> --%>
 				<table>
-					
-					
+
+
 					<tr>
 						<td><form:label path="address.country">Country: </form:label></td>
 						<td><form:select path="address.country">
 								<form:options items="${countries}" />
 							</form:select></td>
 					</tr>
-					
+
 					<tr>
 						<td><form:label path="address.city">City: </form:label></td>
 						<td><form:select path="address.city">
@@ -128,61 +128,33 @@
 
 					<tr>
 						<td><form:label path="address.postcode">Postcode: </form:label></td>
-						<td><form:input path="address.postcode" ></form:input></td>
+						<td><form:input path="address.postcode"></form:input></td>
 					</tr>
-					
+
 					<tr>
 						<td><form:label path="address.street">Street: </form:label></td>
 						<td><form:select path="address.street">
 								<form:options items="${streets}" />
 							</form:select></td>
 					</tr>
-					
+
 					<tr>
 						<td><form:label path="address.housenumber">Housenumber: </form:label></td>
-						<td><form:input path="address.housenumber" ></form:input></td>
+						<td><form:input path="address.housenumber"></form:input></td>
 					</tr>
-					
+
 					<tr>
 						<td><form:label path="address.apartment">Apartment: </form:label></td>
 						<td><form:input path="address.apartment" value=''></form:input></td>
 					</tr>
 
 				</table>
-				
-				
-<!-- 		<fieldset><legend>Address</legend> -->
-				<!--  <div class="form-group">
-    <label class="control-label col-xs-3">Address:</label>
-    <div class="col-xs-3">
-      <select class="form-control">
-        <option>Дата</option>
-      </select>
-      <br/>
-      <select class="form-control">
-        <option>Дата</option>
-      </select>
-    </div>
-    <div class="col-xs-3">
-      <select class="form-control">
-        <option>Месяц</option>
-      </select>
-    </div>
-    <div class="col-xs-3">
-      <select class="form-control">
-        <option>Год</option>
-      </select>
-    </div>
-    <div class="col-xs-3">
-      <select class="form-control">
-        <option>Год</option>
-      </select>
-    </div>
-  </div> -->
-<!-- 				</fieldset>		 -->
+
+
+
 				<div class="table-responsive cart_info">
 					<table class="table table-condensed">
-					
+
 						<thead>
 							<tr class="cart_menu">
 								<td class="description">Item</td>
@@ -193,7 +165,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${order.products}">
+							<c:forEach var="item" items="${productLisInCart}">
 
 								<tr>
 									<td class="cart_description">
@@ -206,7 +178,7 @@
 										<p>&#8364; ${item.price}</p>
 									</td>
 									<td class="cart_quantity">
-										<p>${item.quantity }</p>
+										<p>${item.quantity}</p>
 									</td>
 									<td class="cart_total">
 										<p class="cart_total_price" id="totalItem"+"${item.id}"></p>

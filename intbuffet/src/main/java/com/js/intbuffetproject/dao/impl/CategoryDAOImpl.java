@@ -29,15 +29,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 		sessionFactory.getCurrentSession().save(category);
 	}
 
+	public void updateCategory(Category category) {
+		sessionFactory.getCurrentSession().update(category);
+	}
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<Category> listCategories() {
 
-		// if (logger.isDebugEnabled()) {
-		// logger.debug("getWelcome is executed!");
-		// }
-
-		// logs exception
-		// logger.error("This is Error message", new Exception("Testing"));
 		ArrayList<Category> listCategories = (ArrayList<Category>) sessionFactory.getCurrentSession()
 				.createQuery("from Category ORDER BY name ASC").list();
 		for (Category cat : listCategories) {
@@ -47,7 +45,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	public void removeCategory(Long id) {
-		Category category = (Category) sessionFactory.getCurrentSession().load(Category.class, id);
+		Category category = (Category) sessionFactory.getCurrentSession().get(Category.class, id);
 		if (null != category) {
 			sessionFactory.getCurrentSession().delete(category);
 		}
@@ -56,9 +54,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Category getCategoryByID(Long id) {
-		// TODO Auto-generated method stub
-		return (Category) sessionFactory.getCurrentSession().load(Category.class, id);
+
+		return (Category) sessionFactory.getCurrentSession().get(Category.class, id);
 	}
 
-	
 }

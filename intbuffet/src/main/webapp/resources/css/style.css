@@ -105,8 +105,11 @@ body {
 	display: block;
 }
 
-.graycolor {
-	background: #eaeaea;
+/* .graycolor { */
+/* 	background: #eaeaea; */
+/* } */
+.whitecolor{
+	background: #ffffff;
 }
 
 .bot3 {
@@ -160,8 +163,8 @@ body {
     padding:3px 10px;
 }
 
- a {
+/*  a {
     color: #191970;  
 	font-size: 22px;
 	 font-weight: bold;
-   }
+   } */

@@ -38,11 +38,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto', sans-serif;
 }
 
-.btn:hover, 
-.btn:focus{
-  outline: none;
-  box-shadow: none;
-}
+
 
 .navbar-toggle {
   background-color: #000;
@@ -2068,8 +2064,7 @@ h2.title {
 
 
 .blog-post-area  
-.single-blog-post 
-.btn-primary {
+.single-blog-post  {
   background:#478694;
   border: medium none;
   border-radius: 0;
@@ -2381,12 +2376,12 @@ h2.title {
   border: 1px solid#F7F7F0
 }
 
-.btn.btn-primary {
+/* .btn.btn-primary {
   background:#478694;
   border: 0 none;
   border-radius: 0;
   margin-top: 16px;
-}
+} */
 
 .blank-arrow {
   position: relative;

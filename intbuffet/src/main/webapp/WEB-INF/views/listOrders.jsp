@@ -1,5 +1,7 @@
-<%@ taglib prefix= "spring" uri= "http://www.springframework.org/tags"%>
-<%@ taglib prefix= "security" uri= "http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@page contentType="text/html; charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -57,46 +59,66 @@
 		<div class="container">
 
 			<div class="table-responsive cart_info">
-				<table class="table table-condensed">
+				<table class="table table-condensed table-striped">
 					<thead>
 						<tr class="cart_menu">
-							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
+							<td class="description">N</td>
+							<td class="date">Date</td>
+							<td class="description">Client</td>
+							<td class="description">Order status</td>
+							<td class="description">Method of payment</td>
+							<td class="description">Method of delivery</td>
+							<td class="description">Paid</td>
+
+							<!-- 	<td class="total">Total</td> -->
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="item" items="${UsersOrders}" >
-                          
+						<c:forEach var="item" items="${UsersOrders}">
+
 							<tr>
-								 <td class="cart_product">	<a href="">${item.id}</a></td>  
+								<td class="cart_description"><a href="">${item.id}</a></td>
+
 								<td class="cart_description">
+                                     <p><fmt:formatDate
+									type="date" value="${item.date}" />
+									</p>
+								</td>
+								<security:authorize
+									access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+
+									<td class="cart_description">${item.user.surname}
+										${item.user.firstname}</td>
+								
+								<td class="cart_price">
+									<section>
+										<select items="${orderstatus}" itemValue="name"
+											itemLabel="name" value = "${item.orderstatus}" />
+									</section>
 									
-									 <p>${item.date}</p>  
+								</td>
+								</security:authorize>
+								<td class="cart_price">
+									<p>${item.paymentmethod}</p>
 								</td>
 								<td class="cart_price">
- 									<p>${item.orderstatus}</p>
+									<p>${item.deliverymethod}</p>
 								</td>
-								 <td class="cart_price">
- 									<p>${item.paymentmethod}</p>
-								</td>
-								<td class="cart_price">
- 									<p>${item.deliverymethod}</p>
-								</td>
-								<td class="cart_price">
- 									<p>${item.paid}</p>
-								</td>
-								<td class="cart_total">
-									<p class="cart_total_price" id="totalItem"+"${item.id}"></p>
-								</td>
+								<td class="cart_price"><c:choose>
+										<c:when test="${item.paid==true}">
+											<p>Yes</p>
+										</c:when>
+										<c:otherwise>
+											<p>No</p>
+										</c:otherwise>
+									</c:choose></td>
+
 								<!-- <td class="cart_delete"><a class="cart_quantity_delete"
 									href=""><i class="fa fa-times"></i></a></td>  -->
 							</tr>
 						</c:forEach>
-						
+
 					</tbody>
 				</table>
 			</div>
@@ -104,7 +126,7 @@
 	</section>
 	<!--/#cart_items-->
 
-<!-- 	******************END MAIN row products****************** -->
+	<!-- 	******************END MAIN row products****************** -->
 
 	<!-- 	******************footer row****************** -->
 

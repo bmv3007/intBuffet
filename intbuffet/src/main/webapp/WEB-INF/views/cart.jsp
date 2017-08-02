@@ -1,5 +1,6 @@
-<%@ taglib prefix= "spring" uri= "http://www.springframework.org/tags"%>
-<%@ taglib prefix= "security" uri= "http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@page contentType="text/html; charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,19 +24,13 @@
 			<!--header-middle-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="index.html"><img src="resources/images/logo1.jpg"
-								alt="" /></a>
-						</div>
-
-					</div>
+					<div class="col-sm-4"></div>
 					<div class="col-sm-8">
 						<div class="breadcrumbs">
 							<ol class="breadcrumb">
-								<li><a href="<c:url value='/index' />">Home</a></li>
+
 								<li class="active">Shopping Cart</li>
-								<li><a href="<c:url value='/order' />">Order</a></li>
+
 							</ol>
 						</div>
 					</div>
@@ -69,29 +64,31 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="item" items="${productLisInCart}" >
-                          
+						<c:forEach var="item" items="${productLisInCart}">
+
 							<tr>
-								 <td class="cart_product"><a href=""><img
+								<td class="cart_product"><a href=""><img
 										src="<%=request.getContextPath()%>/getImage?id=${item.id}"
-										class="img-responsive"></a></td>  
+										class="img-responsive"></a></td>
 								<td class="cart_description">
 									<h4>
 										<a href="">${item.name} </a>
 									</h4>
-									 <p>${item.description}</p>  
+									<p>${item.description}</p>
 								</td>
-								 <td class="cart_price">
- 									<p>&#8364; ${item.price}</p>
+								<td class="cart_price">
+									<p>&#8364; ${item.price}</p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" id=${item.id}
-											onclick="addAjax(${item.id},${item.price},${item.quantity})"> + </a> <input
-											class="cart_quantity_input" type="text" name="quantity"
-											value=${item.quantity} autocomplete="off" size="2" id="quantity">
-									 	<a class="cart_quantity_down" id=${item.id}
-											onclick="deleteAjax()"> - </a> 
+										<a class="cart_quantity_up" id=${item.id
+											}
+											onclick="addAjax(${item.id},${item.price},${item.quantity})"> + </a>
+										<input class="cart_quantity_input" type="text" name="quantity"
+											value=${item.quantity } autocomplete="off" size="2"
+											id="quantity"> <a class="cart_quantity_down"
+											id=${item.id }
+											onclick="deleteAjax()"> - </a>
 									</div>
 								</td>
 								<td class="cart_total">
@@ -101,15 +98,25 @@
 									href=""><i class="fa fa-times"></i></a></td>  -->
 							</tr>
 						</c:forEach>
-						
+						<tr>
+							<td colspan="4" style="text-align: right" class="cart_total"><p
+									class="cart_total_price">Total:</p></td>
+							<td class="cart_price">
+								<p id="total_price">&#8364; 1168,80</p>
+							</td>
+						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div>
+				<a href="<c:url value='/order' />" class="btn  btn-primary btn-lg"
+					role="button">order</a>
 			</div>
 		</div>
 	</section>
 	<!--/#cart_items-->
 
-<!-- 	******************END MAIN row products****************** -->
+	<!-- 	******************END MAIN row products****************** -->
 
 	<!-- 	******************footer row****************** -->
 

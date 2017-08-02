@@ -58,6 +58,10 @@ public class Order {
 	@Column(name = "orderstatus")
 	private String orderstatus;
 	
+	@Column(name = "orderamount")
+	private String orderamount;
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "orders_products", 
 	joinColumns = @JoinColumn(name = "orders_id"), 
@@ -71,7 +75,7 @@ public class Order {
 	}
 
 	public Order(Integer id, Date date, User user, Address address, String paymentmethod, String deliverymethod,
-			boolean paid, String orderstatus) {
+			boolean paid, String orderstatus, String orderamount, List<Product> products) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -81,6 +85,8 @@ public class Order {
 		this.deliverymethod = deliverymethod;
 		this.paid = paid;
 		this.orderstatus = orderstatus;
+		this.orderamount = orderamount;
+		this.products = products;
 	}
 
 	public Integer getId() {

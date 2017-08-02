@@ -33,8 +33,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Order> listOrder() {
 
-		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession()
-				.createQuery("from Order ORDER BY id ASC").list();
+		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession().createQuery("from Order ORDER BY id ASC").list();
 		for (Order pr : listPr) {
 			System.out.println(pr.getId());
 		}
@@ -61,8 +60,11 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public List<Order> listOrderByClient(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
+		List<Order> orders = criteria.createAlias("user", "client").add(Restrictions.eq("client.username", username)).list();
+		//List<Order> orders = sessionFactory.getCurrentSession().createQuery("select * from Orders where client = :client").setParameter("client", username).list();
+
+		return orders;
 	}
 
 	@Override

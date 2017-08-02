@@ -12,7 +12,7 @@ public interface OrderService {
 
 	void editOrder(Order order);
 
-	Order getOrderByUsername(String username);
+	List<Order> getOrderByUsername(String username);
 
 	void removeOrder(Long id);
 

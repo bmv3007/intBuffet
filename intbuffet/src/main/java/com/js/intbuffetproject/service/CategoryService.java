@@ -7,7 +7,9 @@ import com.js.intbuffetproject.model.Category;
 
 public interface CategoryService {
 
-	void addProduct(Category category);
+	void addCategory(Category category);
+	
+	void updateCategory(Category category);
 
 	List<Category> listCategories();
 	

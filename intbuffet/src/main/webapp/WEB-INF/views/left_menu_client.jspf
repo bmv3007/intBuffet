@@ -1,33 +1,31 @@
 
 <!-- 	******************MAIN row menu****************** -->
 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-		
-	<p> Category: 
-		<select name="categoryId" id="categoryId" >
-		<option value="0" id="0" >All</option>
+
+	<p>
+		Category: <select name="categoryId" id="categoryId">
+			<option value="0" id="0">All</option>
 			<c:forEach var="category" items="${categoriesList}">
-				<option value=${category.id} id="${category.id}" >${category.name}</option>
+				<option value=${category.id } id="${category.id}">${category.name}</option>
 			</c:forEach>
-			
+
 		</select>
 	</p>
-	<p>  
-		<input type="checkbox" name="vegetarian" value="vegetarian" id="vegetarian">Vegetarian<Br>
+	<p>
+		<input type="checkbox" name="vegetarian" value="vegetarian"
+			id="vegetarian">Vegetarian<Br>
 	</p>
-	<a class="bot3" onclick="find()">Find </a>
-	
-	<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Category
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <c:forEach var="category" items="${categoriesList}">
-				<li><a href="${category.id}">${category.name}</a></li>
-			</c:forEach>
-    
-  </ul>
-</div>
+	<a onclick="find()"><input class="btn btn-default btn-lg btn-block"
+		type="button" value="Find"> </a> <br>
+	<security:authorize
+		access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+
+		<a href="addnewproduct"><input class="btn btn-default btn-lg btn-block"
+			type="button" value="Add new product"></a><br>
+			<a href="categorycontroll"><input class="btn btn-default btn-lg btn-block"
+			type="button" value="Categories"></a>
+	</security:authorize>
+
 	<!-- *************************** -->
 </div>
 

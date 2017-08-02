@@ -2,7 +2,7 @@
 
 
 		<div class="container">
-			<div class="row graycolor">
+			<div class="row">
 				<div id="carousel" class="carousel slide graycolor">
 					<!--  индикаторы слайдов -->
 					<ol class="carousel-indicators graycolor">
