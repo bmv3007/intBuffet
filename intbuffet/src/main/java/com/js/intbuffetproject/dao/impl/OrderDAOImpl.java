@@ -26,6 +26,8 @@ public class OrderDAOImpl implements OrderDAO {
 	private SessionFactory sessionFactory;
 
 	public void addOrder(Order order) {
+
+		logger.info("**************************addOrder(Order order)**************************************");
 		Serializable id = sessionFactory.getCurrentSession().save(order);
 
 	}
@@ -33,10 +35,9 @@ public class OrderDAOImpl implements OrderDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Order> listOrder() {
 
-		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession().createQuery("from Order ORDER BY id ASC").list();
-		for (Order pr : listPr) {
-			System.out.println(pr.getId());
-		}
+		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession()
+				.createQuery("from Order ORDER BY id ASC").list();
+
 		return listPr;
 	}
 
@@ -44,6 +45,23 @@ public class OrderDAOImpl implements OrderDAO {
 		Order order = (Order) sessionFactory.getCurrentSession().load(Order.class, id);
 		if (null != order) {
 			sessionFactory.getCurrentSession().delete(order);
+		}
+
+	}
+
+	public void removeCart(String username) {
+
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
+		criteria.createAlias("user", "client")
+				.add(Restrictions.and(Restrictions.eq("client.username", username), Restrictions.eq("cart", true)));
+		logger.info("deleteOrder");
+		List<Order> list = criteria.list();
+
+		if (!list.isEmpty()) {
+			for (Order order : list) {
+
+				sessionFactory.getCurrentSession().delete(order);
+			}
 		}
 
 	}
@@ -61,16 +79,43 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> listOrderByClient(String username) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
-		List<Order> orders = criteria.createAlias("user", "client").add(Restrictions.eq("client.username", username)).list();
-		//List<Order> orders = sessionFactory.getCurrentSession().createQuery("select * from Orders where client = :client").setParameter("client", username).list();
+		criteria.createAlias("user", "client").add(Restrictions.eq("client.username", username));
+		criteria.add(Restrictions.eq("cart", false));
+		List<Order> orders = criteria.list();
+		// List<Order> orders =
+		// sessionFactory.getCurrentSession().createQuery("select * from Orders
+		// where client = :client").setParameter("client", username).list();
 
 		return orders;
 	}
 
 	@Override
 	public Order getOrderById(Long id) {
-		Order order = (Order) sessionFactory.getCurrentSession().load(Order.class, id);
+		Order order = (Order) sessionFactory.getCurrentSession().get(Order.class, id);
 		return order;
+	}
+
+	@Override
+	public Order getCartByUsername(String username) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
+		criteria.createAlias("user", "client")
+				.add(Restrictions.and(Restrictions.eq("client.username", username), Restrictions.eq("cart", true)));
+
+		List<Order> list = criteria.list();
+
+		if (!list.isEmpty()) {
+			Order orders = (Order) criteria.list().get(0);
+
+			return orders;
+		} else
+			return null;
+	}
+
+	@Override
+	public void updateOrder(Order order) {
+		logger.info("updateOrder" + order);
+		sessionFactory.getCurrentSession().update(order);
+
 	}
 
 }

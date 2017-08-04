@@ -160,8 +160,6 @@
 								<td class="description">Item</td>
 								<td class="price">Price</td>
 								<td class="quantity">Quantity</td>
-								<td class="total">Total</td>
-								<td></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -180,14 +178,17 @@
 									<td class="cart_quantity">
 										<p>${item.quantity}</p>
 									</td>
-									<td class="cart_total">
-										<p class="cart_total_price" id="totalItem"+"${item.id}"></p>
-									</td>
+
 									<!-- <td class="cart_delete"><a class="cart_quantity_delete"
 									href=""><i class="fa fa-times"></i></a></td>  -->
 								</tr>
-							</c:forEach>
 
+							</c:forEach>
+							<tr>
+								<td colspan="3" style="text-align: right" class="cart_total">
+									<p class="cart_total_price" id="totalItem">Total price: ${cart.total} &#8364;</p>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

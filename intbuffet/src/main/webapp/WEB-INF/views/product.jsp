@@ -36,44 +36,44 @@
 	<section id="cart_items">
 		<div class="container">
 			<form:form action="newProduct" modelAttribute="product"
-				class="navbar-form navbar-center">
+				class="form-group">
 				<label for="product">Product</label>
 				<table>
 
 					<tr>
 
 						<td><form:label path="name">Name: </form:label></td>
-						<td><form:input path="name"></form:input></td>
+						<td><form:input path="name" class="form-control"></form:input></td>
 					</tr>
 
 					<tr>
 						<td><form:label path="category">Category: </form:label></td>
-						<td><form:select path="category">
+						<td><form:select path="category" class="form-control">
 								<form:options items="${categories}" itemValue="name" itemLabel="name"/>
 							</form:select></td>
 					</tr>
 					<tr>
 						<td><form:label path="description">Description: </form:label></td>
-						<td><form:input path="description"></form:input></td>
+						<td><form:input path="description" class="form-control"></form:input></td>
 					</tr>
 					<tr>
 						<td><form:label path="price">Price: </form:label></td>
-						<td><form:input path="price"></form:input></td>
+						<td><form:input path="price" class="form-control"></form:input></td>
 					</tr>
 					<tr>
 						<td><form:label path="vegetarian">Vegetarian: </form:label></td>
-						<td><form:input path="vegetarian"></form:input></td>
+						<td><form:input path="vegetarian" class="form-control"></form:input></td>
 					</tr>
 					<tr>
 						<td><form:label path="weight">Weight: </form:label></td>
-						<td><form:input path="weight"></form:input></td>
+						<td><form:input path="weight" class="form-control"></form:input></td>
 					</tr>
 					
 
 				</table>
 				
 
-				<input type="submit" value="Save" />
+				<input type="submit" value="Save" class="btn btn-primary"/>
 
 			</form:form>
 

@@ -15,6 +15,8 @@ public interface AddressDAO {
 	
 	Address getAddressByID(Long id);
 	
+	Address findAddress(Address address);
+	
 	List<String> listCountries();
 	List<String> listCities();
 	List<String> listStreets();

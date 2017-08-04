@@ -64,9 +64,10 @@
 						</tr>
 						<c:forEach items="${categories}" var="category">
 							<tr>
-								<td> <input path="${category.name}" class="form-control" value="${category.name}"></input></td>
-								<td><a href="updateCategory/${category.id}/${newName}"><img class="img-rounded" src="resources/images/save.png"></a></td>
+								<td> <input path="${category.name}" class="form-control" value="${category.name}" attr="${category.id}"></input></td>
+								<td><a href="#" onclick="changeHref('${category.id}')" refattr = "${category.id}"><img class="img-rounded" src="resources/images/save.png"></a></td>
 								<td><a href="deleteCategory/${category.id}"><img class="img-rounded" src="resources/images/delete.png"></a></td>
+								<td><a href="deleteCategory/${category.id} type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a></td>
 							</tr>
 						</c:forEach>
 					</table>

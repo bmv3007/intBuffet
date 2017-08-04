@@ -1,5 +1,7 @@
 package com.js.intbuffetproject.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "addresses")
-public class Address {
-
+public class Address implements Serializable {
+	
+	static final long serialVersionUID = 3260689382642549142L;
+	
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "country")
@@ -106,6 +110,14 @@ public class Address {
 
 	public void setApartment(int apartment) {
 		this.apartment = apartment;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

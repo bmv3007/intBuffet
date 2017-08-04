@@ -5,20 +5,18 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.dto.UserDTO;
@@ -31,7 +29,6 @@ import com.js.intbuffetproject.service.AddressService;
 import com.js.intbuffetproject.service.OrderService;
 import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.UserService;
-import com.js.intbuffetproject.util.Util;
 import com.js.intbuffetproject.util.Util.Deliverymethod;
 import com.js.intbuffetproject.util.Util.Orderstatus;
 import com.js.intbuffetproject.util.Util.Paymentmethod;
@@ -65,16 +62,10 @@ public class OrderController {
 
 		if (httpSession.getAttribute("userDTO") != null) {
 			if (httpSession.getAttribute("cart") != null) {
-				// Product product = productService.getProductByID(idgood);
 
 				Order order = new Order();
 				order.setDate(new Date());
 
-				/*
-				 * List<Product> products = productService .fillProducts(((Cart)
-				 * httpSession.getAttribute("cart")).getProductsInCart().values(
-				 * )); order.setProducts(products);
-				 */
 				order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
 				modelAndView.addObject("paymentmethod1", Arrays.asList(Paymentmethod.values()));
 				modelAndView.addObject("deliverymethod", Arrays.asList(Deliverymethod.values()));
@@ -106,18 +97,23 @@ public class OrderController {
 		User user = userService.getUserByUsername(usetDTO.getUsername());
 		order.setUser(user);
 		order.setDate(new Date());
-		List<Product> products = productService
-				.fillProducts(((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+		Cart cart = (Cart) httpSession.getAttribute("cart");
+		List<Product> products = productService.fillProducts(cart.getProductsInCart().values());
 		order.setProducts(products);
 		order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
-		// logger.info("order = " + order.getUser());
-		logger.info("order date = " + order.getDate());
-		Serializable idAddress = addressService.addAddress(order.getAddress());
+		order.setOrdertotal(cart.getTotal());
+		logger.info("order date= " + order.getAddress());
+		// logger.info("order total = " + order.getOrdertotal());
 
 		ModelAndView modAndView = new ModelAndView();
+		Address address = order.getAddress();
+		Serializable id = addressService.addAddress(address);
+		order.setAddress((Address) addressService.getAddressByID((Long) id));
+		logger.info("order getCountry= " + order.getAddress().getCountry());
+		logger.info("order " + order);
 		orderService.addOrder(order);
 		modAndView.setViewName("index");
-		Cart cart = new Cart();
+		cart = new Cart();
 		httpSession.setAttribute("cart", cart);
 		return modAndView;
 
@@ -134,8 +130,8 @@ public class OrderController {
 		UserDTO user = (UserDTO) httpSession.getAttribute("userDTO");
 		logger.info("Orders = " + orderService.getOrderByUsername(user.getUsername()).toArray());
 		List<Order> listOrder = orderService.listOrderByClient(user.getUsername());
+		modelAndView.addObject("orderstatus", Arrays.asList(Orderstatus.values()));
 		modelAndView.addObject("UsersOrders", listOrder);
-		// Date date =
 		modelAndView.setViewName("listOrders");
 
 		return modelAndView;
@@ -154,11 +150,26 @@ public class OrderController {
 
 		List<Order> listOrder = orderService.listOrder();
 		modelAndView.addObject("UsersOrders", listOrder);
-		// Date date =
 		modelAndView.setViewName("listOrders");
 
 		return modelAndView;
 
 	}
+
+	@RequestMapping(value = "/updateOrder", params = { "id", "status" }, method = RequestMethod.GET)
+	public String updateOrder(@RequestParam("id") Long id, @RequestParam("status") String status) {
+		logger.info(" updateOrder Order id = " + id);
+		logger.info(" updateOrder Order status = " + status);
+		Order order = orderService.getOrderById(id);
+		order.setOrderstatus(status);
+          
+		logger.info(" updateOrder getOrderstatus = " + order.getOrderstatus());
+		orderService.updateOrder(order);
+		
+		return "redirect:/getallusersorders";
+
+	}
+
+	// (value = "/save_cart", method = RequestMethod.GET)
 
 }

@@ -24,6 +24,9 @@
 			type="button" value="Add new product"></a><br>
 			<a href="categorycontroll"><input class="btn btn-default btn-lg btn-block"
 			type="button" value="Categories"></a>
+			
+			<a href="get_statistic"><input class="btn btn-default btn-lg btn-block"
+			type="button" value="Statistic"></a>
 	</security:authorize>
 
 	<!-- *************************** -->

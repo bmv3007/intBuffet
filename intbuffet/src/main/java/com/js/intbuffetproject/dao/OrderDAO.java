@@ -8,6 +8,8 @@ import com.js.intbuffetproject.model.Order;
 public interface OrderDAO {
 
 	void addOrder(Order order);
+	
+	void updateOrder(Order order);
 
 	List<Order> listOrder();
 	
@@ -15,7 +17,12 @@ public interface OrderDAO {
 	
 	List<Order> listOrderByClient(String username);
 	
+	Order getCartByUsername(String username);
+
+	
 	Order getOrderById(Long id);
 
 	void removeOrder(Long id);
+	
+	void removeCart(String username);
 }

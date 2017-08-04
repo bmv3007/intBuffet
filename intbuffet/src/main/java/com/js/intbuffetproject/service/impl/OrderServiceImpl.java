@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.OrderDAO;
 import com.js.intbuffetproject.dao.impl.OrderDAOImpl;
+import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
+import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.OrderService;
 
@@ -24,24 +27,26 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override
+	@Transactional
 	public boolean addOrder(Order order) {
 		logger.info("====addOrder=====");
-		
-			orderDAO.addOrder(order);
-			return true;
-		
+
+		orderDAO.addOrder(order);
+		return true;
 
 	}
 
 	@Override
-	public void editOrder(Order order) {
-		// TODO Auto-generated method stub
-		
+	@Transactional
+	public void updateOrder(Order order) {
+
+		orderDAO.updateOrder(order);
+
 	}
 
 	@Override
 	public List<Order> getOrderByUsername(String username) {
-		// TODO Auto-generated method stub
+		
 		return orderDAO.listOrderByClient(username);
 	}
 
@@ -49,12 +54,19 @@ public class OrderServiceImpl implements OrderService {
 	public void removeOrder(Long id) {
 
 		orderDAO.removeOrder(id);
-		
+
+	}
+	
+	@Override
+	public void removeCart(String username){
+
+		orderDAO.removeCart(username);
+
 	}
 
 	@Override
 	public List<Order> listOrder() {
-		// TODO Auto-generated method stub
+		
 		return orderDAO.listOrder();
 	}
 
@@ -70,6 +82,32 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.listOrderByClient(username);
 	}
 
-	
+	@Override
+	public Cart getCartByUsername(String username) {
+		
+		Order cart =  orderDAO.getCartByUsername(username);
+		Cart oldCart = new Cart();
+		
+		if(cart != null){
+			
+			oldCart.setUser(cart.getUser());
+			for(Product product: cart.getProducts()){
+				Item item= new Item(product);
+				oldCart.addProduct(item.getId(), item);
+			}
+			
+			oldCart.setTotal(oldCart.getTotal());
+		
+		}
+		
+		return oldCart;
+	}
+
+	@Override
+	public Order getOrderById(Long id) {
+
+		return orderDAO.getOrderById(id);
+		
+	}
 
 }

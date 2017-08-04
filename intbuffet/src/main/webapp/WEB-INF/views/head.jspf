@@ -31,7 +31,7 @@
 
 						<li><a href="<c:url value='/index' />">Home</a></li>
 						<li><a href="cart.html"><i class="fa fa-shopping-cart"></i>
-								Cart  <span class="badge">4</span></a></li>
+								Cart  <span class="badge">${cart.totalItems}</span></a></li>
 						<li><a href="login1" id="login"><i class="fa fa-lock"></i>
 								Login</a></li>
 						<security:authorize

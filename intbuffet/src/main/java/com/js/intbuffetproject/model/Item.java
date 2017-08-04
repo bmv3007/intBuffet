@@ -29,6 +29,16 @@ public class Item implements java.io.Serializable {
 		this.quantity = quantity;
 
 	}
+	
+	public Item(Product product) {
+		super();
+		this.id = product.getId();
+		this.name = product.getName();
+		this.description = product.getDescription();
+		this.price = product.getPrice();
+		this.quantity = 0;
+
+	}
 
 	public Long getId() {
 		return id;

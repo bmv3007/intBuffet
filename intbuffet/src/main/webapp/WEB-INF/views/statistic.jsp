@@ -1,5 +1,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
@@ -12,10 +11,9 @@
 <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
 <link href="resources/css/cart.css" rel="stylesheet" />
 <link href="resources/css/style.css" rel="stylesheet" />
+<link href="resources/css/datepicker.css" rel="stylesheet" />
 </head>
 <body>
-
-	<!-- **********************Test**************************************** -->
 
 	<header id="header">
 		<!--header-->
@@ -34,7 +32,7 @@
 						<div class="breadcrumbs">
 							<ol class="breadcrumb">
 
-								<li class="active">Orders report</li>
+								<li class="active">Statistic</li>
 
 							</ol>
 						</div>
@@ -48,16 +46,112 @@
 	<!--/header-->
 
 
-	<!-- 	******************MAIN row products****************** -->
+
+    <div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger" id="alert">
+            <strong>Something went wrong!</strong>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 text-center">
+        <strong>Start date</strong> <a href="#" class="btn btn-info btn-sm" id="dp4" data-date-format="dd-mm-yyyy" data-date="20-01-2015">Change</a>
+    </div>
+    <div class="col-md-3 text-center">
+        <strong>End date</strong> <a href="#" class="btn btn-info btn-sm" id="dp5" data-date-format="dd-mm-yyyy" data-date="25-01-2015">Change</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="date-bg bg-success" id="startDate">20-01-2015</div>
+    </div>
+    <div class="col-md-3">
+        <div class="date-bg bg-success" id="endDate">25-01-2015</div>
+    </div>
+</div>
 
 
 
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+      
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed table-striped">
+					<thead>
+						<tr class="cart_menu">
+							<td class="description">Client</td>
+							<td class="date">Date</td>
+							<td class="description">Client</td>
+							<td class="description">Order status</td>
+							<td class="description">Method of payment</td>
+							<td class="description">Method of delivery</td>
+							<td class="description">Paid</td>
+							<td class="total">Total (&#8364;)</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="item" items="${UsersOrders}">
 
-	<section id="cart_items">
+							<tr>
+								<td class="cart_description"><a href="">${item.id}</a></td>
+
+								<td class="cart_description">
+									<p>
+										<fmt:formatDate type="date" value="${item.date}" />
+									</p>
+								</td>
+								<security:authorize
+									access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+
+									<td class="cart_description">${item.user.surname}
+										${item.user.firstname}</td>
+
+									<td class="cart_price">
+										<section>
+											<select items="${orderstatus}" itemValue="name"
+												itemLabel="name" value="${item.orderstatus}" />
+										</section>
+
+									</td>
+								</security:authorize>
+								<td class="cart_price">
+									<p>${item.paymentmethod}</p>
+								</td>
+								<td class="cart_price">
+									<p>${item.deliverymethod}</p>
+								</td>
+								<td class="cart_price"><c:choose>
+										<c:when test="${item.paid==true}">
+											<p>Yes</p>
+										</c:when>
+										<c:otherwise>
+											<p>No</p>
+										</c:otherwise>
+									</c:choose></td>
+								<td class="cart_description">${item.ordertotal}</td>
+								<td><a href="updateCategory/${category.id}/${newName}"><img
+										class="img-rounded" src="resources/images/save.png"></a></td>
+
+
+							</tr>
+						</c:forEach>
+
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+	</nav>
+
+
+
+	<%-- <section id="cart_items">
 		<div class="container">
 
 			<div class="table-responsive cart_info">
-
 				<table class="table table-condensed table-striped">
 					<thead>
 						<tr class="cart_menu">
@@ -90,26 +184,11 @@
 										${item.user.firstname}</td>
 
 									<td class="cart_price">
-										<%-- <section>
+										<section>
 											<select items="${orderstatus}" itemValue="name"
-												itemLabel="name" value="${item.orderstatus}" /> ${item.orderstatus}
-										</section> --%> <select name="titles" size="1" optionAttr = "${item.id}" >
-											<c:forEach items="${orderstatus}" var="status">
-											<option value="${status.name}">${status.name}</option>
-											 <%-- <c:if test="${status.name} == ${item.orderstatus}">{
-												<option value="${status.name}" selected>${status.name}</option>
-												</c:if>
-												<c:if test="${status.name} != ${item.orderstatus}">{
-												<option value="${status.name}">${status.name}</option>
-												</c:if> --%>
-											</c:forEach>
-									</select> <%-- 	<select name="Status" type="text" >
-											<c:forEach items="${orderstatus}" var="databaseValue">
-												<option value="${item.orderstatus}">${orderstatus.name}</option>
-												
-											</c:forEach>
-											<option items="${orderstatus}" value="${item.orderstatus}" />
-											<select> --%>
+												itemLabel="name" value="${item.orderstatus}" />
+										</section>
+
 									</td>
 								</security:authorize>
 								<td class="cart_price">
@@ -126,24 +205,21 @@
 											<p>No</p>
 										</c:otherwise>
 									</c:choose></td>
-								<td class="cart_description">${item.ordertotal}</td>
-								<td><a a href="#" onclick="changeHrefOrder('${item.id}')"
-									refattr="${item.id}"><img class="img-rounded"
-										src="resources/images/save.png"></a></td>
-
+									<td class="cart_description">${item.ordertotal} </td>
+								<td><a href="updateCategory/${category.id}/${newName}"><img
+										class="img-rounded" src="resources/images/save.png"></a></td>
+								
 
 							</tr>
 						</c:forEach>
 
 					</tbody>
 				</table>
-
 			</div>
-
 		</div>
 	</section>
 	<!--/#cart_items-->
-
+ --%>
 	<!-- 	******************END MAIN row products****************** -->
 
 	<!-- 	******************footer row****************** -->
@@ -175,6 +251,10 @@
 	<script src="resources/js/salvattore.min.js"></script>
 
 	<script src="resources/js/eshop.js"></script>
+	
+	<script src="bootstrap-datepicker.js"></script>
+	
+	<script src="resources/js/statistic.js"></script>
 	</div>
 </body>
 </html>

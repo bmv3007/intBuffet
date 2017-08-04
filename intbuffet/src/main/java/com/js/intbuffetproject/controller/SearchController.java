@@ -1,36 +1,25 @@
 package com.js.intbuffetproject.controller;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.SearchParameter;
-import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.ProductService;
 
 /**
@@ -47,41 +36,39 @@ public class SearchController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping(value = "/find", method = RequestMethod.GET, produces =  "application/json")
-	public @ResponseBody // @ResponseBody - нужен, когда мы НЕ перенаправляем на
-							List<Product> find(@RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian") boolean vegetarian) {
+	@RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody 
+	List<Product> find(@RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian") boolean vegetarian) {
 
 		SearchParameter searchParameter = new SearchParameter();
 		searchParameter.setCategoryID(categoryId);
 		searchParameter.setVegetarian(vegetarian);
-		
-		
-		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
-		
+
 		logger.info("categoryId:" + categoryId + "vegetarian:" + vegetarian);
-		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
-		
-		return  productService.searchProductByParameters(searchParameter);
+
+		return productService.searchProductByParameters(searchParameter);
 	}
 	
-	
-	
-	/*@RequestMapping(value = "/find", method = RequestMethod.POST)
-	public ModelAndView find(Map<String, Object> map, @RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian")  boolean vegetarian) {
-
-		SearchParameter searchParameter = new SearchParameter();
-		searchParameter.setCategoryID(categoryId);
-		searchParameter.setVegetarian(vegetarian);
-		
+	@RequestMapping("/search")
+	@ResponseBody
+	public ModelAndView seachProducts(@RequestParam("search") String searchtext, Map<String, Object> map, Locale locale,
+			HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView modAndView = new ModelAndView();
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// logger.info("local = " + locale);
-		map.put("productList1", productService.searchProductByParameters(searchParameter));
-		//httpSession.setAttribute("currentProductList", productService.searchProductByParameters(searchParameter));
+		session.setAttribute("search", searchtext);
+		map.put("contact", new Product());
+		map.put("productList1", productService.searchProduct(searchtext));
+		map.put("seachtext", "seachtext");
 		modAndView.addAllObjects(map);
 		modAndView.setViewName("index");
-		logger.info("categoryId:" + categoryId + "vegetarian:" + vegetarian);
-		//httpSession.setAttribute("productList1", productService.searchProductByParameters(searchParameter));
-		
-		return  modAndView;
+
+		return modAndView;
 	}
-*/}
+
+}

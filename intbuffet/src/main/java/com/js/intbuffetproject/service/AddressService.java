@@ -16,6 +16,8 @@ public interface AddressService {
 
 	void removeAddress(Long id);
 	
+	Address findAddress(Address address);
+	
 	List<String> listCountries();
 	
 	List<String> listCities();

@@ -21,7 +21,7 @@ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 		<form-login login-page="/login" default-target-url="/index2"
  			authentication-failure-url="/login?error=true" />
 		<!-- username-parameter="j_username" password-parameter="j_password"/> -->
-		<logout logout-url="/logout" logout-success-url="/index" />
+		<logout logout-url="/logout1" logout-success-url="/index" />
 
 		<anonymous username="guest" granted-authority="ROLE_ANONYMOUS" />
 		

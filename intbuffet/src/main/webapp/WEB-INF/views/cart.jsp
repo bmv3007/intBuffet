@@ -59,8 +59,7 @@
 							<td class="description"></td>
 							<td class="price">Price</td>
 							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td></td>
+							<td class="quantity"></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -81,28 +80,25 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" id=${item.id
-											}
-											onclick="addAjax(${item.id},${item.price},${item.quantity})"> + </a>
-										<input class="cart_quantity_input" type="text" name="quantity"
-											value=${item.quantity } autocomplete="off" size="2"
-											id="quantity"> <a class="cart_quantity_down"
-											id=${item.id }
-											onclick="deleteAjax()"> - </a>
-									</div>
+										<a class="btn cart_quantity_up" articul="${item.id}"
+											onclick="addAjax(${item.id},${item.price},${item.quantity})">
+											+ </a> <input class="cart_quantity_input" type="text"
+											name="quantity" value=${item.quantity } autocomplete="off"
+											size="2" disabled cartAttr="${item.id}"> <a
+											class="btn cart_quantity_down" articul="${item.id}"
+											onclick="deleteAjax(${item.id},${item.price},${item.quantity})">
+											- </a>
+									</div> <a href="delete_item/${item.id}" type="button" class="close"
+									aria-label="Close"><span aria-hidden="true">&times;</span></a>
+
 								</td>
-								<td class="cart_total">
-									<p class="cart_total_price" id="totalItem"+"${item.id}"></p>
-								</td>
-								<!-- <td class="cart_delete"><a class="cart_quantity_delete"
-									href=""><i class="fa fa-times"></i></a></td>  -->
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="4" style="text-align: right" class="cart_total"><p
+							<td colspan="3" style="text-align: right" class="cart_total"><p
 									class="cart_total_price">Total:</p></td>
 							<td class="cart_price">
-								<p id="total_price">&#8364; 1168,80</p>
+								<p id="total_price">&#8364; ${cart.total}</p>
 							</td>
 						</tr>
 					</tbody>

@@ -1,7 +1,6 @@
 package com.js.intbuffetproject.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -21,17 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.AddressService;
+import com.js.intbuffetproject.service.OrderService;
+import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.UserService;
-import com.js.intbuffetproject.util.Util.Orderstatus;
 
 /**
  * Handles requests for the application home page.
@@ -47,6 +49,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private ProductService productService;
+
 
 	@Autowired
 	private AddressService addressService;
@@ -59,6 +68,12 @@ public class UserController {
 		usD.setAuthorities(list);
 		usD.setUsername(authentication.getName());
 		httpSession.setAttribute("userDTO", usD);
+		logger.info("usD.getUsername() = "+usD.getUsername());
+		Cart cart = orderService.getCartByUsername(usD.getUsername());
+		logger.info("old cart = "+cart);
+				
+			httpSession.setAttribute("cart", cart);
+	
 		return "redirect:/index";
 	}
 
@@ -135,10 +150,43 @@ public class UserController {
 		ModelAndView modelAndView = new ModelAndView();
 		userService.updateUser(user);
 		modelAndView.addObject("user", user);
+		modelAndView.addObject("countries", addressService.listCountries());
+		modelAndView.addObject("cities", addressService.listCities());
+		modelAndView.addObject("streets", addressService.listStreets());
 		modelAndView.setViewName("profile");
 
 		return modelAndView;
 
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(SessionStatus status) {
+		// logger.info(accessDecisionManager);
+		
+		Cart cart = (Cart) httpSession.getAttribute("cart");
+		if(cart!= null){
+			if (((UserDTO) httpSession.getAttribute("userDTO")) != null) {
+				
+				UserDTO usetDTO = (UserDTO) httpSession.getAttribute("userDTO");
+				User user = userService.getUserByUsername(usetDTO.getUsername());
+				orderService.removeCart(usetDTO.getUsername());
+				Order order = new Order();
+				order.setCart(true);
+				order.setUser(user);
+				order.setDate(new Date());
+				logger.info("order.isCart()"+order.isCart());
+				List<Product> products = productService
+						.fillProducts(cart.getProductsInCart().values());
+				order.setProducts(products);
+				order.setOrdertotal(cart.getTotal());
+				orderService.addOrder(order);
+				cart = new Cart();
+				httpSession.setAttribute("cart", cart);
+			}
+		}
+		//*****************************************************************		
+		status.setComplete();
+		return "redirect:/logout1";
 	}
 
 }

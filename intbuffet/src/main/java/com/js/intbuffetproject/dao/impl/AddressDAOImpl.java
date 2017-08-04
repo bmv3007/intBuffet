@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.AddressDAO;
 import com.js.intbuffetproject.model.Address;
+import com.js.intbuffetproject.model.Category;
 
 @Repository
 public class AddressDAOImpl implements AddressDAO {
@@ -40,8 +41,8 @@ public class AddressDAOImpl implements AddressDAO {
 
 	@Override
 	public Address getAddressByID(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return  (Address) sessionFactory.getCurrentSession().get(Address.class, id);
 	}
 
 	@Override
@@ -60,6 +61,12 @@ public class AddressDAOImpl implements AddressDAO {
 	public List<String> listStreets() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createSQLQuery("select distinct street from addresses order by street").list();
+	}
+
+	@Override
+	public Address findAddress(Address address) {
+		
+		return null;
 	}
 
 }
