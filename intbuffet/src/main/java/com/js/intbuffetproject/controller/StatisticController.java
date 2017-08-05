@@ -32,7 +32,11 @@ public class StatisticController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("statistic");
 		modelAndView.addObject("topClients", statisticService.getTopClients());
-		modelAndView.addObject("topProducts", statisticService.getTopProducts());
+		
+		//	logger.info("---------topClients--------------"+statisticService.getTopClients().get(1).getuser());
+			
+		
+		//modelAndView.addObject("topProducts", statisticService.getTopProducts());
 		return modelAndView;
 	}
 	

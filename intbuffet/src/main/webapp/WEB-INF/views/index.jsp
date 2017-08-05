@@ -50,7 +50,7 @@
 										<a href="#">${product.name}</a>
 									</h3>
 									<p>Category: ${product.category.name}</p>
-									<p>Beschreibung sehr gross........................</p>
+									<p>${product.description}</p>
 									<p> Price: ${product.price}</p>
 									<p> Vegetarian: 
 									<c:choose>

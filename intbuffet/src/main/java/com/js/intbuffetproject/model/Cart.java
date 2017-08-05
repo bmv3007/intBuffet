@@ -1,14 +1,15 @@
 package com.js.intbuffetproject.model;
 
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Cart {
-
+     
+	private Long id;
 	private User user;
 	private double total;
 	private Integer totalItems;
-	private Map<Long, Item> productsInCart = new Hashtable<>(); // product-quantity
+	private Map<Long, Item> productsInCart = new ConcurrentHashMap<Long, Item>(); // product-quantity
 
 	public User getUser() {
 		return user;
@@ -57,6 +58,25 @@ public class Cart {
 		this.total = total;
 		this.totalItems = totalItems;
 		this.productsInCart = productsInCart;
+	}
+	
+	
+
+	public Cart(Long id, User user, double total, Integer totalItems, Map<Long, Item> productsInCart) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.total = total;
+		this.totalItems = totalItems;
+		this.productsInCart = productsInCart;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void addProduct(Long itemId, Item item) {

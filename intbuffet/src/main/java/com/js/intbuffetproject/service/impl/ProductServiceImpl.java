@@ -3,7 +3,8 @@ package com.js.intbuffetproject.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
- 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
@@ -66,9 +67,26 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		List<Product> listProducts = new ArrayList<>();
 		for(Item item: items){
-			
-			listProducts.add(getProductByID(item.getId()));
+			Product product = getProductByID(item.getId());
+			product.setQuantity(item.getQuantity());
+			listProducts.add(product);
 		}
 		return listProducts;
 	}
+
+//*******************************************
+
+@Override
+public List<Integer> fillQuantities(Collection<Item> items) {
+	// TODO Auto-generated method stub
+	List<Integer> listQuantity = new ArrayList<>();
+	
+	for(Item item: items){
+		
+		listQuantity.add(item.getQuantity());
+	}
+	return listQuantity;
 }
+//********************************************
+}
+

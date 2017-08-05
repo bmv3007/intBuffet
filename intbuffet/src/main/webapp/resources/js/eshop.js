@@ -4,17 +4,7 @@ function newMyWindow(e) {
   myWindow = window.open(e, '', 'scrollbars=1,height='+Math.min(h, screen.availHeight)+',width='+Math.min(w, screen.availWidth)+',left='+Math.max(0, (screen.availWidth - w)/2)+',top='+Math.max(0, (screen.availHeight - h)/2));
   }
 
-function doAjax() {
-$.ajax({
-	url : 'checkStrength',
-	data : ({password: $('#password').val()}),
-	success : function(data) {
-			$('#strengthValue').html(data);
-			
-	}
 
-});
-}
 
 function addAjax(articul,price,quantity) {
 	$.ajax({
@@ -25,6 +15,7 @@ function addAjax(articul,price,quantity) {
 			console.log(data);
 			$('#total_price').html('&#8364; '+ data[0]);
 			$('input[cartAttr="'+articul+'"]').val(data[1]);
+			$('#totalItems').html(data[2]);
 			}
 
 });  
@@ -48,14 +39,6 @@ function deleteAjax(articul,price,quantity) {
 }
 
 
-
-
-function getSumma(goods) {
-	console.log("**********");
-   // return _.reduce(cartData, function(sum, item) {return sum + item.count *
-	// item.price}, 0);
-}  
-
 function find() {
 	$.ajax({
 		url : 'find',
@@ -65,28 +48,66 @@ function find() {
 				
 			var out = '';
 			for (var key in data){
-// out+='<div> ';
+				var vegetarian = (data[key]['vegetarian'] > 0) ? 'No' : 'Yes';
+				out+='<div>';
 				out+='<div class="thumbnail">';
-				
-				  out+='<h3>'+data[key]['name'];
+				out+='<img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive">';
+				out+='<div class="caption">';
+				out+='<h3>';
+				out+='<a href="#">'+data[key]['name']+'</a>';
+				out+='</h3>';
+				out+='<p>Category: '+data[key]['category']+'</p>';//????
+				out+='<p>'+data[key]['description']+'</p>';
+				out+='<p> Price: '+data[key]['price']+'</p>';
+				out+='<p> Vegetarian: '+vegetarian+'</p>';
+				out+='<p> Weight: '+data[key]['weight']+'</p>';
+				out+='<a target="_self" id="'+data[key]['id']+'" class="btn btn-danger" onclick="addAjax('+data[key]['id']+')"><i class="glyphicon glyphicon-shopping-cart"></i></a>'
+				out+='</div>';
+				out+='</div>';
+				out+='</div>';
 				// out+='<input type="checkbox" class="add-to-cart"
 				// data-art="'+key+'"
 				// data-art-name="'+data[key]['name']+'"/></h3>';
 				// out+='<p> price: '+data[key]['cost']+' € </p>';
 				// out+='<p>'+data[key]['description']+'</p> <br>';
-				  out+='<p><a href="images/'+key+'.png"><img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive"></a></p> <br>';
+				//  out+='<p><a href="images/'+key+'.png"><img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive"></a></p> <br>';
 // out+='</div>';
-				  out+='</div>';
+				//  out+='</div>';
 				
 				 
 			}
-			// console.log(data);
+			console.log(data);
 			$('#goods').html(out);
 				
 		}
 
 	});
 	}
+
+
+
+//************************************************************
+var vegetarian = (data[key]['vegetarian'] > 0) ? 'Yes' : 'No';
+out+='<div>';
+out+='<div class="thumbnail">';
+out+='<img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive">';
+out+='<div class="caption">';
+out+='<h3>';
+out+='<a href="#">'+data[key]['name']+'</a>';
+out+='</h3>';
+out+='<p>Category: '+data[key]['category']+'</p>';//????
+out+='<p>'+data[key]['description']+'</p>';
+out+='<p> Price: '+data[key]['price']+'</p>';
+out+='<p> Vegetarian: '+vegetarian+'</p>';
+out+='<p> Weight: '+data[key]['weight']+'</p>';
+out+='<a target="_self" id="'+data[key]['id']+'" class="btn btn-danger" onclick="addAjax('+data[key]['id']+')"></a>'
+out+='</div>';
+out+='</div>';
+out+='</div>';
+
+
+//************************************************************
+
 
 
 function changeHref(id) {
@@ -103,7 +124,7 @@ function changeHrefOrder(id) {
 	var status =  $('select[optionAttr="'+id+'"] option:selected').text();
 	var obj = {id: id,status:status}
 	var href="updateOrder?"+$.param(obj);
-	//var href="updateOrder/"+id+"/"+status;
+	// var href="updateOrder/"+id+"/"+status;
 	console.log(href);
 	$('a[refattr="'+id+'"]').attr("href",href);
 	

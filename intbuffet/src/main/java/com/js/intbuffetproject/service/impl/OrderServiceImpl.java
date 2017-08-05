@@ -72,13 +72,13 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> listOrderFromTo(Date from, Date to) {
-		// TODO Auto-generated method stub
+		
 		return orderDAO.listOrderFromTo(from, to);
 	}
 
 	@Override
 	public List<Order> listOrderByClient(String username) {
-		// TODO Auto-generated method stub
+	
 		return orderDAO.listOrderByClient(username);
 	}
 
@@ -91,6 +91,7 @@ public class OrderServiceImpl implements OrderService {
 		if(cart != null){
 			
 			oldCart.setUser(cart.getUser());
+			oldCart.setId(cart.getId());
 			for(Product product: cart.getProducts()){
 				Item item= new Item(product);
 				oldCart.addProduct(item.getId(), item);

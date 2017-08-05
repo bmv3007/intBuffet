@@ -2,6 +2,7 @@ package com.js.intbuffetproject.controller;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
@@ -65,17 +67,23 @@ public class OrderController {
 
 				Order order = new Order();
 				order.setDate(new Date());
-
+				Cart cart = (Cart) httpSession.getAttribute("cart");
+				Collection<Item> listItems = cart.getProductsInCart().values();
+				for(Item item: listItems){
+					if(item.getQuantity()<1){
+						cart.deleteProduct(item.getId());
+						cart.setTotal(cart.getTotal());
+					}
+				}
 				order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
 				modelAndView.addObject("paymentmethod1", Arrays.asList(Paymentmethod.values()));
 				modelAndView.addObject("deliverymethod", Arrays.asList(Deliverymethod.values()));
 				modelAndView.addObject("countries", addressService.listCountries());
 				modelAndView.addObject("cities", addressService.listCities());
 				modelAndView.addObject("streets", addressService.listStreets());
-				modelAndView.addObject("productLisInCart",
-						((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+				modelAndView.addObject("productLisInCart",	listItems);
 
-				logger.info("order = index" + ((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+			//	logger.info("order = index" + ((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
 				modelAndView.setViewName("order");
 				Address address = new Address();
 				order.setAddress(address);
@@ -92,7 +100,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
-	public ModelAndView makeOrder(@ModelAttribute("order") Order order, BindingResult result) {
+	public String makeOrder(@ModelAttribute("order") Order order, BindingResult result) {
 		UserDTO usetDTO = (UserDTO) httpSession.getAttribute("userDTO");
 		User user = userService.getUserByUsername(usetDTO.getUsername());
 		order.setUser(user);
@@ -113,9 +121,10 @@ public class OrderController {
 		logger.info("order " + order);
 		orderService.addOrder(order);
 		modAndView.setViewName("index");
+		//orderService.removeCart(usetDTO.getUsername());
 		cart = new Cart();
 		httpSession.setAttribute("cart", cart);
-		return modAndView;
+		return "redirect:/index";
 
 	}
 
@@ -125,7 +134,7 @@ public class OrderController {
 		if (((UserDTO) httpSession.getAttribute("userDTO")) == null) {
 			modelAndView.setViewName("index");
 			return modelAndView;
-		}
+		}else{
 
 		UserDTO user = (UserDTO) httpSession.getAttribute("userDTO");
 		logger.info("Orders = " + orderService.getOrderByUsername(user.getUsername()).toArray());
@@ -135,6 +144,7 @@ public class OrderController {
 		modelAndView.setViewName("listOrders");
 
 		return modelAndView;
+		}
 
 	}
 

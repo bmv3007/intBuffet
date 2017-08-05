@@ -85,6 +85,7 @@ public class CartController {
 		ArrayList data = new ArrayList();
 		data.add(cart.getTotal());
 		data.add(quantity);
+		data.add(cart.getTotalItems());
 
 		return data;
 

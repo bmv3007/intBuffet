@@ -3,6 +3,7 @@ package com.js.intbuffetproject.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -66,9 +67,19 @@ public class Order implements Serializable {
 	@Column(name = "cart")
 	private boolean cart;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "orders_products", joinColumns = @JoinColumn(name = "orders_id"), inverseJoinColumns = @JoinColumn(name = "products_id"))
-	private List<Product> products;
+	
+	  @ManyToMany(fetch = FetchType.LAZY)
+	  @JoinTable(name = "orders_products", joinColumns = @JoinColumn(name =
+	  "orders_id"), inverseJoinColumns = @JoinColumn(name = "products_id"))
+	  private List<Product> products;
+	 
+
+	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "orders_products", 
+	joinColumns = { @JoinColumn(table="orders", name="orders_id", referencedColumnName="id")}, 
+	inverseJoinColumns = {@JoinColumn(table="products", name = "products_id", referencedColumnName="id"),
+			              @JoinColumn(table="orders_products", name="quantity", referencedColumnName="quantity")})
+	private List<Product> products;*/
 
 	public Order() {
 		super();

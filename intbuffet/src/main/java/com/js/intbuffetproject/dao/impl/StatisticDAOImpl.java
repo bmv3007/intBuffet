@@ -3,6 +3,7 @@ package com.js.intbuffetproject.dao.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -10,6 +11,8 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,26 +36,38 @@ public class StatisticDAOImpl implements StatisticDAO {
 	@Override
 	public List<Product> getTopProducts() {
 		List<Product> listPr = sessionFactory.getCurrentSession().createQuery("from Product ORDER BY name ASC").list();
-	
+
 		return listPr;
 	}
 
 	@Override
 	public List<Object[]> getTopClients() {
-	//	List listUser = .createQuery("user, sum(ordertotal) total from Order GROUP BY user ORDER BY total ASC").list();
-		
-		Query query = (Query) sessionFactory.getCurrentSession().createQuery("select order.user, sum(order.ordertotal)"
-				+ " from Order order group by order.user");
-		
-		//Criteria criteria = session.createCriteria(StockDailyRecord.class);
-		//criteria.setMaxResults(10);
-		//criteria.setFirstResult(20);
-		List<Object[]> groupList = query.getResultList();
-		for(Object[] arr : groupList){
-			System.out.println(Arrays.toString(arr));
-		}
-		
-		return groupList;
+
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
+		ProjectionList projectionList = Projections.projectionList();
+		projectionList.add(Projections.groupProperty("user"));
+		projectionList.add(Projections.sum("ordertotal").as("ordertotal"));
+		criteria.setProjection(projectionList).addOrder(org.hibernate.criterion.Order.desc("ordertotal"));
+		criteria.setMaxResults(10);
+		// criteria.setProjection(Projections.sum("ordertotal"));
+
+		// Query query = (Query)
+		// sessionFactory.getCurrentSession().createQuery("select order.user,
+		// sum(order.ordertotal) from Order order group by order.user");
+
+		// Criteria criteria = session.createCriteria(StockDailyRecord.class);
+		// criteria.setMaxResults(10);
+		// criteria.setFirstResult(20);
+		logger.info("criteria.list() = " + criteria.list());
+		List listOrders = criteria.list();
+		logger.info(listOrders.size());
+		/*
+		 * for(Iterator<Object[]> it = listOrders.iterator(); it.hasNext()){
+		 * Object[] obj= (Object[]) it.next(); logger.info("listOrders = "+
+		 * obj[1]); }
+		 */
+		// logger.info("listOrders = "+ ( (Object[]) listOrders.get(1))[1]);
+		return listOrders;
 	}
 
 	@Override

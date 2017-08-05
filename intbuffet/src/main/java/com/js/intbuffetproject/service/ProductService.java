@@ -2,6 +2,7 @@ package com.js.intbuffetproject.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Item;
@@ -24,4 +25,6 @@ public interface ProductService {
 	List<Product> searchProduct(String searchtext);
 	
 	List<Product> searchProductByParameters(SearchParameter searchParameter);
+	
+	List<Integer> fillQuantities(Collection<Item> items);
 }

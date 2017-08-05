@@ -6,10 +6,10 @@
 			<div class="col-sm-6">
 				<div class="contactinfo">
 					<ul class="nav nav-pills">
-						<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88
-								821</a></li>
-						<li><a href=""><i class="fa fa-envelope"></i>
-								info@domain.com</a></li>
+						<li><a href=""><i class="fa fa-phone">+2 95 01 88
+								821</i> </a></li>
+						<li><a href=""><i class="fa fa-envelope">info@domain.com</i>
+								</a></li>
 					</ul>
 
 					<form class="form-search" method="get" action="search"
@@ -30,15 +30,17 @@
 					<ul class="nav navbar-nav">
 
 						<li><a href="<c:url value='/index' />">Home</a></li>
-						<li><a href="cart.html"><i class="fa fa-shopping-cart"></i>
-								Cart  <span class="badge">${cart.totalItems}</span></a></li>
-						<li><a href="login1" id="login"><i class="fa fa-lock"></i>
-								Login</a></li>
+						<li><a href="cart.html"> Cart <span class="badge"
+								id="totalItems">${cart.totalItems}</span></a></li>
+						<li><a href="login1" id="login"> Login</a></li>
 						<security:authorize
 							access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+							<li><a href="getallusersorders">All orders</a></li>
+						</security:authorize>
+						<security:authorize
+							access="hasRole('ROLE_USER') and fullyAuthenticated">
 							<li><a href="getusersorders" id="orders">Orders</a></li>
-							<li><a href="getallusersorders" >All orders</a></li>
-							<li><a href="profile"><i class="fa fa-user"></i>Profile</a></li>
+							<li><a href="profile">Profile</a></li>
 							<li><a href="logout" id="logout">Log out</a></li>
 						</security:authorize>
 

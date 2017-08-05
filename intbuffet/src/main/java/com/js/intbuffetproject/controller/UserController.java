@@ -69,11 +69,12 @@ public class UserController {
 		usD.setUsername(authentication.getName());
 		httpSession.setAttribute("userDTO", usD);
 		logger.info("usD.getUsername() = "+usD.getUsername());
+		if(httpSession.getAttribute("cart")==null){
 		Cart cart = orderService.getCartByUsername(usD.getUsername());
 		logger.info("old cart = "+cart);
 				
 			httpSession.setAttribute("cart", cart);
-	
+		}
 		return "redirect:/index";
 	}
 
@@ -101,9 +102,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signup(@ModelAttribute("user") User user, BindingResult result,
-			@RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-		user.setBirthday(date);
+	public ModelAndView signup(@ModelAttribute("user") User user, BindingResult result) {
+	
 		logger.info("getUsername = " + user.getUsername());
 
 		ModelAndView modAndView = new ModelAndView();
@@ -171,6 +171,7 @@ public class UserController {
 				User user = userService.getUserByUsername(usetDTO.getUsername());
 				orderService.removeCart(usetDTO.getUsername());
 				Order order = new Order();
+				order.setId(cart.getId());
 				order.setCart(true);
 				order.setUser(user);
 				order.setDate(new Date());

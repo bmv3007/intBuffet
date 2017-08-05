@@ -7,15 +7,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.OrderDAO;
 import com.js.intbuffetproject.model.Order;
-import com.js.intbuffetproject.model.Product;
+
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
@@ -50,17 +51,24 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	public void removeCart(String username) {
-
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
+	Session session =	sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Order.class);
 		criteria.createAlias("user", "client")
 				.add(Restrictions.and(Restrictions.eq("client.username", username), Restrictions.eq("cart", true)));
 		logger.info("deleteOrder");
 		List<Order> list = criteria.list();
 
+		
 		if (!list.isEmpty()) {
 			for (Order order : list) {
-
-				sessionFactory.getCurrentSession().delete(order);
+			
+				Order orderToDelete = (Order) sessionFactory.getCurrentSession().get(Order.class, order.getId());
+				if (null != orderToDelete) {
+				Query  query =  session.createSQLQuery("DELETE FROM orders_products WHERE orders_id="+ orderToDelete.getId());
+				 query.executeUpdate();
+					session.delete(orderToDelete);
+				}
+				
 			}
 		}
 
