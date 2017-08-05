@@ -18,4 +18,6 @@ public interface ProductDAO {
 	List<Product> searchProduct(String searchtext);
 	
 	public List<Product> searchProductByParameters(SearchParameter searchParameter);
+	
+	void updateSellQuantity(Product product, Integer sellQuantity);
 }

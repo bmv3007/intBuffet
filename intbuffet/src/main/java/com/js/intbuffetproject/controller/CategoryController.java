@@ -1,6 +1,5 @@
 package com.js.intbuffetproject.controller;
 
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +18,6 @@ import com.js.intbuffetproject.service.CategoryService;
  */
 @Controller
 public class CategoryController {
-
-	@Autowired
-	private HttpSession httpSession;
 
 	private static final Logger logger = Logger.getLogger(CategoryController.class);
 
@@ -57,7 +53,6 @@ public class CategoryController {
 
 	@RequestMapping("/updateCategory/{id}/{name}")
 	public String updateCategory(@PathVariable("id") Long id, @PathVariable("name") String name) {
-		logger.info(" updateCategory name = " + name);
 		Category category = categoryService.getCategoryByID(id);
 		category.setName(name);
 		categoryService.updateCategory(category);

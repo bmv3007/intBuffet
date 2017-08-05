@@ -2,7 +2,6 @@ package com.js.intbuffetproject.controller;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,6 @@ import com.js.intbuffetproject.service.StatisticService;
 @Controller
 public class StatisticController {
 
-	@Autowired
-	private HttpSession httpSession;
 
 	private static final Logger logger = Logger.getLogger(StatisticController.class);
 
@@ -32,18 +29,15 @@ public class StatisticController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("statistic");
 		modelAndView.addObject("topClients", statisticService.getTopClients());
-		
-		//	logger.info("---------topClients--------------"+statisticService.getTopClients().get(1).getuser());
-			
-		
-		//modelAndView.addObject("topProducts", statisticService.getTopProducts());
+		modelAndView.addObject("topProducts", statisticService.getTopProducts());
+
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = "/get_revenue",  method = RequestMethod.GET)
+
+	@RequestMapping(value = "/get_revenue", method = RequestMethod.GET)
 	@ResponseBody
 	public double get_revenue(@RequestParam("from") Date from, @RequestParam("to") Date to) {
-		
+
 		return statisticService.getRevenue(from, to);
 	}
 

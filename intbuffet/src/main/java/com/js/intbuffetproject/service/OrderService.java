@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Order;
-import com.js.intbuffetproject.model.User;
 
 public interface OrderService {
 

@@ -1,7 +1,6 @@
 package com.js.intbuffetproject.model;
 
 /**
- * Product bean.
  * 
  * @author Maria Borovtsova
  */
@@ -30,13 +29,13 @@ public class Item implements java.io.Serializable {
 
 	}
 	
-	public Item(Product product) {
+	public Item(Product product, int quantity) {
 		super();
 		this.id = product.getId();
 		this.name = product.getName();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
-		this.quantity = 0;
+		this.quantity = quantity;
 
 	}
 

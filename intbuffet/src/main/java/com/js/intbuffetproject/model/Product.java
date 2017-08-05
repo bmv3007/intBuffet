@@ -61,7 +61,14 @@ static final long serialVersionUID = 3260689382642549142L;
 
 	@Column(name = "image")
 	private String image;
-
+	
+	@Column(name = "sell_quantity")
+	private int sell_quantity;
+	
+	@OneToMany(mappedBy = "product")
+	public List<OrdersProducts> orders_products;
+	
+		
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "products_ingredients", 
 	joinColumns = @JoinColumn(name = "products_id"), 
@@ -84,6 +91,26 @@ static final long serialVersionUID = 3260689382642549142L;
 		this.image = image;
 		this.ingredients = ingredients;
 	}
+
+	
+	public Product(Long id, String name, Category category, String description, float price, int vegetarian, int weight,
+			int quantity, String image, int sell_quantity, List<OrdersProducts> orders_products,
+			List<Ingredient> ingredients) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.category = category;
+		this.description = description;
+		this.price = price;
+		this.vegetarian = vegetarian;
+		this.weight = weight;
+		this.quantity = quantity;
+		this.image = image;
+		this.sell_quantity = sell_quantity;
+		this.orders_products = orders_products;
+		this.ingredients = ingredients;
+	}
+
 
 	public Product() {
 	
@@ -172,6 +199,31 @@ static final long serialVersionUID = 3260689382642549142L;
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public int getSell_quantity() {
+		return sell_quantity;
+	}
+
+
+	public void setSell_quantity(int sell_quantity) {
+		this.sell_quantity = sell_quantity;
+	}
+
+
+	public List<OrdersProducts> getOrders_products() {
+		return orders_products;
+	}
+
+
+	public void setOrders_products(List<OrdersProducts> orders_products) {
+		this.orders_products = orders_products;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 
 	@Override
 	public int hashCode() {

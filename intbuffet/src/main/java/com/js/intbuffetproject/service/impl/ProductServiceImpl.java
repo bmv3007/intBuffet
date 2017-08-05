@@ -3,16 +3,14 @@ package com.js.intbuffetproject.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.ProductDAO;
-import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Item;
+import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.SearchParameter;
 import com.js.intbuffetproject.service.ProductService;
@@ -42,19 +40,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product getProductByID(Long id) {
-		// TODO Auto-generated method stub
+
 		 return productDAO.getProductByID(id);
 	}
 
 	@Override
 	public List<Product> searchProduct(String searchtext) {
-		// TODO Auto-generated method stub
+		
 		 return productDAO.searchProduct(searchtext);
 	}
 
 	@Override
 	public List<Product> searchProductByParameters(SearchParameter searchParameter) {
-		// TODO Auto-generated method stub
+		
 		List<Product> listProduct = productDAO.searchProductByParameters(searchParameter);
 		for(Product product:listProduct){
 			product.setImage(product.getImage());
@@ -63,22 +61,26 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> fillProducts(Collection<Item> items) {
-		// TODO Auto-generated method stub
-		List<Product> listProducts = new ArrayList<>();
+	public List<OrdersProducts> fillProducts(Collection<Item> items) {
+
+		List<OrdersProducts> ordersProducts = new ArrayList<>();
 		for(Item item: items){
 			Product product = getProductByID(item.getId());
-			product.setQuantity(item.getQuantity());
-			listProducts.add(product);
+			Integer sellQuantity = product.getSell_quantity()+item.getQuantity();
+			productDAO.updateSellQuantity(product,sellQuantity);
+			OrdersProducts orderProduct = new OrdersProducts();
+			orderProduct.setProduct(product);
+			orderProduct.setQuantity(item.getQuantity());
+			
+			ordersProducts.add(orderProduct);
 		}
-		return listProducts;
+		return ordersProducts;
 	}
 
-//*******************************************
 
 @Override
 public List<Integer> fillQuantities(Collection<Item> items) {
-	// TODO Auto-generated method stub
+	
 	List<Integer> listQuantity = new ArrayList<>();
 	
 	for(Item item: items){
@@ -87,6 +89,6 @@ public List<Integer> fillQuantities(Collection<Item> items) {
 	}
 	return listQuantity;
 }
-//********************************************
+
 }
 

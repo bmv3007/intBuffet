@@ -1,6 +1,5 @@
 package com.js.intbuffetproject.util;
 
-import com.js.intbuffetproject.model.User;
 
 public class TopClient {
 	
@@ -16,7 +15,7 @@ public class TopClient {
 
 	public TopClient() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getUser() {

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.AddressDAO;
 import com.js.intbuffetproject.model.Address;
-import com.js.intbuffetproject.model.Category;
 
 @Repository
 public class AddressDAOImpl implements AddressDAO {
@@ -48,19 +47,19 @@ public class AddressDAOImpl implements AddressDAO {
 	@Override
 	public List<String> listCountries() {
 
-		return sessionFactory.getCurrentSession().createSQLQuery("select distinct country from addresses order by country").list();
+		return (List<String>) sessionFactory.getCurrentSession().createSQLQuery("select distinct country from addresses order by country").list();
 	}
 
 	@Override
 	public List<String> listCities() {
-		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createSQLQuery("select distinct city from addresses order by city").list();
+		
+		return (List<String>) sessionFactory.getCurrentSession().createSQLQuery("select distinct city from addresses order by city").list();
 	}
 
 	@Override
 	public List<String> listStreets() {
-		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createSQLQuery("select distinct street from addresses order by street").list();
+		
+		return (List<String>) sessionFactory.getCurrentSession().createSQLQuery("select distinct street from addresses order by street").list();
 	}
 
 	@Override

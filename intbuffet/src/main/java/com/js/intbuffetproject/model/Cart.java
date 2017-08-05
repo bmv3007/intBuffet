@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Cart {
-     
+
 	private Long id;
 	private User user;
 	private double total;
@@ -29,7 +29,7 @@ public class Cart {
 
 	public Cart() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Cart(User user, Map<Long, Item> productsInCart) {
@@ -38,19 +38,12 @@ public class Cart {
 		this.productsInCart = productsInCart;
 	}
 
-	/*
-	 * public void addProduct(Product product, Integer amount){
-	 * productsInCart.put(product, amount); }
-	 */
-
 	public Cart(User user, double total, Map<Long, Item> productsInCart) {
 		super();
 		this.user = user;
 		this.total = total;
 		this.productsInCart = productsInCart;
 	}
-	
-	
 
 	public Cart(User user, double total, Integer totalItems, Map<Long, Item> productsInCart) {
 		super();
@@ -59,8 +52,6 @@ public class Cart {
 		this.totalItems = totalItems;
 		this.productsInCart = productsInCart;
 	}
-	
-	
 
 	public Cart(Long id, User user, double total, Integer totalItems, Map<Long, Item> productsInCart) {
 		super();
@@ -89,11 +80,11 @@ public class Cart {
 	}
 
 	public double getTotal() {
-		
-		if(productsInCart!=null){
+
+		if (productsInCart != null) {
 			total = 0.0;
-			for(Item item:productsInCart.values()){
-				total = total + (double) (item.getPrice()*item.getQuantity());
+			for (Item item : productsInCart.values()) {
+				total = total + (double) (item.getPrice() * item.getQuantity());
 			}
 		}
 		return total;
@@ -104,10 +95,10 @@ public class Cart {
 	}
 
 	public Integer getTotalItems() {
-		
-		if(productsInCart!=null){
+
+		if (productsInCart != null) {
 			totalItems = 0;
-			for(Item item:productsInCart.values()){
+			for (Item item : productsInCart.values()) {
 				totalItems = totalItems + 1;
 			}
 		}
@@ -117,7 +108,5 @@ public class Cart {
 	public void setTotalItems(Integer totalItems) {
 		this.totalItems = totalItems;
 	}
-	
-	
 
 }

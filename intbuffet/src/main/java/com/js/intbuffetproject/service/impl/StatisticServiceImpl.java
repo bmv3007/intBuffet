@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.StatisticDAO;
-import com.js.intbuffetproject.dao.impl.StatisticDAOImpl;
-import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
@@ -49,7 +47,7 @@ public class StatisticServiceImpl implements StatisticService {
 			topClient.setUser(name.toString());
 			topClient.setSum((Double) object[1]);
 			listTopClient.add(topClient);
-			//logger.info("Object ***************** "+((User) object[0]).getFirstname() +"----"+object[1]);
+			
 		}
 		}
      return listTopClient;

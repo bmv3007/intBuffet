@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.js.intbuffetproject.dao.OrderDAO;
 import com.js.intbuffetproject.model.Order;
 
-
 @Repository
 public class OrderDAOImpl implements OrderDAO {
 
@@ -28,8 +27,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	public void addOrder(Order order) {
 
-		logger.info("**************************addOrder(Order order)**************************************");
-		Serializable id = sessionFactory.getCurrentSession().save(order);
+		 sessionFactory.getCurrentSession().save(order);
 
 	}
 
@@ -51,24 +49,24 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	public void removeCart(String username) {
-	Session session =	sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Order.class);
 		criteria.createAlias("user", "client")
 				.add(Restrictions.and(Restrictions.eq("client.username", username), Restrictions.eq("cart", true)));
-		logger.info("deleteOrder");
+
 		List<Order> list = criteria.list();
 
-		
 		if (!list.isEmpty()) {
 			for (Order order : list) {
-			
+
 				Order orderToDelete = (Order) sessionFactory.getCurrentSession().get(Order.class, order.getId());
 				if (null != orderToDelete) {
-				Query  query =  session.createSQLQuery("DELETE FROM orders_products WHERE orders_id="+ orderToDelete.getId());
-				 query.executeUpdate();
+					Query query = session
+							.createSQLQuery("DELETE FROM orders_products WHERE orders_id=" + orderToDelete.getId());
+					query.executeUpdate();
 					session.delete(orderToDelete);
 				}
-				
+
 			}
 		}
 
@@ -90,9 +88,6 @@ public class OrderDAOImpl implements OrderDAO {
 		criteria.createAlias("user", "client").add(Restrictions.eq("client.username", username));
 		criteria.add(Restrictions.eq("cart", false));
 		List<Order> orders = criteria.list();
-		// List<Order> orders =
-		// sessionFactory.getCurrentSession().createQuery("select * from Orders
-		// where client = :client").setParameter("client", username).list();
 
 		return orders;
 	}
@@ -121,7 +116,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public void updateOrder(Order order) {
-		logger.info("updateOrder" + order);
+
 		sessionFactory.getCurrentSession().update(order);
 
 	}

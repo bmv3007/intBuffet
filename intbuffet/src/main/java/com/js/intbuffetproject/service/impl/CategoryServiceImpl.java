@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category getCategoryByID(Long id) {
-		// TODO Auto-generated method stub
+		
 		return categoryDAO.getCategoryByID(id);
 	}
 

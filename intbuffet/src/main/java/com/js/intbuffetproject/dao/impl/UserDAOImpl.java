@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.UserDAO;
-import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.model.User;
 
 @Repository
@@ -18,7 +17,6 @@ public class UserDAOImpl implements UserDAO {
 	private SessionFactory sessionFactory;
 
 	public void addUser(User user) {
-		logger.info("Birthday" + user.getBirthday());
 		sessionFactory.getCurrentSession().save(user);
 	}
 

@@ -103,11 +103,7 @@
 					</tr>
 
 				</table>
-				<%-- </form:form>
-	<!--       ******************************************************          -->			
-				
-				<form:form action="makeOrder" modelAttribute="address"
-				class="form-inline">
+
 				<label for="address">Address</label> --%>
 				<table>
 
@@ -179,14 +175,13 @@
 										<p>${item.quantity}</p>
 									</td>
 
-									<!-- <td class="cart_delete"><a class="cart_quantity_delete"
-									href=""><i class="fa fa-times"></i></a></td>  -->
 								</tr>
 
 							</c:forEach>
 							<tr>
 								<td colspan="3" style="text-align: right" class="cart_total">
-									<p class="cart_total_price" id="totalItem">Total price: ${cart.total} &#8364;</p>
+									<p class="cart_total_price" id="totalItem">Total price:
+										${cart.total} &#8364;</p>
 								</td>
 							</tr>
 						</tbody>

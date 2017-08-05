@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Product bean.
+ * Address bean.
  * 
  * @author Maria Borovtsova
  */

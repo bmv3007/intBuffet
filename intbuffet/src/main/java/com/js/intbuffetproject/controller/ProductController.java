@@ -1,6 +1,5 @@
 package com.js.intbuffetproject.controller;
 
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,19 +11,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.model.Product;
 
-import com.js.intbuffetproject.service.AddressService;
 import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.ProductService;
-import com.js.intbuffetproject.service.UserService;
+
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class ProductController {
-
-	@Autowired
-	private HttpSession httpSession;
 
 	private static final Logger logger = Logger.getLogger(ProductController.class);
 
@@ -33,12 +28,6 @@ public class ProductController {
 
 	@Autowired
 	private CategoryService categoryService;
-
-	@Autowired
-	private AddressService addressService;
-
-	@Autowired
-	private UserService userService;
 
 	@RequestMapping(value = "/addnewproduct", method = RequestMethod.GET)
 	public ModelAndView addNewProduct() {

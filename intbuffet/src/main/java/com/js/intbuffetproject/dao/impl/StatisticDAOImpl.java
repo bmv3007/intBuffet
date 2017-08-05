@@ -1,28 +1,22 @@
 package com.js.intbuffetproject.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.StatisticDAO;
-import com.js.intbuffetproject.dto.UserDTO;
-import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.User;
 
 @Repository
 public class StatisticDAOImpl implements StatisticDAO {
@@ -35,7 +29,7 @@ public class StatisticDAOImpl implements StatisticDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getTopProducts() {
-		List<Product> listPr = sessionFactory.getCurrentSession().createQuery("from Product ORDER BY name ASC").list();
+		List<Product> listPr = sessionFactory.getCurrentSession().createQuery("from Product ORDER BY sell_quantity DESC").setMaxResults(5).list();
 
 		return listPr;
 	}
@@ -49,24 +43,9 @@ public class StatisticDAOImpl implements StatisticDAO {
 		projectionList.add(Projections.sum("ordertotal").as("ordertotal"));
 		criteria.setProjection(projectionList).addOrder(org.hibernate.criterion.Order.desc("ordertotal"));
 		criteria.setMaxResults(10);
-		// criteria.setProjection(Projections.sum("ordertotal"));
 
-		// Query query = (Query)
-		// sessionFactory.getCurrentSession().createQuery("select order.user,
-		// sum(order.ordertotal) from Order order group by order.user");
+		List<Object[]> listOrders = criteria.list();
 
-		// Criteria criteria = session.createCriteria(StockDailyRecord.class);
-		// criteria.setMaxResults(10);
-		// criteria.setFirstResult(20);
-		logger.info("criteria.list() = " + criteria.list());
-		List listOrders = criteria.list();
-		logger.info(listOrders.size());
-		/*
-		 * for(Iterator<Object[]> it = listOrders.iterator(); it.hasNext()){
-		 * Object[] obj= (Object[]) it.next(); logger.info("listOrders = "+
-		 * obj[1]); }
-		 */
-		// logger.info("listOrders = "+ ( (Object[]) listOrders.get(1))[1]);
 		return listOrders;
 	}
 

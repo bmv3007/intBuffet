@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.UserDAO;
-import com.js.intbuffetproject.dao.impl.UserDAOImpl;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.UserService;
 
@@ -21,10 +20,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean addUser(User user) {
-		logger.info("=====");
-		User user1 = getUserByUsername(user.getUsername());
-		
-   logger.info("getUserByUsername(user.getUsername())= " + user1);
+				
 		if (getUserByUsername(user.getUsername()) != null) {
 			return false;
 		} else {

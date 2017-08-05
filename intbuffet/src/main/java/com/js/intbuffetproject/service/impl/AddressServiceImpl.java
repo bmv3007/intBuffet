@@ -20,12 +20,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Transactional
 	public Serializable addAddress(Address address) {
-		/*Address address1 = findAddress(address);
-		if(address1 == null ){
-		Serializable idAddress =  addressDAO.addAddress(address);
-		 return idAddress;
-		}else return address1.getId();*/
-		
+				
 		return addressDAO.addAddress(address);
 	}
 
@@ -47,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public Address getAddressByID(Long id) {
-		// TODO Auto-generated method stub
+	
 		return addressDAO.getAddressByID(id);
 	}
 

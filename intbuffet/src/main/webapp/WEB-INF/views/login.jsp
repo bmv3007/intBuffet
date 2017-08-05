@@ -20,16 +20,6 @@
 
 <%@include file="head.jspf"%>
 </header>
-<%-- <%
-
-if(request.getParameter("username")!=null && !request.getParameter("username").trim().isEmpty()) {
-   session.setAttribute("username", request.getParameter("username"));
-} 
-
-%> --%>
-
-
-
 
 <c:if test="${not empty param.error}">
 	<font color="red">

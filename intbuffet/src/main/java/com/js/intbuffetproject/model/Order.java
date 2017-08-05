@@ -3,25 +3,21 @@ package com.js.intbuffetproject.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Product bean.
+ * Order bean.
  * 
  * @author Maria Borovtsova
  */
@@ -41,11 +37,11 @@ public class Order implements Serializable {
 	@Column(name = "date")
 	private Date date;
 
-	@ManyToOne // many orders by one client
+	@ManyToOne 
 	@JoinColumn(name = "client")
 	private User user;
 
-	@ManyToOne // many orders by one address
+	@ManyToOne 
 	@JoinColumn(name = "address")
 	private Address address;
 
@@ -55,7 +51,7 @@ public class Order implements Serializable {
 	@Column(name = "deliverymethod")
 	private String deliverymethod;
 
-	@Column(name = "paid") // ? boolean ??
+	@Column(name = "paid") 
 	private boolean paid;
 
 	@Column(name = "orderstatus")
@@ -67,19 +63,8 @@ public class Order implements Serializable {
 	@Column(name = "cart")
 	private boolean cart;
 
-	
-	  @ManyToMany(fetch = FetchType.LAZY) 
-	  @JoinTable(name = "orders_products", joinColumns = @JoinColumn(name =
-	  "orders_id"), inverseJoinColumns = @JoinColumn(name = "products_id"))
-	  private List<Product> products;
-	 
-
-	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "orders_products", 
-	joinColumns = { @JoinColumn(table="orders", name="orders_id", referencedColumnName="id")}, 
-	inverseJoinColumns = {@JoinColumn(table="products", name = "products_id", referencedColumnName="id"),
-			              @JoinColumn(table="orders_products", name="quantity", referencedColumnName="quantity")})
-	private List<Product> products;*/
+	@OneToMany(mappedBy = "order")
+	public List<OrdersProducts> orders_products;
 
 	public Order() {
 		super();
@@ -87,7 +72,7 @@ public class Order implements Serializable {
 	}
 
 	public Order(Long id, Date date, User user, Address address, String paymentmethod, String deliverymethod,
-			boolean paid, String orderstatus, double ordertotal, boolean cart, List<Product> products) {
+			boolean paid, String orderstatus, double ordertotal, boolean cart, List<OrdersProducts> orders_products) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -99,22 +84,7 @@ public class Order implements Serializable {
 		this.orderstatus = orderstatus;
 		this.ordertotal = ordertotal;
 		this.cart = cart;
-		this.products = products;
-	}
-
-	public Order(Long id, Date date, User user, Address address, String paymentmethod, String deliverymethod,
-			boolean paid, String orderstatus, double ordertotal, List<Product> products) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.user = user;
-		this.address = address;
-		this.paymentmethod = paymentmethod;
-		this.deliverymethod = deliverymethod;
-		this.paid = paid;
-		this.orderstatus = orderstatus;
-		this.ordertotal = ordertotal;
-		this.products = products;
+		this.orders_products = orders_products;
 	}
 
 	public Long getId() {
@@ -185,18 +155,6 @@ public class Order implements Serializable {
 		this.orderstatus = orderstatus;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	public void addProducts(Product products) {
-		this.products.add(products);
-	}
-
 	public double getOrdertotal() {
 		return ordertotal;
 	}
@@ -211,6 +169,14 @@ public class Order implements Serializable {
 
 	public void setCart(boolean cart) {
 		this.cart = cart;
+	}
+
+	public List<OrdersProducts> getOrders_products() {
+		return orders_products;
+	}
+
+	public void setOrders_products(List<OrdersProducts> orders_products) {
+		this.orders_products = orders_products;
 	}
 
 }

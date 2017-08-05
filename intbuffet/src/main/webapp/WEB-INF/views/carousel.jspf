@@ -44,7 +44,7 @@
 						</div>
 					</div>
 
-					<!--  cтрелки переключения слайдов -->
+					
 					<a href="#carousel" class="left carousel-control" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left"></span>
 					</a> <a href="#carousel" class="right carousel-control"

@@ -118,6 +118,42 @@
 	</nav>
 
 
+<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+
+			<div class="table-responsive cart_info">
+
+				<table class="table table-striped  table-hover table-condensed">
+					<div class="caption">
+						<h3>Top products</h3>
+					</div>
+					<thead>
+						<tr class="cart_menu">
+							<td class="description">Product</td>
+
+							<td class="total">Total quantity</td>
+
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="item" items="${topProducts}">
+
+							<tr>
+							
+								<td class="total">${item.name}</td>
+									
+								<td class="total">${item.sell_quantity}</td>
+					
+							</tr>
+						</c:forEach>
+
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+	</nav>
 
 	<%-- <section id="cart_items">
 		<div class="container">

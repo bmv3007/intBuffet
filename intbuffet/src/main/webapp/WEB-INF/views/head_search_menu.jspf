@@ -1,18 +1,3 @@
-<%-- <%
-request.setCharacterEncoding("UTF-8");
-String search = "";
-
-if(request.getParameter("search")!=null && !request.getParameter("search").trim().isEmpty()) {
-  search = request.getParameter("search");
-  session.setAttribute("search", search);
-} else if(session.getAttribute("search")!=null){
-	 search = session.getAttribute("search").toString();
-}else{
-	session.setAttribute("search", search);
-}
-
-
-%> --%>
 <!-- 	******************HEAD seach****************** -->
 <div class="row">
 	<div class="seach">
@@ -44,8 +29,6 @@ if(request.getParameter("search")!=null && !request.getParameter("search").trim(
 				<li><a href="login1" id="login">Sing in</a></li>
 				<li><a href="cart"><img src="resources/images/basket5.jpg"></a></li>
 
-				<!-- <li><a href="?lang=ge"><img src="resources/images/du.jpg"></a></li>
-						<li><a href="?lang=ru"><img src="resources/images/ru.jpg"></a></li> -->
 
 			</ul>
 

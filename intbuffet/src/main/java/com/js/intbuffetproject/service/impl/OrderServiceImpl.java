@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.OrderDAO;
-import com.js.intbuffetproject.dao.impl.OrderDAOImpl;
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
-import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.User;
+import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.service.OrderService;
 
 @Service
@@ -29,8 +27,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public boolean addOrder(Order order) {
-		logger.info("====addOrder=====");
-
+	
 		orderDAO.addOrder(order);
 		return true;
 
@@ -92,8 +89,8 @@ public class OrderServiceImpl implements OrderService {
 			
 			oldCart.setUser(cart.getUser());
 			oldCart.setId(cart.getId());
-			for(Product product: cart.getProducts()){
-				Item item= new Item(product);
+			for(OrdersProducts ordersProduct: cart.getOrders_products()){
+				Item item= new Item(ordersProduct.getProduct(), ordersProduct.getQuantity());
 				oldCart.addProduct(item.getId(), item);
 			}
 			

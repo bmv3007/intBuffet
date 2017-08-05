@@ -11,5 +11,6 @@
 		<mapping class="com.js.intbuffetproject.model.User" />
 		<mapping class="com.js.intbuffetproject.model.Address" />
 		<mapping class="com.js.intbuffetproject.model.Category" />
+		<mapping class="com.js.intbuffetproject.model.OrdersProducts" />
 	</session-factory>
 </hibernate-configuration>

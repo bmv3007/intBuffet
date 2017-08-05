@@ -1,7 +1,6 @@
 package com.js.intbuffetproject.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.Map;
 
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.js.intbuffetproject.model.Product;
 import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.ProductService;
 
@@ -47,7 +44,6 @@ public class HomeController {
 	@ResponseBody
 	public ModelAndView listProducts(Map<String, Object> map, Locale locale) {
 		ModelAndView modAndView = new ModelAndView();
-		// logger.info("local = " + locale);
 		map.put("productList1", productService.listProduct());
 		httpSession.setAttribute("currentProductList", productService.listProduct());
 		httpSession.setAttribute("categoriesList", categoryService.listCategories());
@@ -70,12 +66,8 @@ public class HomeController {
 			throws ServletException, IOException {
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 
-	
 		response.getOutputStream().close();
 
 	}
-
-	
-
 
 }

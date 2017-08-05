@@ -28,9 +28,6 @@ import com.js.intbuffetproject.service.ProductService;
 @Controller
 public class SearchController {
 
-	@Autowired
-	private HttpSession httpSession;
-
 	private static final Logger logger = Logger.getLogger(SearchController.class);
 
 	@Autowired
@@ -44,8 +41,6 @@ public class SearchController {
 		searchParameter.setCategoryID(categoryId);
 		searchParameter.setVegetarian(vegetarian);
 
-		logger.info("categoryId:" + categoryId + "vegetarian:" + vegetarian);
-
 		return productService.searchProductByParameters(searchParameter);
 	}
 	
@@ -57,10 +52,10 @@ public class SearchController {
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
-		// logger.info("local = " + locale);
+		
 		session.setAttribute("search", searchtext);
 		map.put("contact", new Product());
 		map.put("productList1", productService.searchProduct(searchtext));

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +24,11 @@ import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
-import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.AddressService;
 import com.js.intbuffetproject.service.OrderService;
+import com.js.intbuffetproject.service.OrdersProductsService;
 import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.UserService;
 import com.js.intbuffetproject.util.Util.Deliverymethod;
@@ -58,6 +58,9 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private OrdersProductsService ordersProductsService;
+
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
 	public ModelAndView order() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -69,8 +72,8 @@ public class OrderController {
 				order.setDate(new Date());
 				Cart cart = (Cart) httpSession.getAttribute("cart");
 				Collection<Item> listItems = cart.getProductsInCart().values();
-				for(Item item: listItems){
-					if(item.getQuantity()<1){
+				for (Item item : listItems) {
+					if (item.getQuantity() < 1) {
 						cart.deleteProduct(item.getId());
 						cart.setTotal(cart.getTotal());
 					}
@@ -81,9 +84,7 @@ public class OrderController {
 				modelAndView.addObject("countries", addressService.listCountries());
 				modelAndView.addObject("cities", addressService.listCities());
 				modelAndView.addObject("streets", addressService.listStreets());
-				modelAndView.addObject("productLisInCart",	listItems);
-
-			//	logger.info("order = index" + ((Cart) httpSession.getAttribute("cart")).getProductsInCart().values());
+				modelAndView.addObject("productLisInCart", listItems);
 				modelAndView.setViewName("order");
 				Address address = new Address();
 				order.setAddress(address);
@@ -91,7 +92,7 @@ public class OrderController {
 
 			}
 		} else {
-			logger.info("order = login");
+			
 			modelAndView.setViewName("login");
 
 		}
@@ -106,22 +107,19 @@ public class OrderController {
 		order.setUser(user);
 		order.setDate(new Date());
 		Cart cart = (Cart) httpSession.getAttribute("cart");
-		List<Product> products = productService.fillProducts(cart.getProductsInCart().values());
-		order.setProducts(products);
 		order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
 		order.setOrdertotal(cart.getTotal());
-		logger.info("order date= " + order.getAddress());
-		// logger.info("order total = " + order.getOrdertotal());
 
 		ModelAndView modAndView = new ModelAndView();
 		Address address = order.getAddress();
 		Serializable id = addressService.addAddress(address);
 		order.setAddress((Address) addressService.getAddressByID((Long) id));
-		logger.info("order getCountry= " + order.getAddress().getCountry());
-		logger.info("order " + order);
 		orderService.addOrder(order);
+		List<OrdersProducts> orders_products = productService.fillProducts(cart.getProductsInCart().values());
+		ordersProductsService.setOrder(orders_products, order);
+		ordersProductsService.saveOrdersProductsAll(orders_products);
 		modAndView.setViewName("index");
-		//orderService.removeCart(usetDTO.getUsername());
+		orderService.removeCart(usetDTO.getUsername());
 		cart = new Cart();
 		httpSession.setAttribute("cart", cart);
 		return "redirect:/index";
@@ -134,16 +132,15 @@ public class OrderController {
 		if (((UserDTO) httpSession.getAttribute("userDTO")) == null) {
 			modelAndView.setViewName("index");
 			return modelAndView;
-		}else{
+		} else {
 
-		UserDTO user = (UserDTO) httpSession.getAttribute("userDTO");
-		logger.info("Orders = " + orderService.getOrderByUsername(user.getUsername()).toArray());
-		List<Order> listOrder = orderService.listOrderByClient(user.getUsername());
-		modelAndView.addObject("orderstatus", Arrays.asList(Orderstatus.values()));
-		modelAndView.addObject("UsersOrders", listOrder);
-		modelAndView.setViewName("listOrders");
+			UserDTO user = (UserDTO) httpSession.getAttribute("userDTO");
+			List<Order> listOrder = orderService.listOrderByClient(user.getUsername());
+			modelAndView.addObject("orderstatus", Arrays.asList(Orderstatus.values()));
+			modelAndView.addObject("UsersOrders", listOrder);
+			modelAndView.setViewName("listOrders");
 
-		return modelAndView;
+			return modelAndView;
 		}
 
 	}
@@ -155,9 +152,7 @@ public class OrderController {
 			modelAndView.setViewName("index");
 			return modelAndView;
 		}
-
 		modelAndView.addObject("orderstatus", Arrays.asList(Orderstatus.values()));
-
 		List<Order> listOrder = orderService.listOrder();
 		modelAndView.addObject("UsersOrders", listOrder);
 		modelAndView.setViewName("listOrders");
@@ -168,18 +163,13 @@ public class OrderController {
 
 	@RequestMapping(value = "/updateOrder", params = { "id", "status" }, method = RequestMethod.GET)
 	public String updateOrder(@RequestParam("id") Long id, @RequestParam("status") String status) {
-		logger.info(" updateOrder Order id = " + id);
-		logger.info(" updateOrder Order status = " + status);
+
 		Order order = orderService.getOrderById(id);
 		order.setOrderstatus(status);
-          
-		logger.info(" updateOrder getOrderstatus = " + order.getOrderstatus());
 		orderService.updateOrder(order);
-		
+
 		return "redirect:/getallusersorders";
 
 	}
-
-	// (value = "/save_cart", method = RequestMethod.GET)
 
 }

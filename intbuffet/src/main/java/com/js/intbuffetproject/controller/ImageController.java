@@ -18,13 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.js.intbuffetproject.service.ProductService;
 
-
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class ImageController {
-
 
 	private static final Logger logger = Logger.getLogger(ImageController.class);
 
@@ -35,18 +33,14 @@ public class ImageController {
 	public void showImage(@RequestParam("id") Long itemId, HttpServletResponse response, HttpServletRequest request)
 			throws ServletException, IOException {
 		String imageName = productService.getProductByID(itemId).getImage();
-		File file = new  File("C:\\intbuffet\\images\\"+imageName);
-		
-		logger.info("itemId, imageName, file =  "+itemId +" - "+imageName+" - "+file);
-		
+		File file = new File("C:\\intbuffet\\images\\" + imageName);
+
+		logger.info("itemId, imageName, file =  " + itemId + " - " + imageName + " - " + file);
+
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-		
+
 		Files.copy(file.toPath(), response.getOutputStream());
 
-		//response.getOutputStream().close();
-
 	}
-
-
 
 }

@@ -3,7 +3,6 @@ package com.js.intbuffetproject.dao;
 import java.util.Date;
 import java.util.List;
 
-import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.Product;
 
