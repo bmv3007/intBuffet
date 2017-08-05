@@ -68,7 +68,7 @@ public class Order implements Serializable {
 	private boolean cart;
 
 	
-	  @ManyToMany(fetch = FetchType.LAZY)
+	  @ManyToMany(fetch = FetchType.LAZY) 
 	  @JoinTable(name = "orders_products", joinColumns = @JoinColumn(name =
 	  "orders_id"), inverseJoinColumns = @JoinColumn(name = "products_id"))
 	  private List<Product> products;
