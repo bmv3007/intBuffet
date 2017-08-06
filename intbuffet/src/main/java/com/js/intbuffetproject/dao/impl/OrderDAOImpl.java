@@ -35,7 +35,7 @@ public class OrderDAOImpl implements OrderDAO {
 	public ArrayList<Order> listOrder() {
 
 		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession()
-				.createQuery("from Order ORDER BY id ASC").list();
+				.createQuery("from Order where ordertotal>0 ORDER BY id ASC").list();
 
 		return listPr;
 	}
@@ -85,8 +85,8 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> listOrderByClient(String username) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
-		criteria.createAlias("user", "client").add(Restrictions.eq("client.username", username));
-		criteria.add(Restrictions.eq("cart", false));
+		criteria.createAlias("user", "client").add(Restrictions.and(Restrictions.eq("client.username", username), Restrictions.eq("cart", false)));
+		//criteria.add(Restrictions.eq("cart", false));
 		List<Order> orders = criteria.list();
 
 		return orders;

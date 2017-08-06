@@ -30,56 +30,86 @@
 
 	<!-- 	******************MAIN row products****************** -->
 
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 top-material"></div>
+
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 top-material">
+
+				<h2>New product</h2>
 
 
 
-	<section id="cart_items">
-		<div class="container">
-			<form:form action="newProduct" modelAttribute="product"
-				class="form-group">
-				<label for="product">Product</label>
-				<table>
+				<form:form action="newProduct" modelAttribute="product"	class="form-group"  enctype="multipart/form-data">
 
-					<tr>
+					<table>
 
-						<td><form:label path="name">Name: </form:label></td>
-						<td><form:input path="name" class="form-control"></form:input></td>
-					</tr>
+						<tr>
 
-					<tr>
-						<td><form:label path="category">Category: </form:label></td>
-						<td><form:select path="category" class="form-control">
-								<form:options items="${categories}" itemValue="name" itemLabel="name"/>
-							</form:select></td>
-					</tr>
-					<tr>
-						<td><form:label path="description">Description: </form:label></td>
-						<td><form:input path="description" class="form-control"></form:input></td>
-					</tr>
-					<tr>
-						<td><form:label path="price">Price: </form:label></td>
-						<td><form:input path="price" class="form-control"></form:input></td>
-					</tr>
-					<tr>
-						<td><form:label path="vegetarian">Vegetarian: </form:label></td>
-						<td><form:input path="vegetarian" class="form-control"></form:input></td>
-					</tr>
-					<tr>
-						<td><form:label path="weight">Weight: </form:label></td>
-						<td><form:input path="weight" class="form-control"></form:input></td>
-					</tr>
-					
+							<td><form:label path="name">Name: </form:label></td>
+							<td><form:input path="name" class="form-control"></form:input></td>
+						</tr>
 
-				</table>
+						<tr>
+							<td><form:label path="category">Category: </form:label></td>
+							<td><form:select path="category" class="form-control">
+									<form:options items="${categories}" itemValue="id"
+										itemLabel="name" />
+								</form:select></td>
+						</tr>
+						<tr>
+							<td><form:label path="description">Description: </form:label></td>
+							<td><form:textarea path="description" class="form-control"></form:textarea></td>
+						</tr>
+						<tr>
+							<td><form:label path="price">Price: </form:label></td>
+							<td><form:input type="number" step="0.1" path="price"
+									class="form-control"></form:input></td>
+						</tr>
+						<tr>
+							<td><form:label path="vegetarian">Vegetarian: </form:label></td>
+							<td><form:checkbox path="vegetarian" class="custom-checkbox"></form:checkbox></td>
+						</tr>
+						<tr>
+							<td><form:label path="weight">Weight: </form:label></td>
+							<td><form:input type="number" step="1" path="weight"
+									class="form-control"></form:input></td>
+						</tr>
+						
+						<%-- <tr>
+							<td><form:label path="image">Image: </form:label></td>
+							<td><a a href="#" onclick="upload()" refattr="ahref"><img class="img-rounded"
+											src="resources/images/download.jpg"></a></td><td><form:input type="file"  path="image" name="file"></form:input>
+							<br></td>
+						</tr> --%>
+						<tr>
+						<td><form:label path="image">Image: </form:label></td>
 				
+				<td><form:input type="file"  path="image" name="file" id="file"></form:input><td>
+					
+						</tr>
+					</table>
 
-				<input type="submit" value="Save" class="btn btn-primary"/>
 
-			</form:form>
+					<input type="submit" value="Save" class="btn btn-primary" />
 
+				</form:form>
+				<form:form action="uploadFile" id="file" method="post" enctype="multipart/form-data" modelAttribute="fileHolder"	class="form-group" >
+				<form:label path="file">Image: </form:label>
+				
+				<form:input type="file"  path="file" name="file"></form:input>
+					<br>	
+					<input type="submit" value="Upload" class="btn btn-primary" />	
+				 <a a href="#" type="submit"  refattr="ahref"  onclick="uploadFile()" ><img class="img-rounded"
+											src="resources/images/download.jpg"></a> 
+		
+	</form:form>
+
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 top-material"></div>
 		</div>
-	</section>
-	
+	</div>
+
 	<!-- 	******************footer row****************** -->
 
 	<div class="container">

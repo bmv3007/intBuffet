@@ -54,7 +54,7 @@
 									<p> Price: ${product.price}</p>
 									<p> Vegetarian: 
 									<c:choose>
-										<c:when test="${product.vegetarian==0}">
+										<c:when test="${product.vegetarian}">
 											Yes
 										</c:when>
 										<c:otherwise>

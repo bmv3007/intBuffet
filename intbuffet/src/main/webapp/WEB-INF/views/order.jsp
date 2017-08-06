@@ -87,7 +87,7 @@
 					<tr>
 						<td><form:label path="paid">The payment is made: 
                     		<c:choose>
-									<c:when test="${order.paid==true}">
+									<c:when test="${order.paid}">
         						    Yes
        						 		</c:when>
 									<c:otherwise>
@@ -104,7 +104,7 @@
 
 				</table>
 
-				<label for="address">Address</label> --%>
+				<label for="address">Address</label> 
 				<table>
 
 
@@ -159,6 +159,7 @@
 							</tr>
 						</thead>
 						<tbody>
+						<c:if test="${not empty productLisInCart}">
 							<c:forEach var="item" items="${productLisInCart}">
 
 								<tr>
@@ -184,6 +185,35 @@
 										${cart.total} &#8364;</p>
 								</td>
 							</tr>
+							</c:if>
+							
+							<c:if test="${not empty productLisInOrder}">
+							<c:forEach var="item" items="${productLisInOrder}">
+
+								<tr>
+									<td class="cart_description">
+										<h4>
+											<a href="">${item.product.name} </a>
+										</h4>
+										<p>${item.product.description}</p>
+									</td>
+									<td class="cart_price">
+										<p>&#8364; ${item.product.price}</p>
+									</td>
+									<td class="cart_quantity">
+										<p>${item.quantity}</p>
+									</td>
+
+								</tr>
+
+							</c:forEach>
+							<tr>
+								<td colspan="3" style="text-align: right" class="cart_total">
+									<p class="cart_total_price" id="totalItem">Total price:
+										${order.ordertotal} &#8364;</p>
+								</td>
+							</tr>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

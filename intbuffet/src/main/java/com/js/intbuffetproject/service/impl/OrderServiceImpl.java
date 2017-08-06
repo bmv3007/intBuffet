@@ -1,5 +1,6 @@
 package com.js.intbuffetproject.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -107,5 +108,32 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.getOrderById(id);
 		
 	}
+
+	@Override
+	public Order copyOrder(Long id) {
+
+    Order oldOrder = orderDAO.getOrderById(id);
+    Order newOrder = new Order();
+    List<OrdersProducts> newListOrdersProducts = new ArrayList<OrdersProducts>();
+    if(oldOrder.getOrders_products()!=null){
+    for(OrdersProducts oldOrdersProducts:oldOrder.getOrders_products()){
+    	OrdersProducts newOrdersProducts = new OrdersProducts();
+    	newOrdersProducts.setProduct(oldOrdersProducts.getProduct());
+    	newOrdersProducts.setOrder(newOrder);
+    	newOrdersProducts.setQuantity(oldOrdersProducts.getQuantity());
+    	newListOrdersProducts.add(newOrdersProducts); 
+    }
+    }
+   
+    newOrder.setAddress(oldOrder.getAddress());
+    newOrder.setDeliverymethod(oldOrder.getDeliverymethod());
+    newOrder.setOrders_products(newListOrdersProducts);
+    newOrder.setOrdertotal(oldOrder.getOrdertotal());
+    newOrder.setPaid(false);
+    newOrder.setPaymentmethod(oldOrder.getPaymentmethod());
+        
+		return newOrder;
+	}
+	
 
 }

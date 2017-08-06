@@ -13,7 +13,7 @@ public interface StatisticService {
 	
 	List<TopClient> getTopClients();
 
-	double getRevenue(Date from, Date to);
+	String getRevenue(Date from, Date to);
 		
 	
 }

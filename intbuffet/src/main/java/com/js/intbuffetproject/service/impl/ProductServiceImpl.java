@@ -50,12 +50,17 @@ public class ProductServiceImpl implements ProductService {
 		 return productDAO.searchProduct(searchtext);
 	}
 
+	@Transactional
 	@Override
-	public List<Product> searchProductByParameters(SearchParameter searchParameter) {
+	public List<Product> searchProductByParameters(Long categoryId, boolean vegetarian) {
+		SearchParameter searchParameter = new SearchParameter();
+		searchParameter.setCategoryID(categoryId);
+		searchParameter.setVegetarian(vegetarian);
 		
 		List<Product> listProduct = productDAO.searchProductByParameters(searchParameter);
 		for(Product product:listProduct){
 			product.setImage(product.getImage());
+			product.setOrders_products(null);
 		}
 		return listProduct;
 	}

@@ -37,11 +37,7 @@ public class SearchController {
 	public @ResponseBody 
 	List<Product> find(@RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian") boolean vegetarian) {
 
-		SearchParameter searchParameter = new SearchParameter();
-		searchParameter.setCategoryID(categoryId);
-		searchParameter.setVegetarian(vegetarian);
-
-		return productService.searchProductByParameters(searchParameter);
+		return productService.searchProductByParameters(categoryId,vegetarian);
 	}
 	
 	@RequestMapping("/search")
@@ -57,7 +53,6 @@ public class SearchController {
 		}
 		
 		session.setAttribute("search", searchtext);
-		map.put("contact", new Product());
 		map.put("productList1", productService.searchProduct(searchtext));
 		map.put("seachtext", "seachtext");
 		modAndView.addAllObjects(map);

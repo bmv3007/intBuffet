@@ -23,7 +23,7 @@ public interface ProductService {
 	
 	List<Product> searchProduct(String searchtext);
 	
-	List<Product> searchProductByParameters(SearchParameter searchParameter);
+	List<Product> searchProductByParameters(Long categoryId, boolean vegetarian);
 	
 	List<Integer> fillQuantities(Collection<Item> items);
 }

@@ -14,6 +14,14 @@
 <link href="resources/css/style.css" rel="stylesheet" />
 </head>
 <body>
+	<security:authorize
+		access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
+		<c:set var="admin">true</c:set>
+	</security:authorize>
+	<security:authorize
+		access="hasRole('ROLE_USER') and fullyAuthenticated">
+		<c:set var="user">true</c:set>
+	</security:authorize>
 
 	<!-- **********************Test**************************************** -->
 
@@ -63,13 +71,18 @@
 						<tr class="cart_menu">
 							<td class="description">N</td>
 							<td class="date">Date</td>
-							<td class="description">Client</td>
+							<c:if test="${admin eq 'true'}">
+								<td class="description">Client</td>
+							</c:if>
 							<td class="description">Order status</td>
 							<td class="description">Method of payment</td>
 							<td class="description">Method of delivery</td>
 							<td class="description">Paid</td>
 							<td class="total">Total (&#8364;)</td>
 							<td></td>
+							<c:if test="${user eq 'true'}">
+									<td></td>
+								</c:if>
 						</tr>
 					</thead>
 					<tbody>
@@ -83,35 +96,24 @@
 										<fmt:formatDate type="date" value="${item.date}" />
 									</p>
 								</td>
-								<security:authorize
-									access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
 
+
+								<c:if test="${admin eq 'true'}">
 									<td class="cart_description">${item.user.surname}
 										${item.user.firstname}</td>
+								</c:if>
+								<td class="cart_price" ><select
+									name="titles" size="1" optionAttr="${item.id}"
+									 ${admin eq 'true' ? 'anabled' : 'disabled'}>
+										<c:forEach items="${orderstatus}" var="status">
+											<option value="${status.name}"
+												${status.name eq item.orderstatus ? 'selected' : ''}>${status.name}</option>
 
-									<td class="cart_price">
-										<%-- <section>
-											<select items="${orderstatus}" itemValue="name"
-												itemLabel="name" value="${item.orderstatus}" /> ${item.orderstatus}
-										</section> --%> <select name="titles" size="1" optionAttr = "${item.id}" >
-											<c:forEach items="${orderstatus}" var="status">
-											<option value="${status.name}">${status.name}</option>
-											 <%-- <c:if test="${status.name} == ${item.orderstatus}">{
-												<option value="${status.name}" selected>${status.name}</option>
-												</c:if>
-												<c:if test="${status.name} != ${item.orderstatus}">{
-												<option value="${status.name}">${status.name}</option>
-												</c:if> --%>
-											</c:forEach>
-									</select> <%-- 	<select name="Status" type="text" >
-											<c:forEach items="${orderstatus}" var="databaseValue">
-												<option value="${item.orderstatus}">${orderstatus.name}</option>
-												
-											</c:forEach>
-											<option items="${orderstatus}" value="${item.orderstatus}" />
-											<select> --%>
-									</td>
-								</security:authorize>
+										</c:forEach>
+								</select></td>
+
+
+
 								<td class="cart_price">
 									<p>${item.paymentmethod}</p>
 								</td>
@@ -127,10 +129,17 @@
 										</c:otherwise>
 									</c:choose></td>
 								<td class="cart_description">${item.ordertotal}</td>
-								<td><a a href="#" onclick="changeHrefOrder('${item.id}')"
-									refattr="${item.id}"><img class="img-rounded"
-										src="resources/images/save.png"></a></td>
-
+								<c:if test="${admin eq 'true'}">
+									<td><a a href="#" onclick="changeHrefOrder('${item.id}')"
+										refattr="${item.id}"><img class="img-rounded"
+											src="resources/images/save.png"></a></td>
+								</c:if>
+								
+								<c:if test="${user eq 'true'}">
+									<td><a a href="#" onclick="repeatOrder('${item.id}')"
+										refattr="${item.id}"><img class="img-rounded"
+											src="resources/images/repeat.jpg"></a></td>
+								</c:if>
 
 							</tr>
 						</c:forEach>

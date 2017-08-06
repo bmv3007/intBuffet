@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.OrdersProducts;
@@ -92,7 +94,7 @@ public class OrderController {
 
 			}
 		} else {
-			
+
 			modelAndView.setViewName("login");
 
 		}
@@ -170,6 +172,28 @@ public class OrderController {
 
 		return "redirect:/getallusersorders";
 
+	}
+
+	@RequestMapping("/repeatOrder/{id}")
+	public ModelAndView repeatOrder(@PathVariable("id") Long id ) {
+		Order order = orderService.copyOrder(id);
+		ModelAndView modelAndView = new ModelAndView();
+
+		if (httpSession.getAttribute("userDTO") != null) {
+			order.setDate(new Date());
+			order.setOrderstatus(Orderstatus.PENDING_PAYMENT.getName());
+			modelAndView.addObject("productLisInOrder", order.getOrders_products());
+			modelAndView.setViewName("redirect:/order");
+			Address address = new Address();
+			order.setAddress(address);
+			modelAndView.addObject(order);
+
+		} else {
+
+			modelAndView.setViewName("login");
+
+		}
+		return modelAndView;
 	}
 
 }

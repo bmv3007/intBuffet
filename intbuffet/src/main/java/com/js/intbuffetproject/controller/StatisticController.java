@@ -36,8 +36,9 @@ public class StatisticController {
 
 	@RequestMapping(value = "/get_revenue", method = RequestMethod.GET)
 	@ResponseBody
-	public double get_revenue(@RequestParam("from") Date from, @RequestParam("to") Date to) {
-
+	public String get_revenue(@RequestParam("from") Date from, @RequestParam("to") Date to) {
+       logger.info("from"+from);
+       logger.info("******** statisticService.getRevenue(from, to) *************** ="+statisticService.getRevenue(from, to));
 		return statisticService.getRevenue(from, to);
 	}
 

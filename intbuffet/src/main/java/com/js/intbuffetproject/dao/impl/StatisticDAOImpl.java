@@ -51,9 +51,9 @@ public class StatisticDAOImpl implements StatisticDAO {
 
 	@Override
 	public List<Order> getRevenue(Date from, Date to) {
-
+		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Order.class);
-		List<Order> orders = criteria.add(Restrictions.between("date", from, to)).list();
+		List<Order> orders = criteria.add(Restrictions.and(Restrictions.between("date", from, to), Restrictions.eq("cart", false))).list();
 
 		return orders;
 

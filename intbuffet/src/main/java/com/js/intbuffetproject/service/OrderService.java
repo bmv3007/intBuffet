@@ -27,5 +27,7 @@ public interface OrderService {
 	List<Order> listOrderFromTo(Date from, Date to);
 
 	List<Order> listOrderByClient(String username);
+	
+	Order copyOrder(Long id);
 
 }

@@ -27,10 +27,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products")
-@Proxy(lazy=false)
-public class Product implements java.io.Serializable{ 
+@Proxy(lazy = false)
+public class Product implements java.io.Serializable {
 
-static final long serialVersionUID = 3260689382642549142L;
+	static final long serialVersionUID = 3260689382642549142L;
 
 	@Id
 	@Column(name = "id")
@@ -40,8 +40,8 @@ static final long serialVersionUID = 3260689382642549142L;
 	@Column(name = "name")
 	private String name;
 
-	@ManyToOne 
-	@JoinColumn(name="category")
+	@ManyToOne
+	@JoinColumn(name = "category")
 	private Category category;
 
 	@Column(name = "description")
@@ -51,7 +51,7 @@ static final long serialVersionUID = 3260689382642549142L;
 	private float price;
 
 	@Column(name = "vegetarian")
-	private int vegetarian;
+	private boolean vegetarian;
 
 	@Column(name = "weight")
 	private int weight;
@@ -61,24 +61,20 @@ static final long serialVersionUID = 3260689382642549142L;
 
 	@Column(name = "image")
 	private String image;
-	
+
 	@Column(name = "sell_quantity")
 	private int sell_quantity;
-	
+
 	@OneToMany(mappedBy = "product")
 	public List<OrdersProducts> orders_products;
-	
-		
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "products_ingredients", 
-	joinColumns = @JoinColumn(name = "products_id"), 
-	inverseJoinColumns = @JoinColumn(name = "ingredients_id"))
+	@JoinTable(name = "products_ingredients", joinColumns = @JoinColumn(name = "products_id"), inverseJoinColumns = @JoinColumn(name = "ingredients_id"))
 	@JsonIgnore
 	private List<Ingredient> ingredients;
-	
-	
-	public Product(Long id, String name, Category category, String description, float price, int vegetarian, int weight,
-			int quantity, String image, List<Ingredient> ingredients) {
+
+	public Product(Long id, String name, Category category, String description, float price, boolean vegetarian,
+			int weight, int quantity, String image, List<Ingredient> ingredients) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -92,9 +88,8 @@ static final long serialVersionUID = 3260689382642549142L;
 		this.ingredients = ingredients;
 	}
 
-	
-	public Product(Long id, String name, Category category, String description, float price, int vegetarian, int weight,
-			int quantity, String image, int sell_quantity, List<OrdersProducts> orders_products,
+	public Product(Long id, String name, Category category, String description, float price, boolean vegetarian,
+			int weight, int quantity, String image, int sell_quantity, List<OrdersProducts> orders_products,
 			List<Ingredient> ingredients) {
 		super();
 		this.id = id;
@@ -111,11 +106,10 @@ static final long serialVersionUID = 3260689382642549142L;
 		this.ingredients = ingredients;
 	}
 
-
 	public Product() {
-	
+
 	}
-	
+
 	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -172,11 +166,11 @@ static final long serialVersionUID = 3260689382642549142L;
 		this.price = price;
 	}
 
-	public int getVegetarian() {
+	public boolean isVegetarian() {
 		return vegetarian;
 	}
 
-	public void setVegetarian(int vegetarian) {
+	public void setVegetarian(boolean vegetarian) {
 		this.vegetarian = vegetarian;
 	}
 
@@ -204,26 +198,21 @@ static final long serialVersionUID = 3260689382642549142L;
 		return sell_quantity;
 	}
 
-
 	public void setSell_quantity(int sell_quantity) {
 		this.sell_quantity = sell_quantity;
 	}
-
 
 	public List<OrdersProducts> getOrders_products() {
 		return orders_products;
 	}
 
-
 	public void setOrders_products(List<OrdersProducts> orders_products) {
 		this.orders_products = orders_products;
 	}
 
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 	@Override
 	public int hashCode() {

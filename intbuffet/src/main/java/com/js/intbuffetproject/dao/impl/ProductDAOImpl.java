@@ -72,7 +72,7 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 
 		if (searchParameter.getVegetarian() == true) {
-			criteria.add(Restrictions.eq("vegetarian", 0));
+			criteria.add(Restrictions.eq("vegetarian", true));
 		}
 
 		List<Product> products = criteria.list();
