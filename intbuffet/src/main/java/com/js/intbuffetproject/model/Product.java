@@ -14,8 +14,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -64,6 +66,9 @@ public class Product implements java.io.Serializable {
 
 	@Column(name = "sell_quantity")
 	private int sell_quantity;
+
+	@Transient
+	private MultipartFile fileHolder;
 
 	@OneToMany(mappedBy = "product")
 	public List<OrdersProducts> orders_products;
@@ -212,6 +217,14 @@ public class Product implements java.io.Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public MultipartFile getFileHolder() {
+		return fileHolder;
+	}
+
+	public void setFileHolder(MultipartFile fileHolder) {
+		this.fileHolder = fileHolder;
 	}
 
 	@Override

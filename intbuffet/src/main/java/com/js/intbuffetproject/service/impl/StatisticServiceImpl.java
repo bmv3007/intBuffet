@@ -55,15 +55,14 @@ public class StatisticServiceImpl implements StatisticService {
 
 	@Override
 	public String getRevenue(Date from, Date to) {
-		logger.info("*************** 1 to ="+to);
+				
+		 to.setTime(to.getTime()+86399000);
 		
-		 to.setTime(to.getTime()+86400000);
-		 logger.info("*************** 2  to ="+to);
 		 List<Order> listOrders = statisticDAO.getRevenue(from, to);
 		 Double sum = 0.0;
 		 for(Order order:listOrders){
 			 sum=sum+order.getOrdertotal();
-			 logger.info("************** sum *************** ="+sum);
+		 
 		 }
 		 
 		return sum.toString();

@@ -40,7 +40,8 @@
 
 
 
-				<form:form action="newProduct" modelAttribute="product"	class="form-group"  enctype="multipart/form-data">
+				<form:form action="newProduct" modelAttribute="product"
+					class="form-group" enctype="multipart/form-data">
 
 					<table>
 
@@ -75,7 +76,7 @@
 							<td><form:input type="number" step="1" path="weight"
 									class="form-control"></form:input></td>
 						</tr>
-						
+
 						<%-- <tr>
 							<td><form:label path="image">Image: </form:label></td>
 							<td><a a href="#" onclick="upload()" refattr="ahref"><img class="img-rounded"
@@ -83,10 +84,11 @@
 							<br></td>
 						</tr> --%>
 						<tr>
-						<td><form:label path="image">Image: </form:label></td>
-				
-				<td><form:input type="file"  path="image" name="file" id="file"></form:input><td>
-					
+							<td><form:label path="image">Image: </form:label></td>
+
+							<td><form:input type="file" path="fileHolder"
+									name="fileHolder" id="file" onclick="setFileName()"></form:input>
+							<td>
 						</tr>
 					</table>
 
@@ -94,7 +96,7 @@
 					<input type="submit" value="Save" class="btn btn-primary" />
 
 				</form:form>
-				<form:form action="uploadFile" id="file" method="post" enctype="multipart/form-data" modelAttribute="fileHolder"	class="form-group" >
+				<%-- <form:form action="uploadFile" id="file" method="post" enctype="multipart/form-data" modelAttribute="fileHolder"	class="form-group" >
 				<form:label path="file">Image: </form:label>
 				
 				<form:input type="file"  path="file" name="file"></form:input>
@@ -103,7 +105,7 @@
 				 <a a href="#" type="submit"  refattr="ahref"  onclick="uploadFile()" ><img class="img-rounded"
 											src="resources/images/download.jpg"></a> 
 		
-	</form:form>
+	</form:form> --%>
 
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 top-material"></div>
@@ -112,25 +114,7 @@
 
 	<!-- 	******************footer row****************** -->
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				<address>
-					<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
-					900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
-					(123) 456-7890
-				</address>
-
-				<address>
-					<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
-					</br>
-				</address>
-
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
-		</div>
-	</div>
+	<%@include file="footer.jspf"%>
 
 	<script src="resources/js/jquery-3.2.1.js"></script>
 

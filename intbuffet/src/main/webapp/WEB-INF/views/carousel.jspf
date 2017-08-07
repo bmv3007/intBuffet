@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="row">
 				<div id="carousel" class="carousel slide graycolor">
-					<!--  индикаторы слайдов -->
+					
 					<ol class="carousel-indicators graycolor">
 
 						<li class="active" data-target="#carousel" data-slide="0"></li>
@@ -15,7 +15,7 @@
 
 					</ol>
 
-					<!--  слайды -->
+					
 					<div class="carousel-inner">
 						<div class="item active">
 							<p class="fig">

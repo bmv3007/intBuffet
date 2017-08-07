@@ -35,7 +35,7 @@ public class OrderDAOImpl implements OrderDAO {
 	public ArrayList<Order> listOrder() {
 
 		ArrayList<Order> listPr = (ArrayList<Order>) sessionFactory.getCurrentSession()
-				.createQuery("from Order where ordertotal>0 ORDER BY id ASC").list();
+				.createQuery("from Order where ordertotal>0 ORDER BY date, id ASC").list();
 
 		return listPr;
 	}

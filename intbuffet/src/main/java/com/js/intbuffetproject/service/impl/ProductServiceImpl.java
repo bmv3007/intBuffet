@@ -1,5 +1,9 @@
 package com.js.intbuffetproject.service.impl;
  
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +11,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.js.intbuffetproject.dao.ProductDAO;
+import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.model.Product;
@@ -18,13 +24,52 @@ import com.js.intbuffetproject.service.ProductService;
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
+	
+	private static String UPLOAD_LOCATION = "C:\\intbuffet\\images\\";
  
     @Autowired
     private ProductDAO productDAO;
  
     @Transactional
-    public void addProduct(Product product) {
+    public void addProduct(Product product, Category category, MultipartFile file) {
+    	boolean fileSaved = false;
+    	try {
+    		fileSaved = addImage(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	if(fileSaved){
+    	product.setCategory(category);
+    	product.setImage(file.getOriginalFilename());
     	productDAO.addProduct(product);
+    	}
+    }
+    
+    @Transactional
+    public boolean addImage(MultipartFile file) throws IOException {
+    	if (!file.isEmpty()) {
+          	File serverFile = new File(UPLOAD_LOCATION + file.getOriginalFilename());
+          	 BufferedOutputStream stream = null;
+              try {
+                  byte[] bytes = file.getBytes();
+                   stream =
+                          new BufferedOutputStream(new FileOutputStream(serverFile));
+                  stream.write(bytes);
+                  stream.close();
+                  
+              } catch (Exception e) {
+                  return false;
+              }finally {
+            	  if(stream!=null){
+            		  stream.close();
+            	  }
+              }
+          } else {
+              return false;
+          }
+    	return true;
+
     }
  
     @Transactional

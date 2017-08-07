@@ -33,7 +33,7 @@
 						<div class="breadcrumbs">
 							<ol class="breadcrumb">
 
-								<li class="active">Statistic</li>
+								<li class="active"><h2>Statistic</h2></li>
 
 							</ol>
 						</div>
@@ -145,102 +145,11 @@
 		</div>
 	</nav>
 
-	<%-- <section id="cart_items">
-		<div class="container">
-
-			<div class="table-responsive cart_info">
-				<table class="table table-condensed table-striped">
-					<thead>
-						<tr class="cart_menu">
-							<td class="description">N</td>
-							<td class="date">Date</td>
-							<td class="description">Client</td>
-							<td class="description">Order status</td>
-							<td class="description">Method of payment</td>
-							<td class="description">Method of delivery</td>
-							<td class="description">Paid</td>
-							<td class="total">Total (&#8364;)</td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="item" items="${UsersOrders}">
-
-							<tr>
-								<td class="cart_description"><a href="">${item.id}</a></td>
-
-								<td class="cart_description">
-									<p>
-										<fmt:formatDate type="date" value="${item.date}" />
-									</p>
-								</td>
-								<security:authorize
-									access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
-
-									<td class="cart_description">${item.user.surname}
-										${item.user.firstname}</td>
-
-									<td class="cart_price">
-										<section>
-											<select items="${orderstatus}" itemValue="name"
-												itemLabel="name" value="${item.orderstatus}" />
-										</section>
-
-									</td>
-								</security:authorize>
-								<td class="cart_price">
-									<p>${item.paymentmethod}</p>
-								</td>
-								<td class="cart_price">
-									<p>${item.deliverymethod}</p>
-								</td>
-								<td class="cart_price"><c:choose>
-										<c:when test="${item.paid==true}">
-											<p>Yes</p>
-										</c:when>
-										<c:otherwise>
-											<p>No</p>
-										</c:otherwise>
-									</c:choose></td>
-									<td class="cart_description">${item.ordertotal} </td>
-								<td><a href="updateCategory/${category.id}/${newName}"><img
-										class="img-rounded" src="resources/images/save.png"></a></td>
-								
-
-							</tr>
-						</c:forEach>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</section>
-	<!--/#cart_items-->
- --%>
-	<!-- 	******************END MAIN row products****************** -->
+	
 
 	<!-- 	******************footer row****************** -->
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				<address>
-					<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
-					900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
-					(123) 456-7890
-				</address>
-
-				<address>
-					<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
-					</br>
-				</address>
-
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
-		</div>
-	</div>
-
+	<%@include file="footer.jspf"%>
 	<script src="resources/js/jquery-3.2.1.js"></script>
 
 	<script src="resources/js/bootstrap.min.js"></script>

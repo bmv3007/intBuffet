@@ -56,7 +56,7 @@ function find() {
 				out+='<h3>';
 				out+='<a href="#">'+data[key]['name']+'</a>';
 				out+='</h3>';
-				out+='<p>Category: '+data[key]['category']+'</p>';//????
+				out+='<p>Category: '+data[key]['category']['name']+'</p>';//????
 				out+='<p>'+data[key]['description']+'</p>';
 				out+='<p> Price: '+data[key]['price']+'</p>';
 				out+='<p> Vegetarian: '+vegetarian+'</p>';
@@ -117,7 +117,7 @@ function showProfit(){
 		success : function(data) {
 		
 			 if(typeof data != "undefined"){
-			$('#profit').html('&#8364; '+ data);
+			$('#profit').html('<p> Profit: &#8364; '+ data+'</p>');
 			 }else $('#profit').html('&#8364; '+ 0);
 			}
 

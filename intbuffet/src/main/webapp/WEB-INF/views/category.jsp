@@ -43,12 +43,13 @@
 							<td><form:label path="name">
 									Name:
 								</form:label></td>
-							<td><form:input path="name" class="form-control" ></form:input></td>
+							<td><form:input path="name" class="form-control"></form:input></td>
 
 						</tr>
 
 						<tr>
-							<td><input type="submit" value="Save" class="btn btn-primary"/></td>
+							<td><input type="submit" value="Save"
+								class="btn btn-primary" /></td>
 						</tr>
 					</table>
 				</form:form>
@@ -56,21 +57,29 @@
 
 				<c:if test="${!empty categories}">
 					<form class="form-group">
-					<table class="data">
-						<tr>
-							<th><h3><span >Categories:</span></h3></th>
-							<th>&nbsp;</th>
-							<th>&nbsp;</th>
-						</tr>
-						<c:forEach items="${categories}" var="category">
+						<table class="data">
 							<tr>
-								<td> <input path="${category.name}" class="form-control" value="${category.name}" attr="${category.id}"></input></td>
-								<td><a href="#" onclick="changeHref('${category.id}')" refattr = "${category.id}"><img class="img-rounded" src="resources/images/save.png"></a></td>
-								<td><a href="deleteCategory/${category.id}"><img class="img-rounded" src="resources/images/delete.png"></a></td>
-								<td><a href="deleteCategory/${category.id} type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a></td>
+								<th><h3>
+										<span>Categories:</span>
+									</h3></th>
+								<th>&nbsp;</th>
+								<th>&nbsp;</th>
 							</tr>
-						</c:forEach>
-					</table>
+							<c:forEach items="${categories}" var="category">
+								<tr>
+									<td><input path="${category.name}" class="form-control"
+										value="${category.name}" attr="${category.id}"></input></td>
+									<td><a href="#" onclick="changeHref('${category.id}')"
+										refattr="${category.id}"><img class="img-rounded"
+											src="resources/images/save.png"></a></td>
+									<td><a href="deleteCategory/${category.id}"><img
+											class="img-rounded" src="resources/images/delete.png"></a></td>
+									<td><a href="deleteCategory/${category.id} type="
+										button" class="close" aria-label="Close"><span
+											aria-hidden="true">&times;</span></a></td>
+								</tr>
+							</c:forEach>
+						</table>
 					</form>
 				</c:if>
 
@@ -79,12 +88,13 @@
 		</div>
 	</div>
 	<!-- 	******************footer row****************** -->
+	<div class="navbar-fixed-bottom row-fluid">
+		<div class="navbar-inner">
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				<address>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					<address>
 					<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
 					900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
 					(123) 456-7890
@@ -94,12 +104,36 @@
 					<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
 					</br>
 				</address>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<address>
+							<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
+							900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
+							(123) 456-7890
+						</address>
 
+						<address>
+							<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
+							</br>
+						</address>
+
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<address>
+							<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
+							900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
+							(123) 456-7890
+						</address>
+
+						<address>
+							<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
+							</br>
+						</address>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
 		</div>
 	</div>
-
 	<script src="resources/js/jquery-3.2.1.js"></script>
 
 	<script src="resources/js/bootstrap.min.js"></script>
