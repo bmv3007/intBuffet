@@ -6,7 +6,8 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based configuration) -->
+	<!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based 
+		configuration) -->
 	<context:annotation-config />
 
 	<!-- Определяем папки, в которых будем автоматически искать бины-компоненты 
@@ -16,8 +17,11 @@
 
 	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
 	<import resource="data.xml" />
-	
-	
+
+
 	<!-- Безопасность -->
-	 <import resource="security.xml" /> 
+	<import resource="security.xml" />
+
+	<!-- JMS -->
+	<import resource="jms.xml" />
 </beans>

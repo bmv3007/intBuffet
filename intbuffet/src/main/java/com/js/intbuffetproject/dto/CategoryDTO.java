@@ -1,4 +1,4 @@
-package com.js.intbuffetproject.model;
+package com.js.intbuffetproject.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,25 +13,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Maria Borovtsova
  */
 @XmlRootElement
-@Entity
-@Table(name = "categories")
-public class Category implements java.io.Serializable {
+public class CategoryDTO implements java.io.Serializable {
 
 	static final long serialVersionUID = 3260689382642549142L;
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue
 	private Long id;
 
-	@Column(name = "name")
 	private String name;
 
-	public Category() {
+	public CategoryDTO() {
 
 	}
 
-	public Category(Long id, String name) {
+	public CategoryDTO(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}

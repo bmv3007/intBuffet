@@ -108,6 +108,9 @@
 				<a href="<c:url value='/order' />" class="btn  btn-primary btn-lg"
 					role="button">order</a><br>
 			</div>
+			<div>
+				<br>
+			</div>
 		</div>
 	</section>
 	<!--/#cart_items-->
@@ -116,7 +119,7 @@
 
 	<!-- 	******************footer row****************** -->
 
-		<%@include file="footer.jspf"%>
+	<%@include file="footer.jspf"%>
 
 	<script src="resources/js/jquery-3.2.1.js"></script>
 

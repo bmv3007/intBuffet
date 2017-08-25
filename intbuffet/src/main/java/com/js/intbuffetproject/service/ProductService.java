@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.js.intbuffetproject.dto.ProductDTO;
 import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.OrdersProducts;
@@ -14,7 +15,7 @@ import com.js.intbuffetproject.model.SearchParameter;
 
 public interface ProductService {
 
-	void addProduct(Product product, Category category, MultipartFile file);
+	void addProduct(Product product);
 
 	List<Product> listProduct();
 	
@@ -29,4 +30,6 @@ public interface ProductService {
 	List<Product> searchProductByParameters(Long categoryId, boolean vegetarian);
 	
 	List<Integer> fillQuantities(Collection<Item> items);
+	
+	ProductDTO converterProductDTO(Product product);
 }

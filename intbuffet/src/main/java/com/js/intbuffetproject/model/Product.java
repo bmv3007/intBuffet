@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Proxy;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * @author Maria Borovtsova
  */
-
+@XmlRootElement
 @Entity
 @Table(name = "products")
 @Proxy(lazy = false)

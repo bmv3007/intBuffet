@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Product;
+import com.js.intbuffetproject.service.CartService;
 import com.js.intbuffetproject.service.ProductService;
-
 
 /**
  * Handles requests for the application home page.
@@ -35,38 +35,61 @@ public class CartController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private CartService cartService;
+
 	@RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
 	public @ResponseBody ArrayList addItem(@RequestParam Long idgood) {
 
-		Product product = productService.getProductByID(idgood);
-
-		Cart cart = null;
-		Item item = null;
+		// Product product = productService.getProductByID(idgood);
+		//
+		Cart cart = (Cart) httpSession.getAttribute("cart"); // ??? если null,
+																// то приведение
+																// к Cart что
+																// даст? Если
+																// ОК, то
+																// заменить
+																// везде дальше
+																// на cart
+		// Item item = null;
 		Integer quantity = 0;
 		if (httpSession.getAttribute("cart") == null) {
 
-			cart = new Cart();
-			item = new Item(idgood, product.getName(), product.getDescription(), product.getPrice(), 1);
-			cart.addProduct(idgood, item);
-			httpSession.setAttribute("cart", cart);
-
-		} else if (((Cart) httpSession.getAttribute("cart")).getProductsInCart().containsKey(idgood)) {
-			cart = (Cart) httpSession.getAttribute("cart");
-			item = cart.getProductsInCart().get(idgood);
-			quantity = (Integer) cart.getProductsInCart().get(idgood).getQuantity() + 1;
-			item.setQuantity(quantity);
-
-			cart.addProduct(idgood, item);
-			httpSession.setAttribute("cart", cart);
-
-		} else {
-
-			cart = (Cart) httpSession.getAttribute("cart");
-			item = new Item(idgood, product.getName(), product.getDescription(), product.getPrice(), 1);
-			cart.addProduct(idgood, item);
+			/*
+			 * cart = new Cart(); item = new Item(idgood, product.getName(),
+			 * product.getDescription(), product.getPrice(), 1);
+			 * cart.addProduct(idgood, item);
+			 */
+			cart = cartService.creatNewCart(idgood);
 			httpSession.setAttribute("cart", cart);
 
 		}
+		// else if (((Cart)
+		// httpSession.getAttribute("cart")).getProductsInCart().containsKey(idgood))
+		// {
+		// cart = (Cart) httpSession.getAttribute("cart");
+		// item = cart.getProductsInCart().get(idgood);
+		// quantity = (Integer)
+		// cart.getProductsInCart().get(idgood).getQuantity() + 1;
+		// item.setQuantity(quantity);
+		//
+		// cart.addProduct(idgood, item);
+		// httpSession.setAttribute("cart", cart);
+		//
+		// } else {
+		//
+		// cart = (Cart) httpSession.getAttribute("cart");
+		// item = new Item(idgood, product.getName(), product.getDescription(),
+		// product.getPrice(), 1);
+		// cart.addProduct(idgood, item);
+		// httpSession.setAttribute("cart", cart);
+		//
+		// }
+		else {
+			cart = cartService.addToCart((Cart) httpSession.getAttribute("cart"), idgood);
+			httpSession.setAttribute("cart", cart);
+		}
+		quantity = (Integer) cart.getProductsInCart().get(idgood).getQuantity();
 		ArrayList data = new ArrayList();
 		data.add(cart.getTotal());
 		data.add(quantity);
@@ -79,25 +102,33 @@ public class CartController {
 	@RequestMapping(value = "/delete_from_cart", method = RequestMethod.GET)
 	public @ResponseBody ArrayList deleteItem(@RequestParam Long idgood) {
 
-		Cart cart = null;
-		Item item = null;
+		Cart cart = (Cart) httpSession.getAttribute("cart");
+		// Item item = null;
 		Integer quantity = 0;
-		if (httpSession.getAttribute("cart") == null) {
+		/*
+		 * if (httpSession.getAttribute("cart") == null) {
+		 * 
+		 * return null;
+		 * 
+		 * } else if (((Cart)
+		 * httpSession.getAttribute("cart")).getProductsInCart().containsKey(
+		 * idgood)) { cart = (Cart) httpSession.getAttribute("cart"); item =
+		 * cart.getProductsInCart().get(idgood); quantity = (Integer)
+		 * cart.getProductsInCart().get(idgood).getQuantity(); if (quantity > 0)
+		 * { --quantity; item.setQuantity(quantity); }
+		 * 
+		 * httpSession.setAttribute("cart", cart);
+		 * 
+		 * }
+		 */
 
+		if (cart == null) {
 			return null;
-
-		} else if (((Cart) httpSession.getAttribute("cart")).getProductsInCart().containsKey(idgood)) {
-			cart = (Cart) httpSession.getAttribute("cart");
-			item = cart.getProductsInCart().get(idgood);
-			quantity = (Integer) cart.getProductsInCart().get(idgood).getQuantity();
-			if (quantity > 0) {
-				--quantity;
-				item.setQuantity(quantity);
-			}
-
-			httpSession.setAttribute("cart", cart);
-
+		} else {
+			httpSession.setAttribute("cart", cartService.removeFromCart(cart, idgood));
 		}
+
+		quantity = (Integer) cart.getProductsInCart().get(idgood).getQuantity();
 
 		ArrayList data = new ArrayList();
 		data.add(cart.getTotal());
@@ -125,16 +156,23 @@ public class CartController {
 
 	@RequestMapping(value = "/delete_item/{id}", method = RequestMethod.GET)
 	public String deleteItemfromCart(@PathVariable("id") Long idgood) {
-		
-		Cart cart = null;
 
-		if (httpSession.getAttribute("cart") != null
-				&& ((Cart) httpSession.getAttribute("cart")).getProductsInCart().containsKey(idgood)) {
-			cart = (Cart) httpSession.getAttribute("cart");
-			cart.getProductsInCart().remove(idgood);
-			cart.setTotal(cart.getTotal());
-			httpSession.setAttribute("cart", cart);
-			
+		// Cart cart = null;
+
+		// if (httpSession.getAttribute("cart") != null
+		// && ((Cart)
+		// httpSession.getAttribute("cart")).getProductsInCart().containsKey(idgood))
+		// {
+		// cart = (Cart) httpSession.getAttribute("cart");
+		// cart.getProductsInCart().remove(idgood);
+		// cart.setTotal(cart.getTotal());
+		// httpSession.setAttribute("cart", cart);
+		//
+		// }
+		Cart cart = (Cart) httpSession.getAttribute("cart");
+		if (cart != null) {
+
+			httpSession.setAttribute("cart", cartService.removeItemFromCart(cart, idgood));
 		}
 
 		return "redirect:/cart";

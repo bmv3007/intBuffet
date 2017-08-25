@@ -81,6 +81,12 @@ public class UserController {
 
 		return "login";
 	}
+	
+	@RequestMapping(value = "/login1", method = RequestMethod.POST)
+	public String goin2() {
+
+		return "login";
+	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
@@ -89,6 +95,12 @@ public class UserController {
 		modelAndView.addObject("address", new Address());
 		modelAndView.setViewName("registration");
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/error404", method = RequestMethod.POST)
+	public String error() {
+		
+		return "error404";
 	}
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)

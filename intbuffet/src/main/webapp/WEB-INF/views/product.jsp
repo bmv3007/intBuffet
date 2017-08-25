@@ -41,7 +41,7 @@
 
 
 				<form:form action="newProduct" modelAttribute="product"
-					class="form-group" enctype="multipart/form-data">
+					class="form-group" enctype="multipart/form-data" method="POST">
 
 					<table>
 
@@ -52,11 +52,12 @@
 						</tr>
 
 						<tr>
-							<td><form:label path="category">Category: </form:label></td>
-							<td><form:select path="category" class="form-control">
-									<form:options items="${categories}" itemValue="id"
-										itemLabel="name" />
-								</form:select></td>
+							<td><form:label path="category.name">Category: </form:label></td>
+							<td>
+								<form:select path="category.id" name="category">
+									<form:options items="${categories}" itemValue="id" itemLabel="name" />
+								</form:select>
+							</td>
 						</tr>
 						<tr>
 							<td><form:label path="description">Description: </form:label></td>

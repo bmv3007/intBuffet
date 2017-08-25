@@ -53,9 +53,8 @@ public class CategoryController {
 
 	@RequestMapping("/updateCategory/{id}/{name}")
 	public String updateCategory(@PathVariable("id") Long id, @PathVariable("name") String name) {
-		Category category = categoryService.getCategoryByID(id);
-		category.setName(name);
-		categoryService.updateCategory(category);
+
+		categoryService.updateCategory(id, name);
 
 		return "redirect:/categorycontroll";
 	}

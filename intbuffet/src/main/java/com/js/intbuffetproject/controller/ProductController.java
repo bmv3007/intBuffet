@@ -8,11 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.model.Product;
 
 import com.js.intbuffetproject.service.CategoryService;
@@ -48,12 +45,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/newProduct", method = RequestMethod.POST)
-	public String newProduct(@ModelAttribute("product") Product product, BindingResult result,
-			@ModelAttribute("category") Category category, @RequestParam("fileHolder") MultipartFile file) {
-		logger.info("product.getCategory( =" + product.getCategory());
-		logger.info("categories =" + category.getName());
+	public String newProduct(@ModelAttribute("product") Product product, BindingResult result) {
 
-		productService.addProduct(product, null, file);
+		productService.addProduct(product);
 
 		return "redirect:/addnewproduct";
 

@@ -215,11 +215,14 @@
 				</div>
 
 
-				<input type="submit" value="Send" />
+				<input type="submit" value="Send" class="btn  btn-primary btn-lg"/>
 
 			</form:form>
 
 		</div>
+		<div>
+				<br>
+			</div>
 	</section>
 	<!--/#cart_items-->
 	<!-- 	******************END MAIN row products****************** -->

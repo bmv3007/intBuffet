@@ -74,9 +74,7 @@
 											src="resources/images/save.png"></a></td>
 									<td><a href="deleteCategory/${category.id}"><img
 											class="img-rounded" src="resources/images/delete.png"></a></td>
-									<td><a href="deleteCategory/${category.id} type="
-										button" class="close" aria-label="Close"><span
-											aria-hidden="true">&times;</span></a></td>
+									
 								</tr>
 							</c:forEach>
 						</table>

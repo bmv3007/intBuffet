@@ -42,5 +42,17 @@ public class ImageController {
 		Files.copy(file.toPath(), response.getOutputStream());
 
 	}
+	
+	@RequestMapping(value = "/getBigImage", method = RequestMethod.GET)
+	public void showBigImage(@RequestParam("id") Long itemId, HttpServletResponse response, HttpServletRequest request)
+			throws ServletException, IOException {
+		String imageName = productService.getProductByID(itemId).getImage();
+		File file = new File("C:\\intbuffet\\images\\big_" + imageName);
+
+		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+
+		Files.copy(file.toPath(), response.getOutputStream());
+
+	}
 
 }
