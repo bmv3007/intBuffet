@@ -21,7 +21,7 @@ import com.js.intbuffetproject.model.Product;
 @Repository
 public class StatisticDAOImpl implements StatisticDAO {
 
-	private static final Logger logger = Logger.getLogger(StatisticDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(StatisticDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

@@ -16,19 +16,27 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.js.intbuffetproject.dao.ProductDAO;
 import com.js.intbuffetproject.dto.ProductDTO;
+import com.js.intbuffetproject.exception.FileIsEmptyException;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.SearchParameter;
 import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.SendJMS;
+import com.js.intbuffetproject.util.SearchParameter;
 
+/**
+ * Class ProductServiceImpl contains business logic related to class Product.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-	private static final Logger logger = Logger.getLogger(ProductServiceImpl.class);
+	private static final Logger LOG = Logger.getLogger(ProductServiceImpl.class);
 
 	private static String UPLOAD_LOCATION = "C:\\intbuffet\\images\\";
 
@@ -42,15 +50,15 @@ public class ProductServiceImpl implements ProductService {
 	private SendJMS sendJMS;
 
 	@Transactional
-	public void addProduct(Product product) {
+	public void addProduct(Product product) throws FileIsEmptyException, IOException {
 		boolean fileSaved = false;
 		MultipartFile file = product.getFileHolder();
-		try {
-			fileSaved = addImage(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (file.isEmpty()) {
+			throw new FileIsEmptyException("Select a file please!");
 		}
+
+		fileSaved = addImage(file);
+
 		if (fileSaved) {
 
 			// product.setCategory(categoryService.getCategoryByID(product.getCategory().getId()));
@@ -59,7 +67,15 @@ public class ProductServiceImpl implements ProductService {
 			productDAO.addProduct(product);
 		}
 
-		sendJMS.sendJMS();
+		try {
+
+			sendJMS.sendJMS();
+
+		} catch (Exception e) {
+
+			LOG.error(e);
+
+		}
 	}
 
 	@Transactional
@@ -116,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
 		SearchParameter searchParameter = new SearchParameter();
 		searchParameter.setCategoryID(categoryId);
 		searchParameter.setVegetarian(vegetarian);
-
+		
 		List<Product> listProduct = productDAO.searchProductByParameters(searchParameter);
 		for (Product product : listProduct) {
 			product.setImage(product.getImage());
@@ -131,7 +147,7 @@ public class ProductServiceImpl implements ProductService {
 		List<OrdersProducts> ordersProducts = new ArrayList<>();
 		for (Item item : items) {
 			Product product = getProductByID(item.getId());
-			Integer sellQuantity = product.getSell_quantity() + item.getQuantity();
+			int sellQuantity = product.getSell_quantity() + item.getQuantity();
 			productDAO.updateSellQuantity(product, sellQuantity);
 			OrdersProducts orderProduct = new OrdersProducts();
 			orderProduct.setProduct(product);
@@ -139,6 +155,17 @@ public class ProductServiceImpl implements ProductService {
 
 			ordersProducts.add(orderProduct);
 		}
+		
+		try {
+
+			sendJMS.sendJMS();
+
+		} catch (Exception e) {
+
+			LOG.error(e);
+
+		}
+
 		return ordersProducts;
 	}
 

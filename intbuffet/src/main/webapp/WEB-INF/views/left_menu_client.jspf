@@ -15,13 +15,14 @@
 		Vegetarian <input type="checkbox" name="vegetarian" value="vegetarian"
 			id="vegetarian">
 	</p>
+	
 	<a onclick="find()"><input class="btn btn-default btn-lg btn-block"
 		type="button" value="Find"> </a> <br>
 	<security:authorize
 		access="hasRole('ROLE_ADMIN') and fullyAuthenticated">
 
 		<a href="addnewproduct"><input class="btn btn-default btn-lg btn-block"
-			type="button" value="Add new product"></a><br>
+			type="button" value="Add new product" id="id1"></a><br>
 			<a href="categorycontroll"><input class="btn btn-default btn-lg btn-block"
 			type="button" value="Categories"></a>
 			<br>

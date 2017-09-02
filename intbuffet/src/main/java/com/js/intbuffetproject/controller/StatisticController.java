@@ -13,13 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.js.intbuffetproject.service.StatisticService;
 
 /**
- * Handles requests for the application home page.
- */
+* Handles requests for statistic: /get_statistic,  /get_revenue.
+* 
+* @author Maria Borovtsova
+* 
+* @version 1.1
+*/
 @Controller
 public class StatisticController {
 
 
-	private static final Logger logger = Logger.getLogger(StatisticController.class);
+	private static final Logger LOG = Logger.getLogger(StatisticController.class);
 
 	@Autowired
 	private StatisticService statisticService;

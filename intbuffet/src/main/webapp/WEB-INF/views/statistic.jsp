@@ -48,6 +48,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="w2ui-field">
+			<div id="error"></div>
 				<label>	Period:</label>
 				<div>
 					<input type="us-date1" id="from" dateAttr="from"> - <input type="us-date2" id="to" dateAttr="to">

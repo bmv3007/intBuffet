@@ -5,7 +5,13 @@ import java.util.List;
 
 import com.js.intbuffetproject.model.Address;
 
-
+/**
+ * @see AddressServiceImpl
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 public interface AddressService {
 
 	Serializable addAddress(Address category);

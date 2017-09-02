@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.js.intbuffetproject.dto.Cart;
 import com.js.intbuffetproject.dto.UserDTO;
 import com.js.intbuffetproject.model.Address;
-import com.js.intbuffetproject.model.Cart;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.model.User;
@@ -33,13 +33,17 @@ import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.UserService;
 
 /**
- * Handles requests for the application home page.
- */
+* Handles requests for users: /login_page,  /registration, /cancel, /signup, /getuser, /profile, /saveProfile, /logout.
+* 
+* @author Maria Borovtsova
+* 
+* @version 1.1
+*/
 @Controller
 @SessionAttributes("userDTO")
 public class UserController {
 
-	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static final Logger LOG = Logger.getLogger(UserController.class);
 
 	@Autowired
 	private HttpSession httpSession;
@@ -59,35 +63,6 @@ public class UserController {
 	@Autowired
 	OrdersProductsService ordersProductsService;
 
-	@RequestMapping(value = "/index2", method = RequestMethod.GET)
-	public String index2() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Collection<? extends GrantedAuthority> list = authentication.getAuthorities();
-		UserDTO usD = new UserDTO();
-		usD.setAuthorities(list);
-		usD.setUsername(authentication.getName());
-		httpSession.setAttribute("userDTO", usD);
-
-		if (httpSession.getAttribute("cart") == null) {
-			Cart cart = orderService.getCartByUsername(usD.getUsername());
-
-			httpSession.setAttribute("cart", cart);
-		}
-		return "redirect:/index";
-	}
-
-	@RequestMapping(value = "/login1", method = RequestMethod.GET)
-	public String goin1() {
-
-		return "login";
-	}
-	
-	@RequestMapping(value = "/login1", method = RequestMethod.POST)
-	public String goin2() {
-
-		return "login";
-	}
-
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -97,12 +72,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/error404", method = RequestMethod.POST)
-	public String error() {
-		
-		return "error404";
-	}
-
+	
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public String cancel() {
 
@@ -123,6 +93,35 @@ public class UserController {
 			return modAndView;
 		}
 
+	}
+	
+	@RequestMapping(value = "/index2", method = RequestMethod.GET)
+	public String index2() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> list = authentication.getAuthorities();
+		UserDTO usD = new UserDTO();
+		usD.setAuthorities(list);
+		usD.setUsername(authentication.getName());
+		httpSession.setAttribute("userDTO", usD);
+
+		if (httpSession.getAttribute("cart") == null) {
+			Cart cart = orderService.getCartByUsername(usD.getUsername());
+
+			httpSession.setAttribute("cart", cart);
+		}
+		return "redirect:/index";
+	}
+
+	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
+	public String goToLoginPage() {
+
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login1", method = RequestMethod.POST)
+	public String login() {
+
+		return "login";
 	}
 
 	@RequestMapping(value = "/getuser", method = RequestMethod.GET)

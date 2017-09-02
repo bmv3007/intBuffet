@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.js.intbuffetproject.service.ProductService;
 
 /**
- * Handles requests for the application home page.
- */
+* Handles requests "/getImage" and "/getBigImage" to get images.
+* 
+* @author Maria Borovtsova
+* 
+* @version 1.1
+*/
 @Controller
 public class ImageController {
 
-	private static final Logger logger = Logger.getLogger(ImageController.class);
+	private static final Logger LOG = Logger.getLogger(ImageController.class);
 
 	@Autowired
 	private ProductService productService;
@@ -35,7 +39,7 @@ public class ImageController {
 		String imageName = productService.getProductByID(itemId).getImage();
 		File file = new File("C:\\intbuffet\\images\\" + imageName);
 
-		logger.info("itemId, imageName, file =  " + itemId + " - " + imageName + " - " + file);
+		LOG.info("itemId, imageName, file =  " + itemId + " - " + imageName + " - " + file);
 
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 

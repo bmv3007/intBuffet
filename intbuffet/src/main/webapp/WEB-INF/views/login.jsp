@@ -48,7 +48,7 @@
 			</div>
 			<br>
 			<div>
-				<input type="submit" value="Login"> <a href="registration"
+				<input type="submit" value="Login" id="buttonlogin"> <a href="registration"
 					id="register">Registration</a> <a href="cancel" id="cancel">Cancel</a>
 					</div>
 		</form>

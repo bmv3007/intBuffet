@@ -23,11 +23,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Product bean.
+ * Class Product with properties <b>id</b>, <b>name</b>, <b>category</b>,
+ * <b>description</b>, <b>price</b>, <b>vegetarian</b>, <b>weight</b>,
+ * <b>quantity</b>, <b>image</b>, <b>sell_quantity</b>, <b>ingredients</b>.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
-@XmlRootElement
+
 @Entity
 @Table(name = "products")
 @Proxy(lazy = false)
@@ -79,6 +83,9 @@ public class Product implements java.io.Serializable {
 	@JsonIgnore
 	private List<Ingredient> ingredients;
 
+	/**
+	 * Creates a new Product with the given parameters.
+	 */
 	public Product(Long id, String name, Category category, String description, float price, boolean vegetarian,
 			int weight, int quantity, String image, List<Ingredient> ingredients) {
 		super();
@@ -94,6 +101,10 @@ public class Product implements java.io.Serializable {
 		this.ingredients = ingredients;
 	}
 
+	
+	/**
+	 * Creates a new Product with the given parameters.
+	 */
 	public Product(Long id, String name, Category category, String description, float price, boolean vegetarian,
 			int weight, int quantity, String image, int sell_quantity, List<OrdersProducts> orders_products,
 			List<Ingredient> ingredients) {
@@ -111,7 +122,10 @@ public class Product implements java.io.Serializable {
 		this.orders_products = orders_products;
 		this.ingredients = ingredients;
 	}
-
+	
+	/**
+	 * Creates a new empty Product.
+	 */
 	public Product() {
 
 	}

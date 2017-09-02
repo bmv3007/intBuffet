@@ -11,7 +11,7 @@ import com.js.intbuffetproject.model.User;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-	private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

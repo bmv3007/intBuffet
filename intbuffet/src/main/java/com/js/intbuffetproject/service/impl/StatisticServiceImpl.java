@@ -1,7 +1,9 @@
 package com.js.intbuffetproject.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,11 +20,18 @@ import com.js.intbuffetproject.service.ProductService;
 import com.js.intbuffetproject.service.StatisticService;
 import com.js.intbuffetproject.util.TopClient;
 
+/**
+ * Class StatisticServiceImpl is used to get statistic.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class StatisticServiceImpl implements StatisticService {
 
-	private static final Logger logger = Logger.getLogger(StatisticServiceImpl.class);
+	private static final Logger LOG = Logger.getLogger(StatisticServiceImpl.class);
 
 	@Autowired
 	private StatisticDAO statisticDAO;
@@ -58,8 +67,13 @@ public class StatisticServiceImpl implements StatisticService {
 
 	@Override
 	public String getRevenue(Date from, Date to) {
-
-		to.setTime(to.getTime() + 86399000);
+		
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(to);
+		calendar.set(Calendar.HOUR, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		to = calendar.getTime();
 
 		List<Order> listOrders = statisticDAO.getRevenue(from, to);
 		Double sum = 0.0;

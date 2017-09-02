@@ -3,9 +3,17 @@ package com.js.intbuffetproject.service;
 import java.util.Date;
 import java.util.List;
 
-import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.dto.Cart;
+import com.js.intbuffetproject.dto.OrderDTO;
 import com.js.intbuffetproject.model.Order;
 
+/**
+ * @see com.js.intbuffetproject.service.impl.OrderServiceImpl
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 public interface OrderService {
 
 	boolean addOrder(Order order);
@@ -28,6 +36,6 @@ public interface OrderService {
 
 	List<Order> listOrderByClient(String username);
 	
-	Order copyOrder(Long id);
+	OrderDTO copyOrder(Long id);
 
 }

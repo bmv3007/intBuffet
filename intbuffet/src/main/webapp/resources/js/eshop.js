@@ -8,7 +8,7 @@ function newMyWindow(e) {
 
 function addAjax(articul,price,quantity) {
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url : 'add_to_cart',
 		data : ({idgood: articul}),
 		success : function(data) {
@@ -25,7 +25,7 @@ function addAjax(articul,price,quantity) {
 
 function deleteAjax(articul,price,quantity) {
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url : 'delete_from_cart',
 		data : ({idgood: articul}),
 		success : function(data) {
@@ -49,14 +49,14 @@ function find() {
 			var out = '';
 			for (var key in data){
 				var vegetarian = (data[key]['vegetarian'] > 0) ? 'No' : 'Yes';
-				out+='<div>';
+				out+='<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">';
 				out+='<div class="thumbnail">';
 				out+='<img src="/intbuffetproject/getImage?id='+data[key]['id']+'" class="img-responsive">';
 				out+='<div class="caption">';
 				out+='<h3>';
 				out+='<a href="#">'+data[key]['name']+'</a>';
 				out+='</h3>';
-				out+='<p>Category: '+data[key]['category']['name']+'</p>';//????
+				out+='<p>Category: '+data[key]['category']['name']+'</p>';// ????
 				out+='<p>'+data[key]['description']+'</p>';
 				out+='<p> Price: '+data[key]['price']+'</p>';
 				out+='<p> Vegetarian: '+vegetarian+'</p>';
@@ -109,7 +109,22 @@ function showProfit(){
 	
 	var from =  $('input[dateAttr="from"]').val();
 	var to =  $('input[dateAttr="to"]').val();
+	// var insert = $('#error');
 	
+	console.log("to = "+to);
+	if(from =='' || to == ''){
+				 
+		var error = document.createElement('div');
+		    error.className = 'error';
+		    error.style.color = 'red';
+		    error.innerHTML = 'Fill in the date please!';
+		 		    
+		    $('#error').html( error );
+		  		
+	}else{
+	
+		$('#error').html( '' );
+		
 	$.ajax({
 		type: "GET",
 		url : 'get_revenue',
@@ -122,6 +137,7 @@ function showProfit(){
 			}
 
 });  
+	}
 	
 	return false;
 }

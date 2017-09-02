@@ -14,7 +14,7 @@ import com.js.intbuffetproject.model.Address;
 @Repository
 public class AddressDAOImpl implements AddressDAO {
 
-	private static final Logger logger = Logger.getLogger(AddressDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(AddressDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

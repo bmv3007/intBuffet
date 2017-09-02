@@ -19,27 +19,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.SearchParameter;
 import com.js.intbuffetproject.service.ProductService;
+import com.js.intbuffetproject.util.SearchParameter;
 
 /**
- * Handles requests for the application home page.
- */
+* Handles requests for searching products: /find,  /search.
+* 
+* @author Maria Borovtsova
+* 
+* @version 1.1
+*/
 @Controller
 public class SearchController {
 
-	private static final Logger logger = Logger.getLogger(SearchController.class);
+	private static final Logger LOG = Logger.getLogger(SearchController.class);
 
 	@Autowired
 	private ProductService productService;
 
 	@RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody 
-	List<Product> find(@RequestParam("categoryId") Long categoryId, @RequestParam("vegetarian") boolean vegetarian) {
+	public @ResponseBody List<Product> find(@RequestParam("categoryId") Long categoryId,
+			@RequestParam("vegetarian") boolean vegetarian) {
 
-		return productService.searchProductByParameters(categoryId,vegetarian);
+		return productService.searchProductByParameters(categoryId, vegetarian);
 	}
-	
+
 	@RequestMapping("/search")
 	@ResponseBody
 	public ModelAndView seachProducts(@RequestParam("search") String searchtext, Map<String, Object> map, Locale locale,
@@ -48,10 +52,10 @@ public class SearchController {
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-		
-			e.printStackTrace();
+
+			LOG.info(e.getMessage());
 		}
-		
+
 		session.setAttribute("search", searchtext);
 		map.put("productList1", productService.searchProduct(searchtext));
 		map.put("seachtext", "seachtext");

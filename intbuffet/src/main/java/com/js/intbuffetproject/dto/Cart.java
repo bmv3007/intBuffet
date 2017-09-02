@@ -1,10 +1,24 @@
-package com.js.intbuffetproject.model;
+package com.js.intbuffetproject.dto;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Cart {
+import com.js.intbuffetproject.model.Item;
+import com.js.intbuffetproject.model.User;
 
+/**
+ * Class Cart with properties <b>id</b>, <b>user</b>, <b>total</b>,
+ * <b>totalItems</b>, <b>productsInCart</b>. 
+ * It's used for storing products by shopping.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
+public class Cart implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private User user;
 	private double total;

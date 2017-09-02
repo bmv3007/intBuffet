@@ -23,10 +23,13 @@
 		<%@include file="head.jspf"%>
 		
 	</header>
-
-<c:if test="${not empty param.error}">
+<h1>Ops! Something went wrong</h1>
+<c:if test="${not empty message}">
 	<font color="red"> 
- Error: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} </font>
+ Error: ${message} </font>
 </c:if>
 
 	<%@include file="footer.jspf"%>
+
+
+	

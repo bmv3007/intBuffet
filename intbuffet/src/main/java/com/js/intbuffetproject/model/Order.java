@@ -17,9 +17,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Order bean.
+ * Class Order with properties <b>id</b>, <b>date</b>, <b>user</b>,
+ * <b>address</b>, <b>paymentmethod</b>, <b>deliverymethod</b>, <b>paid</b>,
+ * <b>orderstatus</b>, <b>ordertotal</b>, <b>cart</b>, <b>orders_products</b>.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
 
 @Entity
@@ -37,11 +41,11 @@ public class Order implements Serializable {
 	@Column(name = "date")
 	private Date date;
 
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(name = "client")
 	private User user;
 
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(name = "address")
 	private Address address;
 
@@ -51,7 +55,7 @@ public class Order implements Serializable {
 	@Column(name = "deliverymethod")
 	private String deliverymethod;
 
-	@Column(name = "paid") 
+	@Column(name = "paid")
 	private boolean paid;
 
 	@Column(name = "orderstatus")
@@ -71,6 +75,11 @@ public class Order implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Creates a new Order with the given parameters: id, date, user, address,
+	 * paymentmethod, deliverymethod, paid, orderstatus, ordertotal, cart,
+	 * orders_products.
+	 */
 	public Order(Long id, Date date, User user, Address address, String paymentmethod, String deliverymethod,
 			boolean paid, String orderstatus, double ordertotal, boolean cart, List<OrdersProducts> orders_products) {
 		super();

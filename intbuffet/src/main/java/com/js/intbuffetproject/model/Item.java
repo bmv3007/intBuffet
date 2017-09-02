@@ -1,8 +1,12 @@
 package com.js.intbuffetproject.model;
 
 /**
+ * Class Item with properties <b>serialVersionUID</b>, <b>id</b>, <b>name</b>,
+ * <b>description</b>, <b>price</b>, <b>quantity</b>.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
 
 public class Item implements java.io.Serializable {
@@ -19,6 +23,10 @@ public class Item implements java.io.Serializable {
 
 	private int quantity;
 
+	/**
+	 * Creates a new Item with the given parameters: id, name, description,
+	 * price, quantity.
+	 */
 	public Item(Long id, String name, String description, float price, int quantity) {
 		super();
 		this.id = id;
@@ -28,7 +36,10 @@ public class Item implements java.io.Serializable {
 		this.quantity = quantity;
 
 	}
-	
+
+	/**
+	 * Creates a new Item with the given parameters: product, quantity.
+	 */
 	public Item(Product product, int quantity) {
 		super();
 		this.id = product.getId();
@@ -79,7 +90,6 @@ public class Item implements java.io.Serializable {
 		this.quantity = quantity;
 	}
 
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

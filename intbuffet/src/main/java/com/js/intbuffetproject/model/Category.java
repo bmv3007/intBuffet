@@ -8,11 +8,14 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Category bean.
+ * Class Category with properties <b>serialVersionUID</b>, <b>id</b>,
+ * <b>name</b>.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
-@XmlRootElement
+
 @Entity
 @Table(name = "categories")
 public class Category implements java.io.Serializable {
@@ -27,10 +30,16 @@ public class Category implements java.io.Serializable {
 	@Column(name = "name")
 	private String name;
 
+	/**
+	 * Creates a new empty Category.
+	 */
 	public Category() {
 
 	}
 
+	/**
+	 * Creates a new Category with the given parameters: id, name.
+	 */
 	public Category(Long id, String name) {
 		this.id = id;
 		this.name = name;

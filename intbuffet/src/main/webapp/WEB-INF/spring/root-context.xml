@@ -14,6 +14,7 @@
 		(@Component, @Service) -->
 	<context:component-scan base-package="com.js.intbuffetproject.dao" />
 	<context:component-scan base-package="com.js.intbuffetproject.service" />
+	<context:component-scan base-package="com.js.intbuffetproject.util" />
 
 	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
 	<import resource="data.xml" />

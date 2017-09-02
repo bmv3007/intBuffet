@@ -11,7 +11,7 @@ import com.js.intbuffetproject.model.OrdersProducts;
 @Repository
 public class OrdersProductsDAOImpl implements OrdersProductsDAO {
 
-	private static final Logger logger = Logger.getLogger(OrdersProductsDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(OrdersProductsDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

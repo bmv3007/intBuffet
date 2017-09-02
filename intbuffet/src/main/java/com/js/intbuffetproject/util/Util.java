@@ -1,5 +1,12 @@
 package com.js.intbuffetproject.util;
 
+/**
+ * Class Util contains constants.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 public class Util {
 	public enum Paymentmethod {
 		CASH_PAYMENT("CASH PAYMENT"), 

@@ -8,11 +8,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Category bean.
+ * Class CategoryDTO is DTO class for class Category.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
-@XmlRootElement
 public class CategoryDTO implements java.io.Serializable {
 
 	static final long serialVersionUID = 3260689382642549142L;

@@ -27,6 +27,9 @@
 	</header>
 	<!--/header-->
 
+	<c:if test="${not empty message}">
+		<font color="red"> ${message} </font>
+	</c:if>
 
 	<!-- 	******************MAIN row products****************** -->
 
@@ -53,11 +56,10 @@
 
 						<tr>
 							<td><form:label path="category.name">Category: </form:label></td>
-							<td>
-								<form:select path="category.id" name="category">
-									<form:options items="${categories}" itemValue="id" itemLabel="name" />
-								</form:select>
-							</td>
+							<td><form:select path="category.id" name="category">
+									<form:options items="${categories}" itemValue="id"
+										itemLabel="name" />
+								</form:select></td>
 						</tr>
 						<tr>
 							<td><form:label path="description">Description: </form:label></td>

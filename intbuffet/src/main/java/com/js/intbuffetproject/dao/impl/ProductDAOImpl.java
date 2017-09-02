@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.js.intbuffetproject.dao.ProductDAO;
 import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.SearchParameter;
+import com.js.intbuffetproject.util.SearchParameter;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO {
 
-	private static final Logger logger = Logger.getLogger(ProductDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(ProductDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -66,22 +66,29 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> searchProductByParameters(SearchParameter searchParameter) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Product.class);
+		
+					
 		if (searchParameter.getCategoryID() != 0) {
 			criteria.createAlias("category", "category")
 					.add(Restrictions.eq("category.id", searchParameter.getCategoryID()));
 		}
 
+		   
 		if (searchParameter.getVegetarian() == true) {
 			criteria.add(Restrictions.eq("vegetarian", true));
 		}
+		
+		
 
 		List<Product> products = criteria.list();
 
+		
+		LOG.info("products = "+ products.size());
 		return products;
 	}
 
 	@Override
-	public void updateSellQuantity(Product product, Integer sellQuantity) {
+	public void updateSellQuantity(Product product, int sellQuantity) {
 		product.setSell_quantity(sellQuantity);
 		
 			sessionFactory.getCurrentSession().update(product);

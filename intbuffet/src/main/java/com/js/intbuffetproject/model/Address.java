@@ -10,17 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Address bean.
+ * Class Address with properties <b>serialVersionUID</b>, <b>id</b>,
+ * <b>country</b>, <b>city</b>, <b>postcode</b>, <b>street</b>,
+ * <b>housenumber</b>, <b>apartment</b>.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
 
 @Entity
 @Table(name = "addresses")
 public class Address implements Serializable {
-	
+
 	static final long serialVersionUID = 3260689382642549142L;
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +52,10 @@ public class Address implements Serializable {
 
 	}
 
+	/**
+	 * Creates a new Address with the given parameters: id, country, city,
+	 * postcode, street, housenumber, apartment.
+	 */
 	public Address(Long id, String country, String city, String postcode, String street, String housenumber,
 			int apartment) {
 		super();

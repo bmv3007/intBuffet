@@ -9,11 +9,18 @@ import com.js.intbuffetproject.dao.UserDAO;
 import com.js.intbuffetproject.model.User;
 import com.js.intbuffetproject.service.UserService;
 
+/**
+ * Class UserServiceImpl contains business logic related to class User.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserDAO userDAO;

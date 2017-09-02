@@ -1,6 +1,6 @@
 package com.js.intbuffetproject.dao.impl;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.js.intbuffetproject.model.Order;
 @Repository
 public class OrderDAOImpl implements OrderDAO {
 
-	private static final Logger logger = Logger.getLogger(OrderDAOImpl.class);
+	private static final Logger LOG = Logger.getLogger(OrderDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

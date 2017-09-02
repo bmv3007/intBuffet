@@ -34,7 +34,7 @@
 
 						<security:authorize
 							access="!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER') ">
-							<li><a href="login1" id="login"> Login</a></li>
+							<li><a href="login_page" id="login"> Login</a></li>
 					</security:authorize>
 						<security:authorize
 							access="hasRole('ROLE_ADMIN') and fullyAuthenticated">

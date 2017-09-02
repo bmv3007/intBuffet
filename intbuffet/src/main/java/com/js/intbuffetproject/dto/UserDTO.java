@@ -8,6 +8,13 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.js.intbuffetproject.model.Address;
 
+/**
+ * Class UserDTO is DTO class for class User.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 public class UserDTO {
 
 	private String username;

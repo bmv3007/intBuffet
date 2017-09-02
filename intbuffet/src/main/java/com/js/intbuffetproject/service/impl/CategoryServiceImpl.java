@@ -12,6 +12,13 @@ import com.js.intbuffetproject.model.Category;
 import com.js.intbuffetproject.service.CategoryService;
 import com.js.intbuffetproject.service.SendJMS;
 
+/**
+ * Class CategoryServiceImpl contains business logic related to class Category.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
@@ -29,9 +36,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Transactional
 	public void updateCategory(Long id, String name) {
-		Category category = getCategoryByID(id);
-		category.setName(name);
-		categoryDAO.updateCategory(category);
+		
+		categoryDAO.updateNameCategory(name, id);
 		sendJMS.sendJMS();
 
 	}
@@ -51,6 +57,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category getCategoryByID(Long id) {
 
 		return categoryDAO.getCategoryByID(id);
+	}
+	
+	@Override
+	public List<Category> getCategoryByName(String name) {
+
+		return categoryDAO.getCategoryByName(name);
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.js.intbuffetproject.dao;
 import java.util.List;
 
 import com.js.intbuffetproject.model.Product;
-import com.js.intbuffetproject.model.SearchParameter;
+import com.js.intbuffetproject.util.SearchParameter;
 
 public interface ProductDAO {
 
@@ -19,5 +19,5 @@ public interface ProductDAO {
 	
 	public List<Product> searchProductByParameters(SearchParameter searchParameter);
 	
-	void updateSellQuantity(Product product, Integer sellQuantity);
+	void updateSellQuantity(Product product, int sellQuantity);
 }

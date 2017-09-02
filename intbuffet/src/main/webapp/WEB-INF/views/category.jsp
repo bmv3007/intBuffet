@@ -26,6 +26,9 @@
 
 	</header>
 	<!--/header-->
+	<c:if test="${not empty error}">
+   Error: ${error}
+    </c:if>
 
 	<div class="container">
 		<div class="row">
@@ -74,7 +77,7 @@
 											src="resources/images/save.png"></a></td>
 									<td><a href="deleteCategory/${category.id}"><img
 											class="img-rounded" src="resources/images/delete.png"></a></td>
-									
+
 								</tr>
 							</c:forEach>
 						</table>
@@ -92,16 +95,16 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-					<address>
-					<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
-					900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
-					(123) 456-7890
-				</address>
+						<address>
+							<strong>Twitter, Inc.</strong><br> 1355 Market Street, Suite
+							900</br> <br>San Francisco, CA 94103</br> <abbr title="Phone">P:</abbr>
+							(123) 456-7890
+						</address>
 
-				<address>
-					<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
-					</br>
-				</address>
+						<address>
+							<strong>Full Name</strong><br> <a href="mailto:#">first.last@example.com</a>
+							</br>
+						</address>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						<address>

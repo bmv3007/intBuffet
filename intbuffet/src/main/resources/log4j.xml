@@ -10,6 +10,15 @@
 		</layout>
 	</appender>
 	
+	<appender name="file" class="org.apache.log4j.FileAppender">
+       <param name="File" value="${catalina.home}/logs/intbuffet.log" />
+       <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%-7p %d [%t] %c %x - %m%n"/>
+       </layout>
+    </appender>
+ 
+    
+	
 	<!-- Application Loggers -->
 	<logger name="com.js.intbuffetproject">
 		<level value="info" />
@@ -30,12 +39,14 @@
 
 	<logger name="org.springframework.web">
 		<level value="info" />
+		
 	</logger>
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
+		<appender-ref ref="file" />
 	</root>
 	
 </log4j:configuration>

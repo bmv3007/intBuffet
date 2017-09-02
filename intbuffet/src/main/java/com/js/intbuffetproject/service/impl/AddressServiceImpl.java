@@ -11,6 +11,13 @@ import com.js.intbuffetproject.dao.AddressDAO;
 import com.js.intbuffetproject.model.Address;
 import com.js.intbuffetproject.service.AddressService;
 
+/**
+ * Class AddressServiceImpl contains business logic related to class Address.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class AddressServiceImpl implements AddressService {

@@ -12,11 +12,18 @@ import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.service.OrdersProductsService;
 
+/**
+ * Class OrdersProductsServiceImpl contains business logic related to class OrdersProducts.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class OrdersProductsServiceImpl implements OrdersProductsService {
 
-	private static final Logger logger = Logger.getLogger(OrdersProductsServiceImpl.class);
+	private static final Logger LOG = Logger.getLogger(OrdersProductsServiceImpl.class);
 
 	@Autowired
 	private OrdersProductsDAO ordersProductsDAO;

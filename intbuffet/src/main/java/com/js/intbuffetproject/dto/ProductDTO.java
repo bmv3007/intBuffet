@@ -3,11 +3,12 @@ package com.js.intbuffetproject.dto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Product bean.
+ * Class ProductDTO is DTO class for class Product.
  * 
  * @author Maria Borovtsova
+ * 
+ * @version 1.1
  */
-@XmlRootElement
 public class ProductDTO implements java.io.Serializable {
 
 	static final long serialVersionUID = 3260689382642549142L;

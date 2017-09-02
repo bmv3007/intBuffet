@@ -10,20 +10,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.js.intbuffetproject.dao.OrderDAO;
-import com.js.intbuffetproject.model.Cart;
+import com.js.intbuffetproject.dto.Cart;
+import com.js.intbuffetproject.dto.OrderDTO;
+import com.js.intbuffetproject.dto.OrdersProductsDTO;
+import com.js.intbuffetproject.dto.ProductDTO;
 import com.js.intbuffetproject.model.Item;
 import com.js.intbuffetproject.model.Order;
 import com.js.intbuffetproject.model.OrdersProducts;
 import com.js.intbuffetproject.service.OrderService;
+import com.js.intbuffetproject.util.ConverterProductDTO;
 
+/**
+ * Class OrderServiceImpl contains business logic related to class Order.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
-	private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
+	private static final Logger LOG = Logger.getLogger(OrderServiceImpl.class);
 
 	@Autowired
 	private OrderDAO orderDAO;
+	
+	@Autowired
+	private ConverterProductDTO converterProductDTO;
 
 	@Override
 	@Transactional
@@ -110,15 +124,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order copyOrder(Long id) {
+	public OrderDTO copyOrder(Long id) {
 
     Order oldOrder = orderDAO.getOrderById(id);
-    Order newOrder = new Order();
-    List<OrdersProducts> newListOrdersProducts = new ArrayList<OrdersProducts>();
+    OrderDTO newOrder = new OrderDTO();
+    List<OrdersProductsDTO> newListOrdersProducts = new ArrayList<OrdersProductsDTO>();
     if(oldOrder.getOrders_products()!=null){
     for(OrdersProducts oldOrdersProducts:oldOrder.getOrders_products()){
-    	OrdersProducts newOrdersProducts = new OrdersProducts();
-    	newOrdersProducts.setProduct(oldOrdersProducts.getProduct());
+    	OrdersProductsDTO newOrdersProducts = new OrdersProductsDTO();
+    	ProductDTO productDTO = converterProductDTO.convertToDTO(oldOrdersProducts.getProduct());
+    	newOrdersProducts.setProduct(productDTO);
     	newOrdersProducts.setOrder(newOrder);
     	newOrdersProducts.setQuantity(oldOrdersProducts.getQuantity());
     	newListOrdersProducts.add(newOrdersProducts); 
@@ -127,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
    
     newOrder.setAddress(oldOrder.getAddress());
     newOrder.setDeliverymethod(oldOrder.getDeliverymethod());
-    newOrder.setOrders_products(newListOrdersProducts);
+    newOrder.setOrdersProductsDTO(newListOrdersProducts);
     newOrder.setOrdertotal(oldOrder.getOrdertotal());
     newOrder.setPaid(false);
     newOrder.setPaymentmethod(oldOrder.getPaymentmethod());

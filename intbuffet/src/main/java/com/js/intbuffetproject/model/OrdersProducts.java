@@ -12,6 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Class OrdersProducts: binds id of product, id of order and quantity of
+ * product.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
+
 @Entity
 @Table(name = "orders_products")
 public class OrdersProducts implements Serializable {
@@ -40,6 +49,10 @@ public class OrdersProducts implements Serializable {
 
 	}
 
+	/**
+	 * Creates a new OrdersProducts with the given parameters: id, product,
+	 * order, quantity.
+	 */
 	public OrdersProducts(Long id, Product product, Order order, int quantity) {
 		super();
 		this.id = id;

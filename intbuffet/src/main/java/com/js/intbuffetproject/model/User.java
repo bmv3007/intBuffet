@@ -11,6 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Class User with properties <b>username</b>, <b>password</b>, <b>email</b>,
+ * <b>firstname</b>, <b>surname</b>, <b>birthday</b>, <b>address</b>.
+ * 
+ * @author Maria Borovtsova
+ * 
+ * @version 1.1
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -34,11 +42,15 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birthday")
 	private Date birthday;
-	
+
 	@OneToOne
 	@JoinColumn(name = "address", referencedColumnName = "id")
 	private Address address;
 
+	/**
+	 * Creates a new User with the given parameters: username, password, email,
+	 * firstname, surname, birthday and address.
+	 */
 	public User(String username, String password, String email, String firstname, String surname, Date birthday,
 			Address address) {
 		super();
@@ -50,7 +62,11 @@ public class User {
 		this.birthday = birthday;
 		this.address = address;
 	}
-	
+
+	/**
+	 * Creates a new User with the given parameters: username, password, email,
+	 * firstname, surname, birthday.
+	 */
 	public User(String username, String password, String email, String firstname, String surname, Date birthday) {
 		super();
 		this.username = username;
@@ -59,9 +75,24 @@ public class User {
 		this.firstname = firstname;
 		this.surname = surname;
 		this.birthday = birthday;
-		
+
 	}
 
+	/**
+	 * Creates a new User with the given parameters: username, firstname,
+	 * surname.
+	 */
+	public User(String username, String firstname, String surname) {
+
+		this.username = username;
+		this.firstname = firstname;
+		this.surname = surname;
+
+	}
+
+	/**
+	 * Creates a new empty User.
+	 */
 	public User() {
 
 	}
